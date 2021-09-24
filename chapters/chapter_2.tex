@@ -1,0 +1,474 @@
+\chapter{Background and related work: Quality Control}
+\minitoc
+
+\section{Introduction}
+
+Product and process failures anticipation have been the subject of multiple researches for decades. Since the introduction of the Statistical Process Control (SPC) in the early 1920s by Walter A. Shewart multiple methods have been proposed to monitor and control a process. From univariate Shewhart and  CUSUM \citep{woodall1985multivariate} \citep{crosier1988multivariate} control charts to multivariate methods such as Hotelling T², EMWA \citep{lowry1992multivariate} and Multi-way Principle Component Analysis (MPCA) \citep{nomikos1994monitoring}. These methods work well to identify unstable operating conditions but they have a limitation: the relationship between process parameters and product quality is not taken into account. These methods use only the information about the process operational behaviour and they describe how process measurements deviate from their average trajectories. As a consequence, some abnormality in process measurement may be irrelevant to the quality of the manufactured products. Recent advancements in Machine Learning in the last few decades have opened up new research perspectives in the quality improvement domain. The first section of this chapter will be dedicated to the literature review related to the Blow-Molding process and in particular to previous work involving the overall quality improvement. This literature review work allows to define a starting position for our future research work. In the second part of the chapter we will review some notions about Machine Learning that will provide the reader with the elements needed to understand the chapters 3, 4 and 5 of this PhD dissertation. 
+
+\section{Quality control and Process Monitoring in the Extrusion Blow Molding process: a state-of-the-art}
+
+
+In order to identify the work already carried out on the subject of improving the quality of parts produced in the context of the industrial process of the Extrusion Blow-Molding, a literature review has been done. Since we are interested in improving the Quality of the part produced through the extrusion Blow-Molding process we focused on FINIRE. A systematic literature review have been carried out using the different databases: \textit{Scopus}, \textit{Google Scholar} and \textit{Crossref}.
+
+The research query used to find potential interesting articles is the following:
+
+\begin{verbatim}
+    ("extrusion blow molding"  OR  "extrusion blow-molding"  OR
+    "extrusion blow-moulding"  OR  "extrusion blow moulding" )  
+    AND   ( "process control"  OR  "process monitoring"  OR
+    "quality control"  OR  "quality prediction"  OR  "anomaly detection" )
+\end{verbatim}
+
+The number of correspondences found in the 3 databases are shown in table \ref{tab:literature_search_results}:
+
+\begin{table}[]
+\centering
+\begin{tabular}{ll}
+Database       & N° results \\
+Scopus         & 42        \\
+Google scholar & 980        \\
+CrossRef       & 198       
+\end{tabular}
+\caption{Literature search results}
+\label{tab:literature_search_results}
+\end{table}
+
+A subsequent reading of the titles of the articles made it possible to skim FINIRE
+
+\begin{figure}
+\centerline{\includegraphics[scale=1]{images/chapter_2/wordcloud.png}}
+\caption{Most recurrent words in article titles}
+\label{fig:wordcloud}
+\end{figure}
+
+On the others hand, different approaches have been proposed to improve the process control and the overall quality control of the produced parts. In the remaining part of the current section we will investigate the approaches proposed in the literature and we will discuss the possibility of using this methods in our industrial context.  
+
+The bibliographic research work made it possible to identify different research themes:
+
+\begin{itemize}
+    \item \textit{Process optimisation}: different strategies have been used to model the whole process that is the parison extrusion, clamping, inflation and cooling. 
+    \item \textit{Quality improvement}: a few methods have been proposed to understand what process parameters affect the most the quality of the blow-molded parts.
+\end{itemize}
+
+The following two subsections will provide more details about the two identified research themes: process optimisation (\ref{Process optimisation}) and quality improvement (\ref{Quality improvement}). Finally, in the last subsection (\ref{Discussion}) we will discuss the feasibility of applying these methods in the industrial context where this research work is carried out. 
+
+\subsection{Process optimisation} \label{Process optimisation}
+
+Different strategies have been used to model the whole process that is the parison extrusion, clamping, inflation and cooling. \citep{lee1996prediction} used a finite element model of thin film to simulate blow molding processes, and applied the feasible direction method to minimise the parison volume at the constraints of part thickness. The proposed parison design simulation is composed of the following stages. The finite element model predicts the wall thickness of the blow-molded part from a given preform thickness. The resulting wall thickness distribution of the part is submitted to the optimisation model to generate a new preform thickness profile. The new preform design is compared with the old one. If there is any improvement, the new preform design is again passed to the finite element model, and the loop is repeated until no further design improvement can be achieved. Author showed that the presented approach makes the optimisation algorithm more efficient and reduces the computational requirement drastically.
+
+\citep{diraddo1993line} established a neural network to predict the distribution of parison thickness and applied Newton-Raphson method to obtain the final blow molded part specifications \citep{diraddo1993profile}. All these methods make use of simulation techniques to optimise the production process.  
+
+\subsection{Quality improvement \label{Quality improvement}}
+
+In 1993 \citep{diraddo1993line} proposed an interesting approach for evaluating the thickness of the final blow-molded part using a Neural Network based approach. The Fully connected Neural Network inputs include the initial parison thickness and temperature profiles, the bottle mold geometry and a rheological parameter representative of the raw material. 
+
+
+
+They claims that this approach has two main advantages:
+
+\begin{itemize}
+    \item It allows to perform an online prediction of the final part thicknesses. An inadequate thickness results in decreased mechanical strength, especially in regions along the part where large blow ratios or complex geometries exist.
+    \item Excessive raw material usage results in material waste and increased cycle times because of increased cooling requirements.
+\end{itemize}
+
+Another interesting approach have been carried out by \citep{ramana2013data}. They propose to use data mining techniques to identify the factors that significantly affect quality, modeling relationships between input attributes and target attribute (yield, quality, performance index etc) and predicting quality levels of given input attributes. Clustering analysis have been initially applied on process data to split the entire population in different clusters. The cluster analysis made it possible to categorize the data into different families. By comparing the results of the cluster families analysis with the data labels, they prove that reject part are categorised in different clusters than parts conforming to customer specifications. Naive Bayes and Decision Tree has been then applied with the main purpose of classify the quality of the part given the input parameters. The process parameters used as input data are: the process cycle time, the extruder temperatures in different zones, the Extrusion Die temperature, the expulsion time, the parison length, the parison shape the blowing pressures as well as the inflation time.
+The prediction accuracy of the models has been evaluated by standard lift chart and ten fold cross validation methods on the test cases. Naïve Bayes and clustering models were found to have better accuracy than Decision Trees in the evaluation performed by standard lift chart while predicting process parameter values that result in acceptable products. The knowledge driven and proactive decisions have been implemented in quickly setting process parameters and their range of values that resulted in increased output of high quality products and significantly reduced the scrap.
+
+In 2008 \citep{attar2008manufacturing} proposed an approach to assist the development phase of a new product and to optimize the weight of the part and its thickness distribution. Firstly they applied a FINIRE.
+Once the numerical modelling of the part was done, improvement of the production process was performed based upon the desired objective function, i.e., a uniform part thickness distribution and/or minimal part weight. The optimisation was performed in two sequential steps, weight optimisation then thickness optimisation, by the systematic manipulation of the operating conditions, such as the parison dimensions. A process modelling methodology was employed to demonstrate the reduction in the part development time using the new model-based approach (Figure \ref{fig:workflow_development_process_optimisation}).
+\begin{figure}
+\centerline{\includegraphics[scale=0.6]{images/chapter_2/optimisation_flow.png}}
+\caption{Workflow for development process optimisation \citep{attar2008manufacturing}}
+\label{fig:workflow_development_process_optimisation}
+\end{figure}
+It is a trial and error process, which is time-consuming and produces a lot of material scrap. On the other hand, the concurrent process optimises parameters virtually, and therefore, eliminates scrap, machine downtime and the need for
+experimental optimisation.
+
+Starting with the results obtained by Diraddo, and with the advancement of Machine Learning techniques in the last decade, we decided to move our attention towards data-driven methods. Supported by the scientific literature we claim that data-driven methods are the right tools to investigate the interactions between Extrusion Blow Molding process data and the corresponding product quality data. The interest of using data-driven methods is also confirmed by the scientific literature of the last years involving quality improvement. Data-driven methods for product quality control have been applied in multiple domains, from steel industry \citep{lieber2013quality,li2018ensemble} to plastic industry \citep{chen2008neural,nagorny2017quality,haeussler1996quality,tellaeche2013machine,sharma2017taguchi} and to the semiconductor manufacturing processes \citep{melhem2016regression,lenz2013data,jiang2020novel}. 
+
+
+\subsection{Discussion} \label{Discussion}
+
+The scientific literature pointed out previous works in the domain of Extrusion-Blow Molding process and quality optimization. We distingu 
+
+This bibliographical research work has made it possible to highlight two fundamental aspects:
+
+\begin{itemize}
+    \item None of the articles considered deals with the process of multi-layers Extrusion Blow-Molding (Co-extrusion). Extrusion-Blow molding scientific literature mainly focus on plastic bottle or simple plastic containers which are commonly produced through mono-layer extrusion blow-molding process. 
+    \item All approaches used to improve the quality of the manufactured parts or to improve the process control make use of data-driven methods. The process seems to be to complex to be modelled through the Physic. Back in 1993 \citep{diraddo1993line} proposed an approach of online prediction of final part dimension using Neural Networks.
+\end{itemize}
+
+For instance, the approach presented by \citep{diraddo1993line} for evaluating the the geometrical dimensions of a plastic bottle is really interesting. On the other hand, among the input process data used as predictors, they use the material throughput exiting the extrusion head as well as the rheological parameter representative of the raw material. This information is missing in our machine and any modification to the system to get the missing information would not be possible for technical and economic reasons. 
+
+In the next section, some basics of Machine Learning are presented with the aim of providing the reader with all the necessary elements to follow chapters 3, 4 and 5.
+
+\section{Machine Learning}
+
+In this section we will review some concepts about Machine Learning in order to provide the reader with the basic elements to understand the following chapters of this PhD dissertation. Initially, some of the key concepts related to the Machine Learning such as difference between \textit{Supervised} and \textit{Unsupervised} learning is presented. Subsequently we will describe a few methods that have been applied all along the doctoral studies. This review is in no way intended to be exhaustive but wants to provide the necessary elements for understanding the approaches presented in chapters 3 and 4. For an exhaustive review of Machine Learning topics we suggest the following references: \citep{bishop2006pattern,friedman2017elements}. As regards Deep Learning, \citep{goodfellow2016deep} provides a comprehensive review of the most applied Neural Network based techniques.   
+
+\subsection{Supervised Learning}
+
+The most widely used machine learning approach is the \textit{Supervised} one. Supervised Learning is the task which involves learning a function from examples of its inputs and outputs. In supervised learning we look for a model that relates the response to the predictors, with the aim of accurately predicting the response for future observations (prediction) or better understanding the relationship between the response and the predictors (inference). In general, to solve a Supervised Learning problem we look for a function that minimises an error (cost function). The cost function quantifies the overall error in prediction between the predictions of each training samples and the real value (or “grand-truth”) associated. The cost function changes depending on the problem that we want to solve: Regression or Classification.
+
+\paragraph{Regression} \label{Regression}
+
+Regression corresponds to a training objective where training data and their corresponding
+outcome, a set of numerical continuous variables, are known and available for training. More generally, suppose that we observe a quantitative response $Y$ and $p$ $(X_1,X_2,\ldots,X_p)$ different predictors. We assume that there is some relationship between $Y$ and $X = (X_1,X_2,\ldots,X_p)$, which can be written in the very general form: 
+
+\begin{equation}
+  Y=\hat{f}(X)+ \epsilon
+  \enspace,
+\end{equation}
+
+where $\hat{f}$ is some fixed but unknown function of $X_1,X_2,\ldots,X_p$, and $\epsilon$ is a random error term, which is independent of $X$ and has mean zero. The objective is to find an estimate of the function $\hat{f}$ that better approximates as well as possible the relationship between the response and predictors. For instance, in a manufacturing context, a regression model can be designed to predict some dimensional characteristic of a manufactured part, given a set of input process parameters.
+
+\paragraph{Classification} \label{Classification}
+
+Classification corresponds to a training objective where training data and their corresponding
+true outcome, called label or class, are known and available during the training phase. A machine learning model performing a classification is also called a \textit{classifier}. Its role is to infer on a label (good part/non compliant part, car/air-plane/truck, etc.) to apply to a given input data vector. The possible answers (i.e. labels or classes) are determined by the dataset given to the model during the training phase. All the possible labels need to be known during training. Given a set of $c$ different classes, an input vector composed of $p$ $(X_1,X_2,\ldots,X_p)$ different predictors, and an output vector of class probabilities $Y$, defined as follow:
+
+\begin{equation}
+    Y \in [0, 1]^{c} \textnormal{ with } \sum_{i=1}^{c} Y_{i} = 1,
+\end{equation}
+we look for the function $\hat{f}$ FINIRE
+
+A compressed form is frequently found when there exist only two classes. This is also called binary classification, indeed $P(c1) = 1 - P(c2)$. Thus $P(c2)$ can be deduced from $P(c1)$, therefore the classifier only focus on computing $P(c1)$. In a manufacturing context, a classifier can be trained to recognise whether a part is compliant (OK), or not (NOK), to some quality specification.   
+
+\paragraph{Time series classification/regression}
+
+In some cases, we deal with several observations of the same variable over time. 
+
+We define \textit{univariate time series} $T = [t_{1}, t_{2}, \dots, t_{K}]$ is an ordered set of real values. The length of $T$ is equal to the number of real values $K$. In the same way, we define an \textit{M}-dimensional Time Series, $T = [T_{1}, T_{2}, \dots, T_{M}$ as a set of $M$ univariate time series with $T^{i} \in \mathbb{R}^{K}$. Given a dataset $D = \{(T_{1}, Y_{1}),(T_{2}, Y_{2}),\dots,(T_{N}, Y_{N})\}$ which corresponds to a collection of pairs $T_{i}, Y_{i})$ where $T_i$ could either be a univariate or multivariate time series with $Y_{i}$ as its corresponding one-hot label vector. For a dataset containing $c$ classes, the one-hot label vector $Y_{i}$ is a vector of length $c$ where each element $j \in [1, c]$ is equal to $1$ is the class of $T_{i}$  is $j$ and \textit{0} otherwise. The task of \textit{Time series classification} consists of training a classifier on a dataset $D$ in order to map from the space of possible inputs to a probability distribution over the class variables values (labels) \citep{fawaz2019deep}. 
+
+
+
+In this research work, we call \textit{Time Series} an ordered set of real values. A univariate Time s
+
+
+
+The kind of data is usually found in financial and industrial context or more generally in any context where a set of metrics or indicators are tracked on a daily basis. 
+
+
+In this Thesis dissertation we define \textit{Time series regression} the task of FINIRE
+
+Time series regression/classification can be carried out through the use of different Deep Learning architectures. 
+In 2017, \citep{wang2017time}, FINIRE 
+
+
+
+\subsubsection{Parametric models} \label{Parametric models}
+
+Parametric models involve a two-step approach:
+\begin{itemize}
+    \item We make an assumption about the functional form of the function $f$.  
+    \item Once the functional form is established, we need a procedure to estimate the model coefficients. 
+
+\end{itemize}
+	 
+Among all parametric methods Linear Regression is the most common. The general linear function can be expressed with the following notation:
+
+\begin{equation}
+    f(x)=\beta_0 + \beta_1X_1 + \beta_2X_2 + \ldots + \beta_pX_p
+    \enspace,
+\end{equation}
+where $\beta_j$ is the generic $j$-th coefficient, associated with the $j$-th feature.
+In Linear Regression, to estimate the model coefficients, we look for the hyper-plane that minimises the residual sum of squares:
+
+\begin{equation}
+    RSS = \sum_{i=1}^{n}(y_i -f(x_i))^2 = (Y - X\beta)^T(Y - X\beta)
+    \enspace.
+\end{equation}
+
+Under the assumption that $X$ have full column rank, we can differentiate the equation with respect of $\beta$ to obtain the unique solution:
+
+\begin{equation}
+    \beta = (X^TX)^{-1}X^TY
+    \enspace.
+\end{equation}
+
+One way to reduce the model variance is to apply a technique that constraints or regularises the coefficient estimates towards zero. The two best known methods are Ridge Regression \citep{hoerl1970ridge} and Lasso Regression \citep{tibshirani1996regression}. 
+
+In Ridge Regression a penalty term is added to the loss function, this penalty term is also called $L2$ regularisation. The penalised residual sum of squares can be written as follows:
+
+\begin{equation}
+\begin{aligned}
+ RSS_{Ridge}(\lambda) & = \sum_{i=1}^{n}(y_i -f(x_i))^2 + \lambda\sum_{j=1}^{p}\beta^{2}_{j} \\
+& = \|Y - X\beta\|_2^2 + \lambda\|\beta\|_2^2
+    \enspace,
+\end{aligned}
+\end{equation}
+where $ \lambda \geq 0 $ is a complexity parameter that controls the amount of shrinkage towards zero and $||\beta||_2$ is the $L2$-norm (Euclidean norm). These parameters have to be determined separately, for example using cross-validation. The Ridge Regression coefficient estimation is given by:
+
+\begin{equation}
+    \beta_{Ridge} = (X^TX + \lambda I)^{-1}X^TY
+    \enspace.
+\end{equation}
+
+Lasso Regression applies a similar shrinkage approach. In Lasso regression a penalty term ($L1$ regularisation), corresponding to an absolute value of magnitude, is applied to the residual sum of squares:
+
+\begin{equation}
+\begin{aligned}
+ RSS_{Lasso}(\lambda) & = \sum_{i=1}^{n}(y_i -f(x_i))^2 + \lambda\sum_{j=1}^{p}|\beta_{j}| \\
+& = \|Y - X\beta\|_2^2 + \lambda||\beta||_1
+    \enspace,
+\end{aligned}
+\end{equation}
+where $\lambda \geq 0 $ is a complexity parameter that can be estimated using cross-validation and $||\beta||_1$ is the $L1$-norm (Manhattan norm). As with Ridge Regression, the Lasso shrinks the coefficient estimates towards zero. However, the lasso penalty has the effect of forcing some of the coefficient estimates to be exactly equal to zero when $\lambda$ is sufficiently large. Lasso yields sparse models that are generally much easier to interpret than those produced by Ridge Regression. With Lasso, the features that are not related to the dependent variable are decreased towards zero so that this method is quite useful to do feature selection. Unlike Ridge Regression, however there is no closed form expression to solve the minimisation of the residual sum of squares. There are multiple algorithms for computing the entire path of solutions but their presentation is outside the scope of this paper. 
+
+\subsubsection{Tree-based methods} \label{Tree-based methods}
+
+Tree based methods are simple and useful models for interpretation. These models use decision trees to determine which target value matches the observation. Decision trees split the feature space into multiple regions $R_j$ and than fit a simple model in each one. For every observation that falls into the region $R_j$ the prediction is simply the mean of the response values for the training observations in $R_j$. Another time, we look for the regions $R_j$ that minimize the residual sum of squares. Unfortunately, it is computationally infeasible to consider every possible partition of the feature space into j regions. In order to overcome this issue, we use a greedy top-down approach. The most widely used method is the CART algorithm \citep{breiman2017classification}. A CART Tree is a binary decision tree that is constructed by splitting a node into two child nodes repeatedly, beginning with the root node that contains the whole learning samples. The main idea is to grow the tree by choosing a split, among all possible splits, that maximize a defined splitting criterion. Usually the splitting criterion for regression trees is the mean squared error:
+
+\begin{equation}
+    MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i -f(x_i))^2
+    \enspace.
+\end{equation}
+
+Even though these model are quite good for interpretability, they are not competitive with others machine learning techniques in term of prediction. One possible way to improve the prediction capabilities is to use methods like Bagging \citep{breiman1996bagging}, Random Forest \citep{breiman2001random} and Gradient Boosting \citep{friedman2001greedy}.
+With Bagging (Boostrap Aggragation), several subsets of data are created from the training set and each of this subset is used to build a decision tree. By averaging the predictions of all the different decision trees we end up with more robust results and with the reduction of the variance of the estimated model. Given B different bootstrapped training set, the final prediction can be written as follow:
+
+\begin{equation}
+    f_{bagging}(x) = \frac{1}{B}\sum_{b=1}^Bf_b(x)
+    \enspace,
+\end{equation}
+where $f_b(x)$ is the prediction on the $b$-th bootstrapped training set for a point $x$.
+Random Forest can be seen as an extension of bagging. In addition to taking the random subset of samples, it takes a random subset of features. Once again, by averaging the results of the “Forest” generated by this method, we can obtain a more robust result compared to a single regression tree. 
+Gradient Boosting is named after two different techniques: Gradient Descent and Boosting. In gradient boosting, the learning procedure consecutively fits new models to provide a more accurate estimate of the response variable. The principle idea behind this algorithm is to construct the new base-learners to be maximally correlated with the negative gradient of the loss function, associated with the whole ensemble. The loss functions applied can be arbitrary, but to give a better intuition, if the error function is the classic squared-error loss, the learning procedure would result in consecutive error-fitting \citep{natekin2013gradient}. 
+
+\subsubsection{Support Vector Machines} \label{Support Vector Machines}
+
+For a binary classification problem, Support Vector Machine or SVM is an algorithm that look for the hyperplane which better separates the two classes. SVM was introduced primarily introduced in 1963 by 
+
+The most commonly used non-linear kernels are polynomial and \textit{Radial Basis Function} kernels. Polynomial Kernel is defined by the following equation:
+
+\begin{equation}
+    K_{polynomial}(x, y) = (x^{T}y + c)^{d},
+\end{equation}
+
+where:
+
+\begin{itemize}
+    \item $x$ and $y$ are vectors of the input feature space.
+\end{itemize}
+
+
+
+The choice of the hyper-parameters $C$ and $\gamma$ is critical to obtain good performance in terms of accuracy and computation time. $C$ inﬂuence the width of the margin between the two classes. This parameter acts like a regularization of the model and allows its generalization to new samples. $C$ is a factor that balances the need to find the simplest possible hyper-plane, and the right to classiﬁcation errors. A small value of $C$ will encourage a wide margin, which will produce a simple hyper-plane, but will accept errors in classiﬁcations. Finally, $\gamma$ weights the inﬂuence of a single sample on the hyper-plane.
+
+
+\subsubsection{Neural network}
+
+A neural network is a computing system made up of a number of simple, highly interconnected processing elements (units). Feedforward neural networks learn to map a fixed-size input to a fixed-size output. To go from one layer to the next, the units compute a weighted sum of their inputs from the previous layer and pass the result through a non-linear function (activation function). For a generic hidden layer $H$ of a neural network the $j$-th unit compute the following operation:  
+
+\begin{equation}
+    h_j^H = \sigma(\sum_{i \in H-1}W_{ij}x_i)
+    \enspace,
+\end{equation}
+where $W_{ij}$ is the weight on connection from unit $j$ and the $i$-th unit of the previous layer, and $\sigma$ is the activation function. Among all activation functions the most popular on these days are \textit{ReLu} (Rectified Linear Unit) \citep{Glorot2011DeepSR}, which is defined as follow:
+
+\begin{equation}
+    ReLu(x) = max(0,x)
+    \enspace.
+\end{equation}
+
+Without the activation function the Neural Network would be a stacking of linear models and it would not be able to take into account non-linear connections between inputs and outputs. 
+Units that are not in the input or output layer are conventionally called hidden units. The hidden layers can be seen as distorting the input in a non-linear way so that categories become linearly separable by the last layer \citep{DBLP:journals/nature/LeCunBH15}. During the training phase we compute an objective function that measures the error (or distance) between the output scores and the desired pattern of scores. The back-propagation algorithm uses the derivative chain rule to calculate the gradient of an objective function with respects to the weights of a multilayer stack of units. In other words, the gradient of the objective function with respect to the inputs can be computed by working backwards from the gradient calculated with the respect of the output. The gradient, for each weight, indicates by what amount the error would increase or decrease if the weight were increased by a tiny amount. Once the gradient is propagated to the input, it is used to upgrade the unit weight through the use of optimisation algorithms. The most common optimisation algorithm is the Stochastic Gradient Descent (SGD). With SGD multiple samples of the training set are used to compute the output and the corresponding error. The error with respect to the weights is calculated and the weights are updated with following equation:
+
+\begin{equation}
+    W_j = W_j - \eta\nabla C(W_j)
+    \enspace,
+\end{equation}
+where $\eta$ is the learning rate, the “step size” with we which we descend the gradient, and $\nabla C(W_j)$ is the gradient of the cost function with respect to the weights.
+In the last few years others optimisation algorithms have been proposed. Among them the most widely used are \textit{RMSprop} and \textit{Adam} (adaptive moment estimation) \citep{kingma2014adam}
+
+\subsection{Unsupervised Learning}
+
+In numerous situations, collecting data and the corresponding expected output for training is too expensive or just very difficult to formalise or collect. When the objective is to design a model capable to group similar data points (i.e. clustering) without any clear predefined groups, a frequent situation in marketing, the common approach is to explore \textit{Unsupervised Learning} (UL) methods and algorithms.
+
+\subsubsection{Clustering}
+
+Clustering, also called cluster analysis
+
+Clustering is an Unsupervised Learning technique (i.e. a learning method where training data is fed into a model without the possibility to compare the output given by the model with a corresponding theoretically correct observation). Thus there is no correct answer, error or reward function, consequently the model does not rely on the availability of the domain’s experts. It is a common technique to perform knowledge discovery inside the data. Clustering focuses on
+finding patterns in the data to find different groups within the input data. This can be used to cluster (i.e. group) the data which are the most similar and apply later on a specific process to each of these groups.
+
+\subsubsection{Density Estimation}
+
+Most UL objectives apart from clustering fit in a density estimation logic. One of the possible objectives with an UL could be to learn the structure of the input data distribution. Once done, a model is able to produce a new data point coming from the learned input data distribution, and thus very similar to the training data. This is in particular useful to create a generative model or a model able to detect any novelty, anomaly outlier data point.
+
+In many situations, there might be an interest to detect any deviation to the usual situation (e.g.
+IT security, dangerous situation detection, etc.). One of the common issue of these objectives
+is to be able to collect a representative dataset of both situation (i.e. normal and abnormal).
+Usually, abnormal events occur a lot less frequently, this inevitably results in an imbalanced data
+repartition, often by many orders of magnitude (e.g. 99.5\% normal data and 0.5\% abnormal data).
+
+
+\subsection{Principal Component Analysis} \label{Principal Component Analysis}
+
+\textit{Principal Component Analysis} \citep{pearson1901liii}\citep{hotelling1933analysis}, usually abbreviated to \textit{PCA}, is the reference dimensional reduction method that relies on a factorisation of the matrix representing the input data.
+
+\begin{equation} \label{eq:covariance}
+    C = cov(X) = \frac{1}{N} \sum_{i=n}^{N} (x_{n} - \Bar{x})(x_{n} - \Bar{x})^{T},
+\end{equation}
+
+Let $m$ be the number of variables for each sample. The eigenvecteurs $v_{k}$ (with $1 \leqslant k \leqslant N$) of the covariance matrix $C$ take the name of \textit{Principal Components} of \textit{X} (Equation \ref{eq:covariance}).
+
+\begin{equation}
+    \lambda(XV) = (XCV) 
+\end{equation}
+
+The eigenvalues $\lambda_{k}$ can than be used to order the eigenvecteurs in ascending order of the variance of the data expressed by each eigenvector. By selecting $k$ Principal Components, with $k << N$ it is possible to account for most of the original dataset variability. Principal Component can be used either as a method of reducing the size of the input data space and as a Data exploratory tool. In fact, since the first Principal Components account for the most of the variability, in the majority of the cases it is possible to visualise most of the input data variability by projecting the input sample on the first 2-3 Principal Components. 
+
+
+\section{The "Deep Learning" revolution}
+
+These last years have shown how artificial intelligence, and in particular machine learning, can be applied to solve multiple tasks and problems. Great improvements have been reached  in multiple domains: from web searches to image recognition and classification through Convolutional Neural Networks to natural language preprocessing with Recurrent Neural Networks. The democratisation of the different models through open-source software libraries, specialised chipset and highly scalable computing platforms has pushed companies to integrate these tools within their own production facilities.
+The application of statistical models can be used to explain how certain process parameters can affect some product outputs. In other words, we can imagine using machine learning, and in particular supervised learning to model complex problems whenever physical models are not defined or cannot be built. Data-driven methods for product quality control have been applied in multiple domains, from steel industry \citep{lieber2013quality} \citep{li2018ensemble} to plastic industry \citep{chen2008neural} \citep{nagorny2017quality} \citep{haeussler1996quality} and to the semiconductor manufacturing processes \citep{melhem2016regression}. Among the different approaches used in previous works Deep Neural Networks seems to be quite promising in predicting the product quality \citep{bai2017deep}. 
+
+\subsection{Convolutional Neural Network} \label{Convolutional Neural Network}
+
+Convolutional Neural Networks (CNN) are simply neural networks that use convolution in place of general matrix multiplication in at least one of their layers. 
+\begin{figure}
+\centerline{\includegraphics[scale=0.7]{images/chapter_2/CNN.jpg}}
+\caption{Convolutional Network overview \citep{DBLP:journals/nature/LeCunBH15}}
+\label{fig:cnn_overview}
+\end{figure}
+The architecture of a typical ConvNet (Figure \ref{fig:cnn_overview}) is structured as a series of stages. The first few stages are composed of two types of layers: convolutional layers and pooling layers. Units in a convolutional layer are organized in feature maps, within which each unit is connected to local patches in the feature maps of the previous layer through a set of weights called a filter bank. The result of this local weighted sum is then passed through a non-linearity such as a ReLU. All units in a feature map share the same filter bank. Different feature maps in a layer use different filter banks.
+
+CNN have three great properties which are well suited for processing data that has a known grid-like topology: “sparse interactions”, “parameter sharing” and “equivariant representations” \citep{goodfellow2016deep}. Compared to traditional fully connected layers where every output unit interacts with every input unit, CNNs have sparse interactions. In fact, the size of the convolutional kernel is lower than the size of the input data which means that we need to store fewer parameters, which both reduces the memory requirements of the model and improves its statistical efficiency. Moreover, the same kernel is used throughout grid-like input data, so instead of learning a parameter for each location, only a set of parameters is
+learnt. This drastically reduce the number of parameters to learn. With the "equivariant representations" we means the property of CNNs to be equivariant to translations. This implies that if we translate an object in an input image, also its representation produced through the convolutional operation would be translated of the same amount. This property is particularly interesting when we know that some function of a small number of neighboring pixels is useful when applied to multiple input locations. The properties presented above make CNN particularly suitable for working with images. 
+
+Among the many possible applications involving CNNs we remember \textit{Image Classification}, \textit{Object Detection}, \textit{Instance segmentation} and \textit{Semantics segmentation}. Image Classification is a fundamental task that attempts to comprehend an entire image as a whole. The aim is to classify the image by providing it a label. Image Classification often refers to images in which just one item appears and is analysed. Object detection, on the other hand, involves both classification and localisation tasks and is used to analyse more realistic scenarios in which numerous items may exist in an image. Advanced computer vision tasks, instance segmentation, are intended to achieve finer-grained object localisation in input images. The bounding boxes used in object detection find only coarse-grained object boundaries and include many pixels that do not belong to the object. In contrast, instance segmentation improves the object localisation accuracy by identifying each pixel that acts as part of a known object in the image. The semantic segmentation task involves associating each pixel in an image with a class label. In the following subsections we will review 3 different Convolutional based architecture we have used in the course of our research work: \textit{Residual Networks} (image classification), \textit{Single Shot MultiBox Detector} (object detection) and \textit{U-Net} (image segmentation).
+
+\subsubsection{Residual Networks} \label{Residual Networks}
+
+Most of the state-of-the-art Image classification methods use Residual Networks, better known as \textit{ResNet}\citep{he2016deep}. The ResNet architecture solves the vanishing gradient problem for very deep neural network architectures by applying the concept of residual learning. By applying \textit{Shortcut connections} (Figure \ref{fig:shortcut}) 
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.5]{images/chapter_2/residual_learning.jpg}}
+\caption{Shortcut \citep{he2016deep}}
+\label{fig:shortcut}
+\end{figure}
+
+
+There is empirical evidence that Residual Networks are easier to optimise, and can gain accuracy from considerably increased depth. By stacking multiple convolutional layers and by leveraging the concept of residual learning, Residual Networks may be very depth with more than 100 convolutional layers. Depending on the number of Convolutional layers, there exists multiples versions of the these models. The most popular architectures are \textit{ResNet18}, \textit{ResNet34}, \textit{ResNet50}, \textit{ResNet101}, \textit{ResNet152}. As shown in figure \ref{fig:resnet_architectures}, the generic ResNet\textit{X} is composed of 5 convolutional building blocks and a last fully connected layer which leverage the extracted features to produce the classification result. Depending on the depth of the architecture each convolutional building is composed of a different number of convolutional layers.
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.4]{images/chapter_2/resnet.png}}
+\caption{ResNet architectures \citep{he2016deep}}
+\label{fig:resnet_architectures}
+\end{figure}
+
+
+\subsubsection{Single Shot MultiBox Detector}
+
+The choice of using these architecture is motivated by the the overall trade-off between the inference speed the model performances.
+
+For lightweight application, 
+
+a family of general purpose computer vision neural networks designed with mobile devices in mind to support classification, detection and more. 
+
+\subsubsection{U-Net}
+
+\textit{U-net}
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.6]{images/chapter_2/unet.png}}
+\caption{U-net architecture \citep{ronneberger2015u}}
+\label{fig:resnet_architectures}
+\end{figure}
+
+It consists of a contracting path (left side) and an expansive path (right side). The contracting path follows the typical architecture of a convolutional network. It consists of the repeated application of two 3x3 convolutions (unpadded convolutions), each followed by a rectified linear unit (ReLU) and a 2x2 max pooling operation with stride 2 for downsampling. At each downsampling step we double the number of feature channels. Every step in the expansive path consists of an upsampling of the feature map followed by a 2x2 convolution (“up-convolution”) that halves the
+number of feature channels, a concatenation with the correspondingly cropped feature map from the contracting path, and two 3x3 convolutions, each followed by a ReLU. The cropping is necessary due to the loss of border pixels in every convolution. At the final layer a 1x1 convolution is used to map each 64-component feature vector to the desired number of classes. In total the network
+has 23 convolutional layers
+
+
+
+\subsection{Recurrent Neural Network} \label{Recurrent Neural Network}
+
+Recurrent Neural Networks (RNN) \citep{rumelhart1986learning} are a family of neural networks that possess internal state or short-term memory due to recurrent feed-back connections, that make them suitable for dealing with sequential problems. The main advantage of RNN compared to others neural network architectures is their ability to process sequences of any length by keeping into account the historical information. More effective sequence models used in practical applications are called \textit{gated RNNs}. These include the \textit{LSTM} (Long-Short-Term-Memory) \citep{hochreiter1997long} and \textit{GRU} (gated recurrent unit) \citep{cho2014properties}. Without going into much details, gated RNNs are based on the idea of creating paths through time that have derivatives that neither vanish nor explode \citep{goodfellow2016deep}. The LSTM has been found extremely successful in many applications, such as speech recognition \citep{graves2013hybrid}\citep{graves2014towards}, machine translation \citep{sutskever2014sequence} and image captioning \citep{kiros2014unifying}\citep{vinyals2015show}\citep{xu2015show}. Thanks to its ability to deal with sequential data, RNN based networks have also been applied reasonably to time series regression/classification tasks \citep{smirnov2018time}. Inspired by the results achieved by RNNs in the domain of sequential data, we have decided to design a simple recurrent neural network to try to solve our problem (Figure \ref{fig:rnn_model}).The main idea behind our pipeline is to sequentially process the temperature at each timestep $t$ by taking into account information from prior inputs to influence the current input and output. The last output computed by the RNN model is then passed through a fully connected layer to produce a scalar output aiming at approximating the thickness of the part area for which the time series has been extracted. 
+
+
+
+\subsection{AutoEncoders}
+
+\textit{AutoEncoders} (AE) are a class of Neural Networks introduced in 1985 by \cite{rumelhart1985learning} which learns the mapping from a data sample to a latent space.
+
+\section{Model Hyper-parameters fine-tuning}
+
+The algorithms presented in the previous section have several dozen hyper-parameters. Their adjustment is often crucial to obtain satisfactory performance. This is called hyper-parameter optimization: the aim is to optimize the performance of the model for the task at hand. It is also necessary to select the right data preparation methods. This is particularly true for Deep Learning architectures when the number of hyper-parameter is potentially endless. Table REF summarizes the most the most critical Hyper-parameters to fine tune while training a Deep Neural Networks.
+
+\begin{table}[]
+\caption{Most known Hyper-parameters for training a Deep Neural Network}
+\label{tab:hyper-parameters}
+\begin{tabular}{|l|p{4cm}|p{4cm}|}
+\hline
+Hyper-parameter           & Common values applied in scientific literature  & Description                                    \\ \hline
+Number of layers          & {[}2;200{]}                                     & Number of layers in the architecture           \\ \hline
+Layer type                & Fully-connected, Convolutional, Recurrrent, ... &                                                \\ \hline
+Numer of Neuron per layer & {[}1;4000{]}                                    &                                                \\ \hline
+Activation function       & ReLu, Softmax, Sigmoid, Tanh, ...               &                                                \\ \hline
+Cost function             &                                                 &                                                \\ \hline
+Weight initialisation     &                                                 & The method applied to initialize model weights \\ \hline
+Learning rate             &                                                 &                                                \\ \hline
+Mini-batch                & {[}2;256{]}                                     &                                                \\ \hline
+\end{tabular}
+\end{table}
+
+Methods for automatic optimisation of these hyper-parameters have been proposed. There exists today many Open Source optimisation frameworks that allows to perform this optimisation tasks in an easy manner. Among them we can mention \textit{Optuna} \citep{optuna_2019} that we have used throughout our research work. \textit{Optuna} provides an easy interface to automate the hyper-parameter search. It supports the following sampling algorithms: \textit{Grid and Random Search} (\ref{Grid and Random search}), \textit{Tree-structured Parzen Estimator} (\ref{TPE approach}).
+
+This section proposes to review the most advanced methods for performing and discuss their application to our compliance monitoring problem.
+
+\subsection{Grid and Random search} \label{Grid and Random search}
+
+In order to perform the optimisation, the performance of the method over the range of values of each of the hyper-parameters needs to be evaluated. It is possible to evaluate the whole value range exhaustively, by a regular test grid, which is computationally expensive. A less costly approach in term of calculation time is the random drawing over the range of values, proposed by \citep{bergstra2012random}. 
+\begin{figure}
+\centerline{\includegraphics[scale=0.7]{images/chapter_2/random_search.eps}}
+\caption{Grid and Random Search \citep{bergstra2012random}}
+\label{fig:Grid and Random Search}
+\end{figure}
+In Figure \ref{fig:Grid and Random Search} the Grid search and Random search of nine trials are compared for optimising a generic function $f(x, y) = g(x) + h(x)$ where Above each square $g(x)$ is shown in green, and left of each square $h(y)$ is shown in yellow. With grid search, nine trials only test $g(x)$ in three distinct places. With random search, all nine trials explore distinct values of $g$. This failure of grid search is the rule rather than the exception in high dimensional hyper-parameter optimisation.
+
+\subsection{Bayesian Methods}
+
+In 2011, \citep{bergstra2011algorithms} carried out a state of the art of hyper-parameter optimisation methods for deep neural network models. This work shows the interest of iterative optimisation, based on the criterion of the Expected Improvement of the model performance, proposed by \citep{jones2001taxonomy}. The study introduces two optimisation methods. One method seeks to model the optimisation problem by \textit{Gaussian stochastic processes} (GP) and the second TPE (\textit{Tree-structured Parzen Estimator}) method proposes a kernel-based modeling. These methods are based on the construction of meta-models. The study shows the superiority of these two methods over the optimisation by random sampling.
+
+\paragraph{GP approach}
+
+\paragraph{TPE approach} \label{TPE approach}
+
+
+There existis in literature others approaches for performing Machine Learning hyper-parameters optimization. 
+% Citare altri approcci e spiegare che non entriamo nei dettagli perchè non facciamo uso di questi metodi nel nostro lavoro di tesi.
+
+% La notion the AutoML
+
+In this subsection we have shown how the hyper-parameters optimisation, whether it is carried out through a Random sampling approach or through the use of iterative methods, is an expensive task in term of computation time. The cost of optimizing these models is very high, due to the inﬁnity of possible architectures and the many hyper-parameters, especially for Neural Network architectures. The number of 
+
+Therefore, substantial computational resources are required.
+
+
+\subsection{Transfer Learning}
+
+Transfer learning is biologically motivated by the way that humans apply learned knowledge to solve new problems, and consists in exploiting knowledge learned in one problem and searching a good protocol of transferring to a new problem.
+The inductive transfer learning learns a predictive model or general principals from specific observations, and infers the decision for the target problem. In this setting, the source and target tasks are different but related. In practice, in inductive transfer learning problems, a parametric model is trained in the source problem and transferred to the target problem in a special way, like transferring parameters, or considering the relations between problems.
+
+This approach become particularly interesting when we deal with a dataset where the number of samples is small. There is no a well-defined rule to distinguish between a small and a large dataset. Moreover, the amount of data requried to solve a Machine Learning problem depends on the task that we try to accomplish. In the context of this research project we consider as small, every dataset that have less than 1000 samples.
+
+Convolutional networks are broadly applicable in the fields mentioned before, and they are even more attractive in the inductive transfer learning setting, where the target domain is identical to the source domain, and the target task is different from the source task.
+
+The success of transfer learning with convolutional networks relies on the generality of the learned representations that have been constructed from a large database like ImageNet \citep{deng2009imagenet}. Yosinski et al. [2014] quantified the transferability of these pieces of information in different layers, e.g. the first layers learn general features, the middle layers learn high-level semantic features and the last layers learn the features that are very specific to a particular task. Zeiler and Fergus [2014] also visualized the features in the intermediate layers, demonstrating, with images, that convolutional networks learn features from general level to task-specific level. Overall, the learned representations can be conveyed to related but different domains and the parameters in the
+network are reusable for different tasks.
+
+We distinguish two successive stages in the training of a neural network by transfer learning: the training of the new last layers, and then the specialization of the whole network. The first stage is to guarantee the convergence of the classifier on the new task. We seek to obtain a satisfactory classiﬁcation score. This is why in a first step, only the weights of the neurons of the new last layers are adjusted by back-propagation of the error gradient. Once the convergence of the last layers has been obtained, it is possible to fine-tune the whole network by performing an adjustment of all the weights of the layers in order to improve the classiﬁcation score.
+
+
+\section{Conclusion}
+
+This chapter allowed us to present our first contributions. A review of the literature on control and monitoring approaches in the context of plastic injection moulding process control has enabled us to position our research problem.
+
+\subsection{Scientific Contribution}
+
+\subsection{Industrial Contribution}
+
+
