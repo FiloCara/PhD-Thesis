@@ -185,6 +185,7 @@ Since we are dealing with data where the temporal information plays a key role, 
 \label{fig:rnn_model}
 \end{figure}
 
+Inspired by the results achieved by RNNs in the domain of sequential data, we have decided to design a simple recurrent neural network to try to solve our problem (Figure \ref{fig:rnn_model}).The main idea behind our pipeline is to sequentially process the temperature at each timestep $t$ by taking into account information from prior inputs to influence the current input and output. The last output computed by the RNN model is then passed through a fully connected layer to produce a scalar output aiming at approximating the thickness of the part area for which the time series has been extracted.
 
 \subsubsection{Spatial-temporal approach} \label{Spatial-temporal approach}
 

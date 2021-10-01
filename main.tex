@@ -35,19 +35,19 @@
 \fancyhead[LO]{}  % left odd
 \fancyfoot[C]{\small\thepage}  % page at foot
 
-\newtcolorbox[auto counter,
-list inside=defs,
-number within=section]{definition}[2][]{
-  list entry={{\bfseries\thetcbcounter~#2}},
-  title={Definition~\thetcbcounter:~\textbf{#2}},
-  colback={white},
-  colbacktitle={gray},
-  coltitle=black,
-  #1
-}
-\newcommand{\listofdefinitions}{%
-  \tcblistof[\section*]{defs}{List of Definitions}
-}
+% \newtcolorbox[auto counter,
+% list inside=defs,
+% number within=section]{definition}[2][]{
+%   list entry={{\bfseries\thetcbcounter~#2}},
+%   title={Definition~\thetcbcounter:~\textbf{#2}},
+%   colback={white},
+%   colbacktitle={gray},
+%   coltitle=black,
+%   #1
+% }
+% \newcommand{\listofdefinitions}{%
+%   \tcblistof[\section*]{defs}{List of Definitions}
+% }
 
 \renewcommand{\baselinestretch}{1.2}
 
@@ -124,6 +124,6 @@ Voici le résumé en français
 % B
 \input{appendix/appendix_B}
 % C
-\input{appendix/appendix_C}
+% \input{appendix/appendix_C}
 
 \end{document}

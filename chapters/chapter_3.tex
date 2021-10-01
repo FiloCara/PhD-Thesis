@@ -39,10 +39,10 @@ By an automatic analysis of a set of examples (training set) of measured input-o
 
 In this section, we will try to define a general framework that can be applied to improve process control. We use supervised machine learning to discover some patterns between the process parameters and the quality of the part that has been manufactured by the same process. We proceed in four main stages:
 \begin{enumerate}
-    \item \textit{Data collection} consist in retrieving all the data needed to model the manufacturing production process. It involves two main stages:  data acquisition and  data labelling (Section \ref{Data Collection}). 
+    \item \textit{Data collection} consists in retrieving all the data needed to model the manufacturing production process. It involves two main stages:  data acquisition and  data labelling (Section \ref{Data Collection}). 
     \item \textit{Data processing} covers the range of operations required to make the input data suitable for the machine learning algorithm (Section \ref{Data Processing}). 
-    \item \textit{Exploratory data analysis} is an ensemble of simple graphical and quantitative techniques that can be used to explore data and retrieve important information (Section \ref{Exploratory Data Analysis}).
-    \item \textit{Data modelling} corresponds to the statistical modelling of the relationship between the input process data and the output quality data by a machine learning algorithm (Section \ref{Machine Learning modeling})
+    \item \textit{Exploratory data analysis} is an ensemble of graphical and quantitative techniques that can be used to explore data and retrieve important information (Section \ref{Exploratory Data Analysis}).
+    \item \textit{Data modelling} corresponds to the statistical modelling of the relationship between the process data and the quality data by a machine learning algorithm (Section \ref{Machine Learning modeling})
 \end{enumerate}
 %
 \begin{figure}
@@ -55,22 +55,21 @@ In the remaining part of the current section we will review in details how to ca
 
 \subsection{Data collection} \label{Data Collection}
 
-Collecting data allows to capture a record of past events so that we can use data analysis to find recurring patterns. In the context of this research work, the data collection is the task of retrieving the data that could be meaningful to explain the variability of a quality characteristic given some process parameters. Among the many challenges in Industry 4.0, data collection is becoming one of the critical bottlenecks. It is known that the majority of the time for building end-to-end data-driven models is spent on preparing the data, which includes collecting, cleaning, analyzing, visualizing, and feature engineering. Moreover, as machine learning is used in new applications, it is usually the case that there is not enough training data. Traditional applications of machine learning like machine translation or image object detection rely on huge quantities of training data that have been accumulated for decades. On the other hand, more recent applications, especially in the manufacturing industry, have little or no training data. To train a machine learning model, it is necessary to have samples that are representative of the entire operating range of the process. If the individuals do not cover the whole process functioning, the model will be biased.
+Collecting data allows to capture a record of past events so that we can use data analysis to find recurring patterns. In the context of this research work, data collection is the task of retrieving the data that could be meaningful to explain the variability of a quality characteristic given some process parameters. Among the many challenges in Industry 4.0, data collection is becoming one of the critical bottlenecks. It is known that the majority of the time for building end-to-end data-driven models is spent on preparing the data, which includes collecting, cleaning, analyzing, visualizing, and feature engineering. Moreover, as machine learning is used in new applications, it is usually the case that there is not enough training data. Traditional applications of machine learning like machine translation or image object detection rely on huge quantities of training data that have been accumulated for decades. On the other hand, more recent applications, especially in the manufacturing industry, have little or no training data. To train a machine learning model, it is necessary to have samples that are representative of the entire operating range of the process. If the individuals do not cover the whole process functioning, the model will be biased.
 
 Two kind of data are required: the input data, corresponding to the process data and the output data which is actually the measure of the quality of the parts. Data collection involves mainly two different steps: \textit{process data acquisition} and \textit{Quality data acquisition}. 
 
 \subsubsection{Process data acquisition} \label{Process Data Acquisition}
 
-In this PhD dissertation we define \textit{process data} any kind of data belonging to the manufacturing process taken into account. For instance, some of the process parameters of the extrusion blow-molding process are the extruder throughputs, the extruder temperature, as well as the air blowing pressure. These process data constitute a picture of the state of the process at a given time.
+We use here the term \textit{process data} for any type of data belonging to the manufacturing process. For instance, some process data of the extrusion blow-molding process are the extruder throughputs, the extruder temperature, or the  blowing air pressure. This process data is a picture of the state of the process at a given time.
 
-Process data acquisition is a challenging task in Industry 4.0 due to different technologies, machines, sensors, IoT devices and communication networks. Sensors, actuators, and PLCs are the main data generator in the automotive industry \citep{khan2017big}. In the last decade a new type of intelligent sensors, also called \textit{Smart Sensors}, are more and more used in the manufacturing industry. Most of the data available in the Manufacturing plants comes from PLCs, Sensors and Smart Sensors. The three devices are further explained as below.
+Process data acquisition is a challenging task in Industry 4.0 due to different technologies, machines, sensors, IoT devices and communication networks. Sensors, actuators, and PLCs are the main data generators in the automotive industry \citep{khan2017big}. In the last decade a new type of intelligent sensor, also called \textit{smart sensors}, is more and more used in the manufacturing industry. Most of the data available in the Manufacturing plants comes from PLCs, sensors and smart sensors. The three devices are further explained as below.
 
 \begin{itemize}
-    \item \textit{Sensors}: A sensor is a device that converts a physical state or activity into an electrical signal. This electrical signal is sent to the PLC for further processing. In manufacturing, sensors create a huge amount of data. Most machines and robots include sensors that collect data from their surroundings, such as temperature sensors, which are used to detect the heat of a machine or the environment.
-    \item \textit{Smart sensors}: With the developments of the IOT and machine learning, are today available in the market various types of Smart Sensors. Smart sensors are devices that take information from a physical environment and use embedded microprocessors and wireless communication to monitor, examine and provides information about the proper functioning of the observed system. These sensors are today massively applied in the manufacturing industry and they provides a lot of information that can be used in the task of better controlling the process and to better understand the quality part variability.
-    \item \textit{Actuators}: The actuator takes an electrical signal from the PLC and turns it into physical action. A basic example of an actuator connected to a PLC is the automatic starting of a motor. There are several robots for automated procedures in the industrial business. These robots are actuators that produce a large quantity of data.
-    \item \textit{PLC}: PLC is a programmable unit where the instructions for automation are stored and takes a decision based on the input data from the sensors while actuators work on the PLC instructions (Figure \ref{fig:plc}). A factory has a lot of PLCs based on the processes. PLCs are made by different vendors and it generates heterogeneous data which is a big challenge for industrial big data.
-    A plant has a large number of PLCs. PLCs are manufactured by many vendors and create heterogeneous data, which is a big challenge for industrial big data.
+    \item \textit{Sensors} convert a physical state or activity into an electrical signal that is sent to the PLC for further processing. In manufacturing, sensors create a huge amount of data. Most machines and robots include sensors that collect data from their surroundings, such as the temperatures of a machine or its environment.
+    \item \textit{Smart sensors} are devices that take information from a physical environment and use embedded microprocessors and wireless communication to monitor, examine and provide information about the proper functioning of the observed system. With the developments of the IoT and machine learning, various types of smart sensors are nowadays available. They are massively applied in the manufacturing industry and they provide a lot of information that can be used in the task of better controlling the process and to better understand the quality part variability.
+    \item \textit{Actuators} controlled by the PLC, produce a physical action. A basic example of an actuator connected to a PLC is the automatic starting of a motor. There are several robots for automated procedures in the industry. These robots are actuators that produce a large amount of data.
+    \item \textit{PLC} is a programmable unit that takes input from sensors, and controls actuators (Figure \ref{fig:plc}). A factory has has a large number of PLCs based on the processes. PLCs are manufactured by different suppliers and they generate heterogeneous data which is a big challenge for industrial big data.
 \end{itemize}
 
 \begin{figure}
@@ -80,7 +79,7 @@ Process data acquisition is a challenging task in Industry 4.0 due to different 
 \end{figure}
 
 
-The presented devices produces a lot of data but they do not manage the data storage. In fact, PLCs have a limited amount of storage space and they cannot be used to store the data permanently. The local machine data storage is most of the time handled by the SCADA (Supervisory Control And Data Acquisition) software. The term SCADA is used to identify any kind of software, installed on a personal computer or server, which allows the implementation, operation and management of supervisory, control and remote control systems without necessarily having to write code using programming languages. SCADA software have multiples functionalities which range from automation, to alarm handling, logging, archiving and simple statistical analysis \citep{daneels1999scada}. SCADA is a powerful system for acquisition of industrial automation data but, it is not able to handle the storage of a large volume of data. For this reason the collected data through the SCADA system should be stored elsewhere, in a place where data are easily accessible. Cloud platform, whether they are internal the manufacturing company or outside, are generally the solution for storing a large amount of data. Cloud platforms, or \textit{data Lake}, has been designed to be highly scalable and it provides a way to easily access the data through Big data technology that facilitate and accelerate the data analysis stages.  
+The presented devices produce a lot of data but they do not manage the data storage. In fact, PLCs have a limited amount of storage space and they cannot be used to store the data permanently. The local machine data storage is most of the time handled by the SCADA (Supervisory Control And Data Acquisition) software. The term SCADA is used to identify any kind of software, installed on a personal computer or server, which allows the implementation, operation and management of supervisory, control and remote control systems without necessarily having to write code using programming languages. SCADA software have multiples functionalities which range from automation, to alarm handling, logging, archiving and simple statistical analysis \citep{daneels1999scada}. SCADA is a powerful system for acquisition of industrial automation data but, it is not able to handle the storage of a large volume of data. For this reason the collected data through the SCADA system should be stored elsewhere, in a place where data are easily accessible. Cloud platform, whether they are internal the manufacturing company or outside, are generally the solution for storing a large amount of data. Cloud platforms, or \textit{data Lake}, has been designed to be highly scalable and it provides a way to easily access the data through Big data technology that facilitate and accelerate the data analysis stages.  
 
 In order to be able to properly manage the data acquisition, taking into account the heterogeneity of the data coming from the different data sources, we propose to introduce a \textit{Gateway} system which constitutes an intermediary bridge between the shop floor PLCs, ans sensors, and the Cloud platform where the data are stored. Moreover, it can communicate with the \textit{MES} system. The Manufacturing Execution System (MES) is a production management system serving as the information center in the enterprise to improve manufacturing transparency. It is the middle layer connecting the manufacturing process on the shop floor and the business process on the Enterprise Resource Planning (ERP) \citep{chen2020implementation}. By communicating with the MES system, it is possible to associate to a produced part the set of events that have enabled its production.
 
@@ -100,7 +99,7 @@ The gateway is a physical or virtualized server which acts like an intermediary 
 The gateway has two main roles:
 
 \begin{itemize}
-    \item It allows to centralize the data collection at the plant level. It is in charge to retrieve the data from all the data sources, whether they are PLCs, Smart Sensors, SCADA software or the MES system. This process facilitates the subsequent sending of data to the Cloud platform. 
+    \item It allows to centralize the data collection at the plant level. It is in charge to retrieve the data from all the data sources, whether they are PLCs, smart sensors, SCADA software or the MES system. This process facilitates the subsequent sending of data to the Cloud platform. 
     \item This gateway is well suited for eventually deploying in production at the plant side the machine learning models that have been trained. 
 \end{itemize}
 
@@ -284,9 +283,9 @@ From a technical point of view, the scoring time of the model should be fast eno
 
 In this section our approach to improve the process control has been presented. In the next section, we will provide the results obtained by applying the approach presented above in our industrial context.
 
-\section{Empirical Setting (TO BE FINISHED)} \label{Empirical Setting}
+\section{Empirical Setting} \label{Empirical Setting}
 
-In 2019 a work has been carried by the Digital Manufacturing core team to determine what are the main causes of scraps involving the extrusion blow-molding machine. An analysis conducted on three years of data collected by the Manufacturing Execution System (MES) software of the company in a French plant has highlighted that the first cause of scraps in blow-molding machines is due to tanks whose weight does not meet the customer's specifications. This kind of non-compliance accounts for about one half of the total amount of scraps (Figure \ref{fig:Most common scrap causes (2017-2018-2019)}) followed by inclusion and others contamination problems. 
+In the context of our research framework, a work has been carried out to determinate what are the main causes of scraps involving the Extrusion-Blow Molding process. An analysis conducted on three years of data collected by the Manufacturing Execution System (MES) software of the company in a French plant has highlighted that the first cause of scraps in blow-molding machines is due to tanks whose weight does not meet the customer's specifications. This kind of non-compliance accounts for about one half of the total amount of scraps (Figure \ref{fig:Most common scrap causes (2017-2018-2019)}) followed by inclusion and others contamination problems. 
 
 \begin{figure}
 \centerline{\includegraphics[scale=0.9]{images/chapter_3/Scraps_codes.eps}}
@@ -294,49 +293,55 @@ In 2019 a work has been carried by the Digital Manufacturing core team to determ
 \label{fig:Most common scrap causes (2017-2018-2019)}
 \end{figure}
 
-As a consequence of this analysis, we decided to focus our efforts on trying to understand where these scrap come from and what we can do to try to reduce them. By following the approach described in section \ref{Proposed Method} of this chapters, we aim to search for any hidden pattern or correlation within process data and quality data that could explain why some parts are not compliant in term of weight.
+The tank weight is historically considered as an important product characteristic as it provides an overall indication about the amount of material which compose the fuel tank. By ensuring a lower tolerance limit of the weight it is possible, according to experts, to ensure that there is enough material to ensure compliance of thicknesses. In the same way, there exist an upper tolerance limit which exists to ensure that the part it is not to heavy. By measuring in real-time, for each part produced, the weigh of the tank, people in plants feel reassured about the correct material distribution along its surface.  
+% In chapter 4 i need to re-discuss this topic by showing that there is not correlation between weight and the thickness compliance to the customer specifications. 
+As a consequence of this analysis, we decided to focus our efforts on trying to understand where these scrap come from and what we can do to try to reduce them. Moreover, since the weight is measured in real-time, it is possible to easily assemble a dataset composed of multiple samples. By following the approach described in section \ref{Proposed Method} of this chapters, we aim to search for any hidden pattern or correlation within process data and quality data that could explain why some parts are not compliant in term of weight.
 
 
 \subsection{Data collection TO BE FINISHED}
 
-The industrial process taken into account has more than 5000 features measured in real-time by the PLC at each production cycle. Among all this features, 45 of them are considered as critical to ensure the proper process stability according to experts. Process parameters are stored in multiple databases and some pre-processing operations are needed to create a structured dataset.  Moreover, each process parameter measured in real-time during the production process has to be associated with the scalar value corresponding to the quality measurement of the manufactured product, at the end of the production cycle. In order to do that, some statistics (such as average, maximum and minimum) are calculated on the process parameters to have only scalar values.
-Since the final parts are produced in batches of one or two days, we built our own dataset using data from 5 different batches, corresponding to as many production days, for a total of 5597 individuals. Some preliminary operations on features have been made to reduce the overall feature space: we used previous knowledge on the process to discard all features that cannot provide useful information. Moreover, in order to reduce multi-collinearity, we have deleted from the dataset some of the most highly correlated features. Finally, our dataset has a feature space of size 290. Data were normalized to have zero-mean and unit-variance. Standardizing the features is not only important if we are comparing measurements that have different units, but it is also a general requirement for many machine learning algorithms. 
+The industrial process taken into account has more than 5000 process parameters measured in real-time at each production cycle. Among all this features, some of these are considered as critical to ensure the proper process stability according to experts (\ref{The key parameters of the Extrusion Blow-Molding}). Process parameters are stored in multiple databases accordingly to the FINIRE. For instance, Extrusion process data are 
 
-Unfortunately, there is an important parameters that is not collected through the SCADA software, the parison length. As explained in section (add REF), the parison length provides information about the material distribution. Depending on the final length, the material distribution on the final tank may change and so the final tank weight. We therefore felt it was necessary to collect this additional data in order    
 
-\subsubsection{Parison length estimation}
+Since the final parts are produced in batches of one or two days, we built our own dataset using data from 5 different batches, corresponding to as many production days, for a total of 5597 individuals. 
 
-One of the key characteristic which can explain the tank weight variability is the length of the plastic parison when it is closed inside the molds at the beginning of the blow-molding process. In fact, accordingly to the length of the parison the distribution of the thickness may change and this can impact the weight of the final part. The parison length is not available within our process data database because the machine is not equipped with the sensors to measure it. Measuring the length of the parison requires to equip the machine with external sensors.
-In order to be efficient, flexible and robust, our measuring system should present the following properties:
+ 
+Unfortunately, there is an important parameter that is not collected through the SCADA software, the parison length. The production process taken into account FINIRE 
+As explained in section \ref{Quality control and Process Monitoring in the Extrusion Blow Molding process: a state-of-the-art}, the parison length provides information about the material distribution. Depending on the final length, the material distribution on the final tank may change and so the final tank weight. We therefore felt it was necessary to collect this additional data in order
+
+In this next subsection we will presents our approach based on Computer Vision to measure the parison length in real-time.
+
+\subsubsection{Parison length estimation using Computer Vision}
+
+One of the key characteristic which can explain the tank weight variability is the length of the plastic parison when it is closed inside the molds at the beginning of the blow-molding process. In fact, accordingly to the length of the parison the distribution of the thickness may change and this can impact the weight of the final part. The parison length is not available within our process data database because the machine is not equipped with the sensors to measure it. Measuring the length of the parison requires to equip the machine with external sensors. In order to be efficient, flexible and robust, our measuring system should present the following properties:
 
 % TO BE REVIEWED
 \begin{enumerate}
     \item Have a relatively small software and hardware cost compared to its manual counterpart.
     \item Require little to no expert intervention to adapt the model or process the data.
-    \item Be rapidly adaptable to a novel or evolving industrial situation. The system should be easily adaptable to any blow-molding machine in every plant of the Company.
+    \item Be rapidly adaptable to a novel or evolving industrial situation. The system should be easily adaptable to any blow-molding machine in every plant of the Manufacturing Company.
     \item Be capable of doing real time analysis.
     \item Be capable to return the result with a low latency.
-    \item Be able to run in a hostile environment.
+    \item Be able to run in a hostile environment. Te measuring system FINIRE 
     \item Be robust to (small) variations in the environment (e.g. lighting).
 \end{enumerate}
 
-In order to respect the previous industrial constraints we made the choice to move towards a Computer Vision based approach. Our choice is motivated by the low cost of a camera, compared to others sensors, and by the performances achieved by deep-learning based algorithms in detecting object within images. The choice of working with deep  learning is motivated by the need of building a model able to infer the Parison length that is robust to the following challenges:
+In order to take into account the previous industrial constraints, we made the choice to move towards a Computer Vision based approach. Our choice is motivated by the low cost of a camera, compared to others sensors, and by the performances achieved by deep-learning based algorithms in detecting object within images. 
 
-\begin{itemize}
-    \item \textit{Scale Variation}
-    \item \textit{Illumination conditions}
-\end{itemize}
+In section (ADD CHAPTER 2 SECTION) we shown how Neural Networks and, in particular, Convolutional Neural Networks reaches stet-of-the-art results in image based classification, object detection and image segmentation tasks. Motivated by the results presented in scientific literature we took the choice of train a Convolutional Neural Network able to detect the Parison in real-time and then to provide the length measurement. In order to achieve real-time length detection we have chosen to compare the performances of two different Neural Networks architectures: \textit{SSD MobileNet-V2} architecture \citep{sandler2018mobilenetv2} and \textit{Faster R-CNN} \citep{ren2015faster}. MobileNet is an object detector released in 2017 as an efficient CNN architecture designed for mobile and embedded vision application. This architecture uses proven depth-wise separable convolutions to build lightweight deep neural networks. The choice of using these architecture is motivated by the the overall trade-off between the inference speed the model performances. 
 
-In section (ADD CHAPTER 2 SECTION) we shown how Neural Networks and, in particular, Convolutional Neural Networks reaches stet-of-the-art results in image based classification, object detection and image segmentation tasks. Motivated by the results presented in scientific literature we took the choice of train a Convolutional Neural Network able to detect the Parison in real-time and to provide the length measurement. In order to achieve real-time length detection we have chosen to compare the performances of two different Neural Networks architectures: \textit{SSD MobileNet-V2} architecture \citep{sandler2018mobilenetv2} and \textit{Faster R-CNN} \citep{ren2015faster}. MobileNet is an object detector released in 2017 as an efficient CNN architecture designed for mobile and embedded vision application. This architecture uses proven depth-wise separable convolutions to build lightweight deep neural networks. The choice of using these architecture is motivated by the the overall trade-off between the inference speed the model performances. Since we look for a real-time FINIRE  
+In order to train such a model, 200 parison images has been collected using a camera of HD resolution (1280x720). Images have been taken 
 
-The limited availability of data, 200 images are considered a really small dataset for deep-learning based computer vision tasks, this is why we decided to take advantage of a pre-trained Neural Network.
+The images have been subsequently annotated by means of the Open Source \textit{Labelme} software \citep{wada2016labelme}. Due to the limited number of samples composing our dataset, 200 images are considered a really small dataset for a deep-learning based computer vision task, we decided to take advantage of a pre-trained Neural Network.
 
-In order to train such a model, 200 parison images has been collected using a camera of HD resolution (1280x720). 
 
 % Add parison images
 
-Results has shown that MobileNet is able to provide accurate results within a limited amount of time. The computation time is less than 1 second on a \textit{Nvidia} Jetson Nano. Nvidia Jetson Nano is a small, powerful computer for embedded applications and AI IoT that delivers the power of modern AI. 
 
+
+Results has shown that the SSD MobileNet-V2 is able to provide accurate results within a limited amount of time. The computation time is less than 1 second on a \textit{Nvidia} Jetson Nano. Nvidia Jetson Nano is a small, powerful computer for embedded applications and Deep Learning based IoT.
+
+P
 
 \begin{figure}
 \centerline{\includegraphics[scale=0.8]{images/chapter_3/parison_length_gt_prediction.png}}
@@ -346,6 +351,11 @@ Results has shown that MobileNet is able to provide accurate results within a li
 
 \subsection{Data processing TO BE FINISHED}
 
+
+and some pre-processing operations are needed to create a structured dataset.  Moreover, each process parameter measured in real-time during the production process has to be associated with the scalar value corresponding to the quality measurement of the manufactured product, at the end of the production cycle. In order to do that, some statistics (such as average, maximum and minimum) are calculated on the process parameters to have only scalar values.
+
+Some preliminary operations on features have been made to reduce the overall feature space: we used previous knowledge on the process to discard all features that cannot provide useful information. Moreover, in order to reduce multi-collinearity, we have deleted from the dataset some of the most highly correlated features. Finally, our dataset has a feature space of size 290. Data were normalized to have zero-mean and unit-variance. Standardising the features is not only important if we are comparing measurements that have different units, but it is also a general requirement for many machine learning algorithms.
+
 \subsubsection{The Human-based data cleaning TO BE FINISHED}
 
 \subsubsection{The statistical data cleaning TO BE FINISHED}
@@ -354,9 +364,8 @@ Results has shown that MobileNet is able to provide accurate results within a li
 
 
 
-\subsection{Supervised learning modeling TO BE FINISHED}
+\subsection{Supervised learning modelling TO BE FINISHED}
 
-\subsubsection{Training}
 
 We compared multiple regressive models: Linear Regression, Lasso Regression, Ridge Regression, Random Forest and Gradient Boosting Tree. 
 
@@ -401,17 +410,16 @@ The impossibility of building a predictive model can be explained by multiple re
 \label{fig:Example of a process parameter variability in probability distribution}
 \end{figure}
 
-The Non-stationarity of the data depends FINIRE
 
-The lack of data characterizing raw material properties FINIRE
-
-Inbalanced dataset FINIRE
+In the following subsections we will provide more details about 
 
 
 
 \section{SmartBMM: towards smarter machines TO BE FINISHED}
 
-The data analysis results presented all along this chapter have shown the inability to explain the tank weight variability given the blow-molding process data that are considered as critical by the process experts. What the analysis has also highlighted is that the most of the scraps occurs just after the machine start-ups. As shown previously, right after the machine start-up, the extrusion blow-molding process is not completely stable which increase the overall scrap rate of the blow-molded parts. Moreover, an interview of different extrusion blow-molding experts has highlighted that there are not common and shared best practice to start the machine. As a consequence there is a lot of variability between startups.
+The data analysis results presented all along this chapter have shown the inability to explain the tank weight variability given the blow-molding process data that are considered as critical by the process experts. The possible reasons have been discussed in detail in the previous section.
+
+What the analysis has also highlighted is that the most of the scraps occurs just after the machine start-ups. As shown previously, right after the machine start-up, the extrusion blow-molding process is not completely stable which increase the overall scrap rate of the blow-molded parts. Moreover, an interview of different extrusion blow-molding experts has highlighted that there are not common and shared best practice to start the machine. As a consequence there is a lot of variability between startups.
 
 \begin{figure}
 \centerline{\includegraphics[scale=0.7]{images/chapter_3/smartbmm_barchart.png}}
