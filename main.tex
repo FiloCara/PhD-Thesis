@@ -10,7 +10,9 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{gensymb}
+\usepackage{dsfont}
 \usepackage{multirow}
+\usepackage{rotating}
 \usepackage[most]{tcolorbox}
 \usepackage{glossaries}
 \usepackage{booktabs}
@@ -18,12 +20,16 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{lscape} 
+\usepackage{adjustbox}
 \usepackage[parfill]{parskip}
+\usepackage{nomencl}
 
 \setlength\parindent{15pt} % set indent
 \setlength{\parskip}{10pt} % changes vertical space between paragraphs
 
 \renewcommand{\arraystretch}{1.3} % Stretch a bit the table cell height
+
+\DeclareMathOperator*{\argmin}{argmin}
 
 \hypersetup{colorlinks,linkcolor={blue},citecolor={blue},urlcolor={blue}}
 
@@ -69,10 +75,7 @@
 
 I like to acknowledge ...
 
-\chapter*{Abstract}
-
-In the manufacturing industry, especially in the automotive sector, product quality is a major indicator for evaluating the production capacity of a company. Customers are increasingly demanding in term of product quality and providing the customer with a product that comply with the specification is essential in a market that is becoming more and more competitive. In this research work, we propose to make use of data-driven methods to improve the overall quality of the manufactured products in an automotive industry context. Data-driven methods may be used to improve the process control by better understanding how manufacturing process parameters, or features,  affect the quality of the finished part. In the same way, we claim that training a data-driven model able to infer in real-time the quality of a part, without any direct part measurement, could benefits to the overall quality control chain, by ensuring a fast reaction to quality deviation. Both approaches have been tested in a real manufacturing environment, the Extrusion-Blow Moulding for fuel tank production. The experimental evaluation mainly showed two results. The first outcome has highlighted the complexity of applying data-driven methods in an industrial context where it is not possible to take into account all sources of product quality variability. Secondly, we have shown that the introduction of new sensors, such as a thermal camera at the end of the production process, made it is possible to infer in real-time some dimensional characteristics of the finished product that allows for a 100\% quality control of the produced parts.       
-
+\input{chapters/abstract}
   
 \chapter*{Résumé}
 
@@ -84,8 +87,8 @@ Voici le résumé en français
 \listoftables
 \addcontentsline{toc}{chapter}{List of Tables}
 
-\listofdefinitions
-\addcontentsline{toc}{chapter}{List of Definitions}
+\input{chapters/list_of_symbols}
+\printnomenclature
 
 \tableofcontents
 
@@ -93,23 +96,23 @@ Voici le résumé en français
 \input{chapters/introduction}
 
 % Chapter 1
-\setcounter{mtc}{4}
+\setcounter{mtc}{3}
 \input{chapters/chapter_1}
 
 % Chapter 2
-\setcounter{mtc}{5}
+\setcounter{mtc}{4}
 \input{chapters/chapter_2}
 
 % Chapter 3
-\setcounter{mtc}{6}
+\setcounter{mtc}{5}
 \input{chapters/chapter_3}
 
 % Chapter 4
-\setcounter{mtc}{7}
+\setcounter{mtc}{6}
 \input{chapters/chapter_4}
 
 % Chapter 5
-\setcounter{mtc}{8}
+\setcounter{mtc}{7}
 \input{chapters/chapter_5}
 
 \input{chapters/conclusion}
