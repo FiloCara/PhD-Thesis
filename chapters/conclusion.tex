@@ -1,10 +1,89 @@
-\chapter*{Conclusion}
+\chapter*{Conclusion TO BE FINISHED}
 \addcontentsline{toc}{chapter}{Conclusion}
 \thispagestyle{empty}
 
-% TO BE MODIFIED
-The future direction of Industrial Internet technology is to transform industrial processes and products, moving from the reliance on experience-based decision making towards data-centric or evidence-based decision making. It is through this process that Industrial AI will play a major role to advance the digitalization of traditional industrial systems.
+The future direction of the manufacturing industry is to transform industrial processes and products, moving from the reliance on experience-based decision making towards data-centric or evidence-based decision making. It is through this process that Machine Learning will play a major role to advance the digitisation of traditional industrial systems. Plastic Omnium Clean Energy System aims to leverage the Industry 4.0 paradigm in order to keep its leadership in the manufacturing industry of fuel tanks. For Plastic Omnium, the Industry 4.0 paradigm can provide a new way of looking at performance, with a more precise and immediate vision (based on real-time indicators) of the entire production chain, but also the optimisation of production through the use of data-driven methods. Plastic Omnium identifies four majors pillars driving the fourth industrial revolution: \textit{Smart Factories}, \textit{Digital Industrialisation}, \textit{Predictive Quality} and \textit{Predictive Maintenance}. In this research work we have focused in the \textit{Predictive Quality} pillar. In particular, we have demonstrated how machine learning can contribute to a process of continuous quality improvement. Internally collected plant data, as well as new sources of data coming from new sensors may be leveraged through a machine learning data-driven method to model the relationship between the input process data and the output quality data. We claims that the improvement of the overall quality of a production line can be obtained by working either on the process and either on the quality control. This for us definitely makes sense as the production of a part compliant with the specifications is the result of a careful work in optimising the production process, as well as the ability to quickly identify a deviation in the quality of the finished part. By quickly identifying a quality problem it is possible to react faster and adjust the process, limiting the production of non-conforming parts.
+% Chapter 1 DONE
+Our dissertation has developed as follow. In chapter 1, we have emphasised the importance of the ever growing amount of data available in the manufacturing plants. These data could be used to discover hidden patterns, through machine learning, and to bring value to the overall production chain. Subsequently, the industrial context of the extrusion blow-moulding is presented. extrusion blow-moulding is a complex manufacturing process which consists of two sub-processes: the extrusion and the blow-moulding. The high degree of freedoms of this manufacturing process is captured by a large amount of process parameters which allows to define the process status at a given instant in time. Fuel tanks produced through this manufacturing process must respect some dimensional and geometrical constraints to ensure the integrity of the part and to comply with the costumer specifications. In order to asses the conformity of the part, thickness measurement are routinely performed. Measuring the thickness in real-time is a time-consuming task that cannot be done online. For that reason, only certain parts of the entire production batch are measured. Historically, the weight of the tank is used as an alternative of the thickness to asses that the plastic shell is composed to sufficient material to ensure its robustness. Compared to thickness, the tank weight is easily measurable inline. A literature review targeting the Quality improvement domain in the extrusion blow-moulding has been conducted to evaluate previous works and to define the starting point of our research work. The bibliographical research has highlighted that most of the the previous works leverage data-driven methods to try to characterise the quality variability given some input process data. Due to the complexity of the manufacturing process data-driven methods has proven to be preferable compared to expertise-based methods . Because of this, we have decided to direct our research work towards the data-driven methods.
+% Chapter 2 DONE
+In chapter 2, we described a general data-driven framework that can be used to leverage past manufacturing data to try to improve the quality of the produced parts. This approach is composed of four main stages: data collection, data processing, exploratory data analysis and supervised machine learning modelling. We claim that Supervised machine learning approaches are preferable compared to the Unsupervised ones in the context of ours research problem. In fact, we want to approximate the relationship between the input process data and the quality of the part. An unsupervised machine learning approach could be used to detect unstable operating condition in a production process but any connection with the quality part would be missing. Linear models, with or without penalty term, tree-based methods and Support Vector Machines are well known Supervised machine learning algorithm that lend themselves very well to being used with structured data. Deep Learning, a sub-field of machine learning, however, provide the best results when the input data are unstructured. For instance, when dealing with images, videos or time series, Deep Learning often provides better results. However, Deep Learning architectures require a large amount of data to converge towards a stable solution. Transfer learning may partially mitigate this limitation. Instead of training an architecture from scratch, the parameters of a pre-trained model are fine-tuned. 
+% Chapter 3 DONE
+In chapter 3, we presented a first application of the proposed data-driven method in the context of our industrial use-case. We made the choice of working on the modelling of the weight of the tank given the input process parameters. Building a model able at inferring the weight of the tank would allow for a better comprehension of our industrial process. Process data have been collected and pre-processed. Unfortunately the parison length, considered in literature as one of the key parameter in explaining the dimensional variability of the part was not available. A camera-based system leveraging Deep Learning has been put in place to detect the parison in real-time and to compute its length. The measured length, as well as the the other process parameters, constitute the input data for the Supervised machine learning model. Results has show the impossibility to build a predictive model by highlighting a whole series of difficulties that we have encountered in a context full of uncertainty as the industrial one. In particular, the critical process parameters, historically monitored to control the process, do not provide useful information for predicting the weight of the manufactured products. Some of the possible explanations have been discussed: the non-stationarity of our process and the lack of data about raw material above all. Nonetheless, this research work has enabled us to identify some areas for improvement in the production process. The \textit{SmartBMM} project has started from the observation that most of the scraps occurs in the transient regime when the machine is not yet stable. As a consequence, we have decided to completely automate the way the extrusion blow-moulding machines are started with the main idea to reduce the duration of the transient phase. The project has been subsequently extended to automate and optimise other machine phases such as the Purge ones.
+% Chapter 4 DONE
+Consequently, we have oriented chapter 4 to present and highlight a solution to infer directly the thickness of the part without relying on the tank weight. Firstly, a simple statistical analysis has demonstrated how the correlation between the weight and the thicknesses of the tank is quite low. This calls into question the effectiveness of using the weight to infer the part conformity. As the weight is not sufficient to guarantee the dimensional conformity of the parts produced, we decided to focus our efforts directly towards the tanks thickness. The proposed method addresses the real-time thickness inference issue by leveraging thermal imaging and machine learning to provide a prediction of the thickness of different critical areas of the part. We have observed that different areas of the part have different cooling behaviours depending on their thickness. Areas with smaller thicknesses cool down faster than those with higher thicknesses. For the thicker zones, the surface temperature even starts to increase before decreasing. This phenomenon is due to the release of energy from the innermost plastic layer that has not be in direct contact with the mould surfaces. This surface temperature decay, easily measured by taking consecutive thermal frames over time, could be leveraged to infer the thickness of the part. Three different data-driven pipelines have been presented. The first one leverages parametric expansions to compress the information of the temperature time series extracted from each critical point. The parameters of the parametric expansions are then fed into a machine learning algorithm. The second pipeline directly exploit the extracted time series by leveraging a recurrent neural network. The third pipeline, which completely outdoes the previous two, directly process the input video without extracting the temperature time series. Finally, we proposed a few directions which appear as promising to extend the thickness reconstruction to others points outside the critical ones. We namely introduced an approach that could be applied in order to reconstruct the entire thickness mask of the part.
 
-In this PhD thesis we have showed an application of statistical learning methods in FINISH
+
+\section*{Scientific Contributions}
+
+This research work has in our opinion three main scientific contributions:
+
+\begin{enumerate}
+    \item This research work provides to the scientific community an industrial application of machine learning and Deep Learning in the context of the quality improvement. Our research work has made it possible to highlight not only the benefits that machine learning approaches can bring to the manufacturing production chain but also some of the possible issues we can encounter when such a methods are applied in a real industrial context. 
+    
+    \item We provide a new approach for measuring the thickness in real-time in a non-contact manner. Our approach relays in Deep Learning and thermal imaging to infer the thickness of a blow-moulded fuel tank. Thermal imaging for inferring the thickness of an object is not a new idea but, at our knowledge, this is the first time that a data-driven method has been leveraged to infer the thickness given the surface decay temperature. We claim that such an approach could be extended to others manufacturing production processes where the manufactured part undergoes a cooling process.    
+    
+    \item We have shown how Deep Learning could be leveraged in the manufacturing industry even if the amount of data available is limited. Transfer learning and data augmentation have proven to be effective techniques to address the data scarcity issue.  
+
+\end{enumerate}
+
+
+\section*{Industrial Contributions}
+
+This research work has in our opinion five main industrial contributions:
+
+\begin{enumerate}
+    %OK
+    \item We provide to the company a general framework for dealing with quality improvement topics in a data-driven manner. This approach open ups new possibilities in term of quality control and process improvement. In this PhD dissertation, we have shown an application of such a framework in the context of the extrusion blow-moulding but, the same approach could be extended to others production processes. For instance, such a framework is currently used in the finishing centres of the production line to asses the quality of the welding parts.
+    %OK
+    \item Results presented all along this research work allow to call into questions some of the previous beliefs about the functioning of the extrusion blow-Moulding process. The critical process parameters, as they are collected today, are not enough to explain the part weight variability. Moreover, the weight has proven to not be sufficient to ensure the correct material distribution. 
+    %OK
+    \item The \textit{SmartBMM} software is currently in deployment in all the manufacturing plants of the company. The daily usage in the pilot plants, where the solution has been developed, shows a significant reduction in Purge cycles times as well in the starting phases. Moreover, by reducing the transient regime duration we are able to indirectly reduce the part non-conformities.
+    % OK
+    \item The parison length measurement in real time provides interesting information about the process. A few initiatives are currently in progress to leverage the real-time parison length measurement to adjust the die-gap opening accordingly to the length of the parison. This would allow for a better repeatability of the material distribution over the parison length. 
+    %OK
+    \item We propose an approach to infer the thickness of blow-moulded parts using thermal imaging and a Deep Learning without any direct measurement of the part. Results are considered accurate enough to move towards the industrialisation of the proposed system. Such an approach would allow for a 100\% thickness part inspection.   
+
+\end{enumerate}
+
+\section*{Perspectives}
+
+Finally, we would like to draw attention on a few perspective research directions. These questions appear essential given our current understanding of the manufacturing industry and the state of the machine learning research. In our opinion, there are three majors challenges to overcome for the manufacturing industry, in order to properly apply machine learning models in production: machine learning model uncertainty management and the machine learning life-cycle management. These topics have to be addressed in order to answer the third research objectives presented in the first chapter (see section \ref{Research objectives and methodology}).   
+% MODEL UNCERTAINTY
+If we want to employ machine learning technology to control the functioning of a production process, or to asses the quality of a manufactured part, we must be extremely cautious about mission-critical tasks, which necessitates not just advancements in model and algorithm accuracy, but also security limits and uncertainty management in system design. For instance, for a manufacturing company with low percentage of quality scraps, a machine learning model with a 80\% accuracy in prediction may lead to incorrect alerts. Non detecting non-conforming parts, or even worst, declaring a part as non compliant when in fact it is fully compliant, is surely a problem for the company. 
+The experimentation conducted during this research work have highlighted how it is extremely hard to build a robust machine learning algorithm in the context of our manufacturing process. We claim that a 100\% model accuracy is utopistic in our industrial context but in general in the manufacturing industry. Therefore, future works may focus on how a model with a limited accuracy could provide values to a company. Maybe the accuracy is not enough to automatically declare the part as non-conforming inside a traceability system, but it could be used to quickly identify some product quality deviation.
+
+% MODEL LIFE-CYCLE MANAGEMENT
+Another topic related to decision-making is the machine learning model life-cycle management. Results presented all along this PhD dissertation have highlighted that the extrusion blow-moulding process is non-stationary. In the manufacturing industry, multiples non controllable factors may lead to a change in the input data distribution. If the input data distribution changes over time, a model would not be able to provide the same accuracy over time. It becomes mandatory to correctly handle the model re-train over time. In order to re-train the model, it becomes extremely important to correctly handle the data acquisition of new quality control data to provides a model FINIRE. morever, future research works could leverage the machin learning field of Domain Adaptation. Domain adaptation is the task of adapting models across domains. This is motivated by the challenge where the test and training datasets fall from different data distributions due to some factor. Domain adaptation aims to build machine learning models that can be generalised into a target domain and dealing with the discrepancy across domain distributions.
+% 
+% \textbf{A future research question could be}: How to, effectively and automatically, handle the uncertainty of a trained machine learning model in the manufacturing industry? 
+
+
+
+% GENERALISATION
+Strictly related to the previous topic ...
+
+
+The last topic that should be addressed is the one of the model generalisation across different machines. A machine learning model trained on a specific machine will not necessarily work for another machine. Some external factors that we do not control may change. The input raw material, 
+
+For instance, the FINIRE 
+
+We claims that transfer learning could be a solution FINIRE
+
+
+In fact, we claims that a model trained on a specific machine, for a specific product, could not properly generalise FINIRE. This means lots of money and energy is needed to continuously build new trainig data and to train new models for new problems. We think that transfer learning could partially solve such an issue. In fact, FINIRE
+
+What works for a machine will not necessarily work for another machine. Some external factors that we do not control may change. For instance, the FINIRE 
+
+
+Moreover, what works for a machine will not necessarily work for another machine. 
+
+
+% 
+
+% non facile nel futuro prossimo ma forse fattibile in un futuro remoto 
+we claims that it will be quite difficult to build a genralised modle able to 
+% 
+
+
 
 \clearpage

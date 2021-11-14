@@ -3,7 +3,7 @@
 
 \section{Introduction}
 
-In this chapter, we propose an application of the previously proposed method to the industrial context studied in this research project. Since tank weight out of tolerances limits is the first cause of part non-conformities, we have decided to focus initially on the comprehension of the tank weight variability. We are interested in understanding what process parameters contribute most to the variability of tank weight. Firstly, it is necessary to have a representative data set of the phenomenon to be modeled. Subsequently, we will try to leverage the historical set of data to try to model the relationship between the process conditions and the quality of the parts. Results, as well as the difficulties of applying such an approach in the studied industrial context will be discussed in details. Finally, we will show how the results obtained through this research work has made it possible to identify some areas of improvement in the manufacturing process. 
+This chapter describes an application of the previously proposed method to our industrial context. Since out-of-tolerance tank weight is the primary cause of part non-conformity, we investigate the process parameters that contribute most to the variability of tank weight. The first step is to gather a data set representative of the phenomenon to be modelled.  This historical data set is then used to model the relationship between process measurements and part quality. The results, as well as the difficulties encountered when applying such an approach in the industrial context studied will be discussed in detail. Finally, we will show how the results obtained in the framework of this research work have allowed us to identify some areas for improvement in the manufacturing process. 
 
 
 \section{Motivation}
@@ -16,7 +16,7 @@ Poor quality or ``scrap'' parts are very expensive for a company like Plastic Om
 \label{fig:Corrective process control}
 \end{figure}
 
-Evidence has shown how the overall process stability ensures, in most cases, the product quality stability. However, it still remains unclear how the system parameters affect the product quality variability. Moreover, quality prediction can offer the possibility to define better system parameters at an early production stage. In other words, the product quality anticipation may be used to adjust the process in real time and not retrospectively (Figure \ref{fig:Predictive process control}). Such an approach would allow the product failure anticipation and the just-in-time process correction with an overall reduction of the non-conforming parts.
+Evidence has shown that the overall stability of the process ensures, in most cases, the stability of the product quality. However, it still remains unclear how the system parameters impact the variability of product quality. Quality prediction would allow better adjustment of system parameters at an early stage of production. In other words, anticipation of product quality could be used to adjust the process in real time rather than retrospectively (Figure \ref{fig:Predictive process control}). Such an approach would allow process failures to be anticipated and corrected just-in-time, with an overall reduction in the production of non-conforming parts.
 
 \begin{figure}
 \centerline{\includegraphics[scale=0.7]{images/chapter_3/predictive_approach.eps}}
@@ -24,17 +24,17 @@ Evidence has shown how the overall process stability ensures, in most cases, the
 \label{fig:Predictive process control}
 \end{figure}
 
-In order to understand the relationship between process parameters and the quality of final part, we use a supervised learning approach. We view our complex industrial process as a black box with multiple inputs and one output. Given $p$ process parameters $(X_1,X_2,\ldots,X_p)$ and one product quality variable $Q$, we look for the function that better approximates the relationship between the inputs and the output. Mathematically speaking, we look for the function $\hat{f}$ that approximates the relationship between the process variables and the quality result so that the following expression is verified:
+In order to understand the relationship between process parameters and the quality of final parts, we use a supervised learning approach. We view our complex industrial process as a black box with multiple inputs and one output. Given $p$ process parameters $(X_1,X_2,\ldots,X_p)$ and one product quality variable $Q$, we look for the function that better approximates the relationship between the inputs and the output. Mathematically speaking, we look for the function $f$ that approximates the relationship between the process variables and the quality result:
 
 \begin{equation}
     Q = \hat{f}(X_1,X_2,\ldots,X_p) + \epsilon
     \enspace,
 \end{equation}
-where $\epsilon$ is
+where $\epsilon$ is defined as the part of $Q$ that cannot be predicted from the input process parameters $(X_1,X_2,\ldots,X_p)$.
 
 By an automatic analysis of a set of examples (training set) of measured input-output behaviour of the process learning algorithms can find out important correlations between process variables and construct classifiers for detecting dangerous or unwanted process states.
 
-In the context of our research framework, a work has been carried out to determinate what are the main causes of scraps involving the Extrusion-Blow Molding process. An analysis conducted on three years of data collected by the Manufacturing Execution System (MES) software of the company in a French plant has highlighted that the first cause of scraps in blow-molding machines is due to tanks whose weight does not meet the customer's specifications. This kind of non-compliance accounts for about one half of the total amount of scraps (Figure \ref{fig:Most common scrap causes (2017-2018-2019)}) followed by inclusion and others contamination problems. 
+In the context of our research framework, a work has been carried out to determinate what are the main causes of scraps involving the extrusion blow-moulding process. An analysis conducted on three years of data collected by the Manufacturing Execution System (MES) software of the company in a French plant has highlighted that the first cause of scraps in blow-moulding machines is due to tanks whose weight does not meet the customer's specifications. This kind of non-compliance accounts for about one half of the total amount of scraps (Figure \ref{fig:Most common scrap causes (2017-2018-2019)}) followed by inclusion and other contamination problems. 
 
 \begin{figure}
 \centerline{\includegraphics[scale=0.9]{images/chapter_3/Scraps_codes.eps}}
@@ -42,402 +42,130 @@ In the context of our research framework, a work has been carried out to determi
 \label{fig:Most common scrap causes (2017-2018-2019)}
 \end{figure}
 
-As we have presented in section \ref{The key quality characteristics of a blow-molded fuel tank}, the tank weight is historically considered as an important product characteristic as it provides an overall indication about the amount of material which compose the fuel tank. By ensuring a lower tolerance limit of the weight it is possible, according to experts, to ensure that there is enough material to ensure compliance of thicknesses. In the same way, there exist an upper tolerance limit which exists to ensure that the part it is not to heavy. By measuring in real-time, for each part produced, the weigh of the tank, people in plants feel reassured about the correct material distribution along its surface.  
-As a consequence of this analysis, we decided to focus our efforts on trying to understand where these scrap come from and what we can do to try to reduce them. Moreover, since the weight is measured in real-time, it is possible to easily assemble a dataset composed of multiple samples. By following the approach described in section \ref{Proposed Method} of this chapters, we aim to search for any hidden pattern or correlation within process data and quality data that could explain why some parts are not compliant in term of weight.
-
-
-% \section{Proposed method} \label{Proposed Method}
-
-% In this section, we will try to describe a general framework that can be applied to improve process control. We use supervised machine learning to discover some patterns between the process parameters and the quality of the part that has been manufactured by the same process. We proceed in four main stages:
-% \begin{enumerate}
-%     \item \textit{Data collection} consists in retrieving all the data needed to model the manufacturing production process. It involves two main stages:  data acquisition and  data labelling (Section \ref{Data Collection}). 
-%     \item \textit{Data processing} covers the range of operations required to make the input data suitable for the machine learning algorithm (Section \ref{Data Processing}). 
-%     \item \textit{Exploratory data analysis} is an ensemble of graphical and quantitative techniques that can be used to explore data and retrieve important information (Section \ref{Exploratory Data Analysis}).
-%     \item \textit{Data modelling} corresponds to the statistical modelling of the relationship between the process data and the quality data by a machine learning algorithm (Section \ref{Machine Learning modeling})
-% \end{enumerate}
-% %
-% \begin{figure}
-% \centerline{\includegraphics[scale=0.45]{images/chapter_3/stages.png}}
-% \caption{The 4 stages towards predictive process control}
-% \label{fig:4_stages}
-% \end{figure}
-% %
-% In the remaining part of the current section we will review in details how to carry out these four steps to achieve a \textit{predictive process control}. 
-
-% \subsection{Data collection} \label{Data Collection}
-
-% Collecting data allows to capture a record of past events so that we can use data analysis to find recurring patterns. In the context of this research work, data collection is the task of retrieving the data that could be meaningful to explain the variability of a quality characteristic given some process parameters. Among the many challenges in Industry 4.0, data collection is becoming one of the critical bottlenecks. It is known that the majority of the time for building end-to-end data-driven models is spent on preparing the data, which includes collecting, cleaning, analyzing, visualizing, and feature engineering. Moreover, as machine learning is used in new applications, it is usually the case that there is not enough training data. Traditional applications of machine learning like machine translation or image object detection rely on huge quantities of training data that have been accumulated for decades. On the other hand, more recent applications, especially in the manufacturing industry, have little or no training data. To train a machine learning model, it is necessary to have samples that are representative of the entire operating range of the process. If the individuals do not cover the whole process functioning, the model will be biased.
-
-% Two kind of data are required: the input data, corresponding to the process data and the output data which is actually the measure of the quality of the parts. Data collection involves mainly two different steps: \textit{process data acquisition} and \textit{Quality data acquisition}. 
-
-% \subsubsection{Process data acquisition} \label{Process Data Acquisition}
-
-% We use here the term \textit{process data} for any type of data belonging to the manufacturing process. For instance, some process data of the extrusion blow-molding process are the extruder throughputs, the extruder temperature, or the  blowing air pressure. This process data is a picture of the state of the process at a given time.
-
-% Process data acquisition is a challenging task in Industry 4.0 due to different technologies, machines, sensors, IoT devices and communication networks. Sensors, actuators, and PLCs are the main data generators in the automotive industry \citep{khan2017big}. In the last decade a new type of intelligent sensor, also called \textit{smart sensors}, is more and more used in the manufacturing industry. Most of the data available in the Manufacturing plants comes from PLCs, sensors and smart sensors. The three devices are further explained as below.
-
-% \begin{itemize}
-%     \item \textit{Sensors} convert a physical state or activity into an electrical signal that is sent to the PLC for further processing. In manufacturing, sensors create a huge amount of data. Most machines and robots include sensors that collect data from their surroundings, such as the temperatures of a machine or its environment.
-%     \item \textit{Smart sensors} are devices that take information from a physical environment and use embedded microprocessors and wireless communication to monitor, examine and provide information about the proper functioning of the observed system. With the developments of the IoT and machine learning, various types of smart sensors are nowadays available. They are massively applied in the manufacturing industry and they provide a lot of information that can be used in the task of better controlling the process and to better understand the quality part variability.
-%     \item \textit{Actuators} controlled by the PLC, produce a physical action. A basic example of an actuator connected to a PLC is the automatic starting of a motor. There are several robots for automated procedures in the industry. These robots are actuators that produce a large amount of data.
-%     \item \textit{PLC} is a programmable unit that takes input from sensors, and controls actuators (Figure \ref{fig:plc}). A factory has has a large number of PLCs based on the processes. PLCs are manufactured by different suppliers and they generate heterogeneous data which is a big challenge for industrial big data.
-% \end{itemize}
-
-% \begin{figure}
-% \centerline{\includegraphics[scale=1]{images/chapter_3/PLC.jpg}}
-% \caption{PLC \textit{Siemens} S7-1500}
-% \label{fig:plc}
-% \end{figure}
-
-
-% The presented devices produce a lot of data but they do not manage the data storage. In fact, PLCs have a limited amount of storage space and they cannot be used to store the data permanently. The local machine data storage is most of the time handled by the SCADA (Supervisory Control And Data Acquisition) software. The term SCADA is used to identify any kind of software, installed on a personal computer or server, which allows the implementation, operation and management of supervisory, control and remote control systems without necessarily having to write code using programming languages. SCADA software have multiples functionalities which range from automation, to alarm handling, logging, archiving and simple statistical analysis \citep{daneels1999scada}. SCADA is a powerful system for acquisition of industrial automation data but, it is not able to handle the storage of a large volume of data. For this reason the collected data through the SCADA system should be stored elsewhere, in a place where data are easily accessible. Cloud platform, whether they are internal the manufacturing company or outside, are generally the solution for storing a large amount of data. Cloud platforms, or \textit{data Lake}, has been designed to be highly scalable and it provides a way to easily access the data through Big data technology that facilitate and accelerate the data analysis stages.  
-
-% In order to be able to properly manage the data acquisition, taking into account the heterogeneity of the data coming from the different data sources, we propose to introduce a \textit{Gateway} system which constitutes an intermediary bridge between the shop floor PLCs, ans sensors, and the Cloud platform where the data are stored. Moreover, it can communicate with the \textit{MES} system. The Manufacturing Execution System (MES) is a production management system serving as the information center in the enterprise to improve manufacturing transparency. It is the middle layer connecting the manufacturing process on the shop floor and the business process on the Enterprise Resource Planning (ERP) \citep{chen2020implementation}. By communicating with the MES system, it is possible to associate to a produced part the set of events that have enabled its production.
-
-% The architecture of the overall data acquisition system is visible in Figure \ref{fig:data_acquisition_architecture}.
-
-% \begin{landscape}
-% \begin{figure}
-% \centering
-% \includegraphics[scale=0.5]{images/chapter_3/Data_acquisition_architecture.png}
-% \caption{Data acquisition architecture}
-% \label{fig:data_acquisition_architecture}
-% \end{figure}
-% \end{landscape}
-
-% The gateway is a physical or virtualized server which acts like an intermediary between the data acquisition systems available in the shop floor and the Cloud platform where the data are stored for data analysis. The gateway connected to the shop floor network and it is able to interact directly with the PLC of the machines as well as smart sensors.  
-
-% The gateway has two main roles:
-
-% \begin{itemize}
-%     \item It allows to centralize the data collection at the plant level. It is in charge to retrieve the data from all the data sources, whether they are PLCs, smart sensors, SCADA software or the MES system. This process facilitates the subsequent sending of data to the Cloud platform. 
-%     \item This gateway is well suited for eventually deploying in production at the plant side the machine learning models that have been trained. 
-% \end{itemize}
-
-% The gateway should be equipped with different tools and software to allows the communication with the machines through the different communication protocols mainly used in Industry 4.0. There exist a multitude of communication protocols. Among all these we can mention \textit{OPC UA} and \textit{MQTT}. OPC UA (Open Platform Communications Unified Architecture) is a service-oriented machine-to-machine communication protocol mainly used in industrial automation. Its main goals are to provide a cross-platform communication protocol while using an information model to describe the transferred data \citep{profanter2019opc}. MQTT (Message Queuing Telemetry Transport) is an open message protocol which mainly focuses on a small code footprint and low network bandwidth usage, while handling high latency or bad network connections \citep{profanter2019opc}. Further information regarding the communication protocols used in Industry 4.0 are available in \citep{profanter2019opc}\citep{8262021}\citep{zezulka2018communication}.
-
-
-% \paragraph{Process data types}
-
-% When dealing with process data, we distinguish two different types of data: \textit{Cyclical data} and \textit{Time series data}.
-
-% \begin{itemize}
-%     \item \textit{Cyclical data}: Cyclical data are scalar values which provide information about a certain recurring event. Examples of Cyclical data are the machine cycle time, or the time needed from the machine to perform an operation. 
-%     \item \textit{Time series data}: Whenever a production process, or a part of it, requires time to be completed, it is possible to recover multiple sequential values of the same process parameters. This sequence of sequential data take the name of time series. The number of sequential values composing the time series depends on the sampling rate and may change accordingly to the nature of the measurement. For instance, the temperature of a machine components may be measured all along the production cycle and it is a classical example of time series data.
-% \end{itemize}
-
-% \begin{figure}
-% \centering
-% \includegraphics[scale=0.5]{images/chapter_3/time_series_data.png}
-% \caption{Time series data}
-% \label{fig:time_series_data}
-% \end{figure}
-
-
-% \subsection{Quality data acquisition}
-
-% Quality data acquisition is the task of collecting product quality data associated with all or some of the parts produced. The quality label can be continuous or discrete depending on the applied measurement method. For instance, we can measure a thickness of a manufactured part and provides the results in the form of continuous values in meters. On the other hand, we can measure a thickness value and associate it to  a class according to its compliance, or non-compliance with the specifications. Accordingly to the type of the label, either discrete or continuous, the data modelling may change. If the label is discrete the supervised learning modelling takes the form of a Classification problem (\ref{Classification}), otherwise it will be treated as a Regression problem (\ref{Regression}).   
-
-% The quality data acquisition can be done offline or online. The following two paragraphs will provide an overview of these two methods. 
-
-
-% \paragraph{Offline acquisition}
-
-% Offline acquisition, is the most common approach for labelling manufacturing data. In fact, for all non-visual product characteristics, it is extremely complicated to asses the quality of a part in less then a minute. Most of the quality controls realized on the part require specific equipment and the task of controlling the part can take several minute. Moreover, effective controlling might result in the destruction of the product or render it unfit for sale in some way. In such a case, the only possibility is to measure the quality of the part offline. Measuring offline has the advantage of allowing careful control of the manufactured parts, reducing the possibility of measurement error. However, as there are only a few parts to measure, it may takes a long time to build a dataset which is representative of all categories of part non-compliance.
-
-% Since, we are not able to measure the quality of all parts produced, it becomes crucial to structure the data collection to make them easily usable for future data analysis. Data have to be stored in a database and the quality measurement must be related to a part number, or traceability number, in order to subsequently associate it with the process data, which in turn must be tagged with the part number. 
-
-
-% \paragraph{Online acquisition}
-
-% Performing the online data acquisition, on the production line, eliminates two critical error risks:
-% \begin{enumerate}
-%     \item The loss of the link between the production measurements and the off-line annotation.
-%     \item The transformation of the parts between their production and their annotation.
-% \end{enumerate}
-
-% On the other hand, the time available for the annotation is very limited. Most of the time the machine operators have time constraints to meet the production cadence. As a consequence this data annotation must be done in a limited amount of time. Depending on the operator task the available time for performing the control may change. We estimate that the operator can consecrate a maximum of one third of the production cycle time to this task, which means that for a process with a cadence of 60 seconds the operator has at maximum 20 seconds to perform this task. In addition to the annotation time, the human expert has to assist in the handling of the parts and related operations.
-
-% By automating the process data acquisition through the data collection presented above, and by ensuring the proper registration of the quality data obtained by measuring the parts, it is possible to permanently feed a dataset with new data in an automatic manner. Over time we can hope to recover enough data to cover the all distribution of all possible quality non-conformities. 
-
-% \subsection{Data processing} \label{Data Processing}
-
-% As heterogeneous data is collected in manufacturing processes, it becomes necessary to process these data to make them more suitable for data analysis. In general, Data processing is the result of three major tasks: data cleaning, reduction, and scaling.
-
-% \begin{itemize}
-%     \item \textit{Data cleaning} aims to enhance the quality of the data by missing value imputations and outlier removals. 
-%     \item \textit{Data reduction} is applied to reduce data dimensions and therefore, reducing the computational costs associated. 
-%     \item \textit{Data scaling} aims to transform the original data into similar ranges for predictive modelling. 
-% \end{itemize}
-
-% In the remaining part of this section we will provide some additional elements regarding these three data processing tasks. 
-  
-% \paragraph{Data cleaning}
-
-% % Missing literature references
-
-% Data cleaning is the result of two main operations: missing values inputations and outlier removals.
-
-% There are two main approaches to dealing with missing data. The first option is to simply reject data samples with missing values since most data mining algorithms cannot handle missing data. This approach is only useful when the amount of missing values is small. The second technique is to use missing value imputation to replace missing data with inferred values. Mean imputation, forward or backward imputation, and moving average techniques are examples of traditional inputation procedures. In such a case, missing values are inferred based solely on the data properties of that variable, and therefore are referred to as univariate techniques. The mean or median imputation method will replace missing values with the mean or median of that variable. The forward or backward method simply replaces the missing value with the previous or next data measurement. More advanced techniques make use of regression model based methods to obtain more accurate inputation results. 
-
-% As regarding outlier removals, the most commonly used techniques use statistical analysis to identify which data belongs or not to the data distribution. Data outliers can be identified, for instance, if the data fall beyond a certain range constructed using conventional statistics such as standard deviations, means and quartiles. Identifying outliers is a delicate operation as, what at first glance might appear to be an outlier, could turn out to be extremely interesting data. When dealing with manufacturing process data, the outlier can be representative of a process functioning state which is not normal and could therefore explain some product quality non-compliance. Physical knowledge of the production process is therefore indispensable in order to understand whether the outliers are due to a process malfunction or to a data acquisition error.    
-
-
-% \paragraph{Data Reduction}
-
-% % Missing literature references 
-
-% Assuming that data are ranged in a tabular format where the row represents the samples and columns the features, or process parameters, data reduction may be conducted to reduce either the number of samples or the number of columns.
-% There are three main methods of column-wise data variable reduction: The first is to use domain knowledge to directly select variables of interests. The second is to use statistical feature selection methods to select important variables for further analysis. The third is to adopt feature extraction methods to construct useful features for data analysis.
-% Human expertise plays a key role in the data acquisition process and, globally, in the task of modelling by statistical learning the relationship between process and product characteristics. For complex process the number of available process parameters are huge, in the order of hundreds and sometimes thousands. The Human experts most of the time has many years of experience working with a particular Manufacturing process and it knowledge of the process may be used to pre-select a number of useful features that can be used to try predicting the target output. 
-
-% As regarding feature selection techniques, we distinguish mainly three approaches: the filter, wrapper and embedded methods. The filter method is a simple feature selection approach in which variables are ranked and selected based on specific univariate metrics. Pearson's correlation coefficient is a common filter technique for determining the direction and strength of a linear relationship between two variables. A wrapper method may be used to assess the usefulness of data variables given a certain learning algorithm. Heuristic search methods, such as stepwise forward and backward selection methods, are commonly used. When compared to the filter approach, the wrapper method can take into consideration data variable correlations and interactions with learning algorithms. However, because it is generally performed via an exhaustive search, the computing costs associated with it might be significantly higher. The embedded technique has been developed to optimize the feature selection result via the model training process in order to decrease computation costs. Two popular embedded methods are the L1 regularization (based on the least absolute shrinkage and selection operator, LASSO) and L2 regularization (based on ridge regression) (\ref{Parametric models}). By adding the $L1$ or $L2$ regularization terms to the objective function it is possible to use a penalized linear regression to accomplish the feature selection task.
-
-% Unlike feature selection, which picks only relevant features from existing variables, feature extraction seeks to create new features based on linear or nonlinear combinations of existing variables. Most common linear feature extraction techniques include principal component analysis (PCA) and statistical methods. Statistical methods typically calculate summarizing statistics such as the mean, peak, and standard deviation, for data measurements over a particular time span as features. This approach is particularly suited for the time series data. When dealing with time-series data we can compress the entire information in a limited set of new features computed through the use of summarizing statistics. When working with PCA, the features extracted, corresponding to the Principal Components, are linear combinations of the original data variables. The PCA-based method can be very useful when there presents data multi-collinearity problem. In practice, the number of principal components or features extracted is determined based on the proportion of total data variance explained, for instance, the principal components should be capable of explaining at least 80 or 90\% of the total data variance. To minimize the potential information loss, more advanced techniques can be applied. Nonlinear feature extraction such as \textit{AutoEncoders} may be used to extract more complex and useful features.
-
-
-% \paragraph{Data Scaling}
-
-% Data scaling is often needed to ensure the validity of predictive modelling, especially when the input variables have different scales. The most used scaling techniques are \textit{max-min normalization} and \textit{z-score standardization}. Min-max normalization is defined as follow:
-% \begin{equation}
-%     x = x - x_{min} / x_{max} - x_{min}
-% \end{equation}
-
-% where $x_min$ and $x_max$ refer to the minimum and maximum values of the generic feature x. The z-score standardization is instead defined by the following equation:
-
-% \begin{equation}
-%     x = x - \mu / \sigma
-% \end{equation}
-
-% where $\mu$ is the mean and $\sigma$ is the standard deviation of the feature $x$.
-
-% Z-score standardization is well suited when data are normally distributed.
-% The max-min normalization, instead, is recommended when the data do not conform to a normal distribution and have no outliers. 
-
-
-% \subsection{Exploratory data analysis} \label{Exploratory Data Analysis}
-
-% Exploratory Data Analysis (EDA) is a set of data analysis techniques that may be applied to:
-
-% \begin{itemize}
-%     \item Uncover underlying structures,
-%     \item Isolate important variables,
-%     \item Detect outliers and other anomalies,
-%     \item Suggest suitable models for conventional statistics.
-% \end{itemize}
-
-% EDA is usually the intermediate stage between the Data processing and the Data modeling. By exploring the data, it is possible to discover interesting patterns among data and drive the modeling phase depending on what has been observed. Moreover, the EDA allows to fine-tune the Data processing stage. In fact, by exploring the data we can identify useless features that cannot bring any added value and can therefore be discarded.   
-
-% The term “Exploratory Data Analysis” was introduced by John W. Tukey who in \citep{tukey1977exploratory} shows how simple graphical and quantitative techniques can be used to explore data.
-
-% Typical graphical techniques are:
-
-% \begin{itemize}
-%     \item Plotting the raw data (e.g., stem-and-leaf diagrams, histograms, scatter plots)
-%     \item Plotting simple statistics (e.g., mean plots, box plots, residual plots)
-%     \item Positioning (multiple) plots to amplify cognition
-% \end{itemize}
-
-% Typical quantitative techniques are:
-
-% \begin{itemize}
-%     \item Interval estimation
-%     \item Measures of location or of scale
-%     \item Shapes of distributions
-% \end{itemize}
-
-% A very convenient tool for performing exploratory data analysis is the Principal Component Analysis (section \ref{Principal Component Analysis}). By projecting the input data on the Principal Components, it is possible to visualize most of the input data variance by simply plotting the data to the firsts Principal Components which accounts for the most data variability. In such a way, it is possible to visualize most of the variability of the input data, even if the size of the feature space is not negligible. 
-
-% \subsection{Machine learning modeling} \label{Machine Learning modeling}
-
-% Machine learning modeling involves the use of machine learning algorithm to approximate the transfer function between the input process data and the output quality data. Mathematically speaking, we look for the function $\hat{f}$ so that:
-
-% \begin{equation}
-%     Q = \hat{f}(X_1,X_2,\ldots,X_p) + \epsilon
-% \end{equation}
-
-% where:
-
-% \begin{itemize}
-%     \item $Q$ is the target quality variable we want to infer given the input process parameters.
-%     \item $\hat{f}$ is the transfer function approximated through the use of a statistical algorithm.
-%     \item $(X_1,X_2,\ldots,X_p)$ is the set of input process parameters.
-%     \item $\epsilon$ is an error term which is independent of $(X_1,X_2,\ldots,X_p)$ and which account of the approximation error. 
-% \end{itemize}
-
-% Since we are interested both in prediction and inference, we privilege for this task easily interpretable methods such as parametric models and tree-based methods. 
-
-% % rephrase it
-
-% The model training is usually done by applying cross validation and hyper-parameter tuning. Different supervised learning algorithms have to be trained and parameterized to allow a comparison of their performances in order to select the best performing model. 
-
-% As the a-priori selection of adequate algorithms is not achievable in a generalized way \citep{kotthoff2016algorithm}, different learning methods and algorithms have to be compared and evaluated for each individual application \citep{lee2020machine}. The pre-selection must be made on the basis of selected criteria, e.g. complexity, interpretability, and speed. 
-% Regarding our use-case of understanding what process parameters affect the most the quality of the manufactured part, the prediction time as well as the potential precision, which is associated with model complexity, are of greater interest. However, algorithm performance is also affected by factors such as the data volume. Since we are interested both in prediction and inference, we privilege for this task easily interpretable methods machine learning algorithms such as Parametric models and Tree-based methods and Support Vector Machines. We claims that deep  learning based methods are not well suited for this task as a consequence of their "black-box" nature.
-
-% For the evaluation and comparison of model performances, different statistical performance metrics can be applied. For binary classifications, the metrics can be calculated based on the entries of a confusion matrix, as shown in Table \ref{tab:confusion_matrix}.
-
-% \begin{table}[]
-% \label{tab:confusion_matrix}
-% \begin{tabular}{l|l|l|}
-% \cline{2-3}
-%                                          & Actually Positive              & Actually Negative              \\ \hline
-% \multicolumn{1}{|l|}{Predicted Positive} & \textbf{True Positives (TPs)}  & \textbf{False Positives (FPs)} \\ \hline
-% \multicolumn{1}{|l|}{Predicted Negative} & \textbf{False Negatives (FNs)} & \textbf{True Negatives (TNs)}  \\ \hline
-% \end{tabular}
-% \caption{Confusion Matrix}
-% \end{table}
-
-% The comparison of the predicted class with the true class allows to distinguish between correctly positive or negative classified examples (true positive, true negative) and incorrectly classified examples (false positive, false negative). This approach is particularly useful when you simply want to discriminate between a non-conforming part (NOK) and a conforming part (OK). If the objective is to predict a continuous numerical value, the supervised machine learning problem should be transformed into a Regression problem. When dealing with Regression, others metrics are used to evaluate the performance of the trained models. Regarding our use-case, we claims that the most suited metrics are $R^2$, $MSE$ and $RMSE$ (ADD REFERENCE TO CHAPTER 2). The advantage of RMSE over MSE and R2 is the ability to provide an error in the same unit of measure of the target variable. For instance, if we are measuring a continuous characteristic such as the thickness of a blow-molded part, the $RMSE$ return the average prediction error in meters, or in any other unit of length. This guarantees greater interpretability of the final result for people not familiar with statistics.
-
-% From a technical point of view, the scoring time of the model should be fast enough to eventually adjust the production process in real-time. The required response time depends, of course, on the manufacturing process. The scoring time is affected not just by the algorithm employed, but also by the hardware and software on which it is implemented. However, we claims that in most situations, the allowed reaction time is sufficiently large that the scoring time limitation does not limit the model selection process.
-
-
-% In this section our approach to improve the process control has been presented. In the next section, we will provide the results obtained by applying the approach presented above in our industrial context.
+As presented in Section \ref{The key quality characteristics of a blow-moulded fuel tank}, the tank weight is historically considered as an important product characteristic as it provides an overall indication about the amount of material that composes the fuel tank. By ensuring a lower tolerance limit of the weight it is possible, according to experts, to ensure that there is enough material to ensure compliance of thicknesses. In the same way, there exist an upper tolerance limit which exists to ensure that the part it is not to heavy. By measuring in real-time, for each part produced, the weigh of the tank, people in plants feel reassured about the correct material distribution along its surface.  
+As a consequence of this analysis, we decided to focus our efforts on trying to understand where these scrap come from and what we can do to try to reduce them. Moreover, since the weight is measured in real-time, it is possible to easily assemble a dataset composed of multiple samples. By following the approach described in Section \ref{Proposed Method} of this chapters, we aim to search for any hidden pattern or correlation within process data and quality data that could explain why some parts are not compliant in term of weight.
 
 
 \section{Data collection}
 
-The industrial process taken into account has more than 5000 process parameters measured in real-time at each production cycle. Among all this features, some of these are considered as critical to ensure the proper process stability according to experts (compare section \ref{The key parameters of the Extrusion Blow-Molding}). In addition to the critical process parameters there exist other timer and counter variables. A timer variable is a variable which account for the time needed to execute a particular mechanical movement. A machine production cycle requires the movement of several mechanical elements. The time required to execute the movement is recorded. The sum of all the mechanical times corresponds to the machine cycle time. A counter variable, instead, is a variable which increase over time because of a particular event. The number of part produced in a production day is an example of counter variable.  
+\subsection{Process parameters of the SCADA software}
 
-Process parameters are collected by the internally developed SCADA system and the data are stored in multiple databases in accordance with the sources of the data. For instance, all the extrusion process data are stored database. The same is true for the blow-molding data and for the weight of the tank that are stored in two separates databases. Moreover, each process parameter measured in real-time during the production process has to be associated with the scalar value corresponding to the quality measurement of the manufactured product, at the end of the production cycle. In order to do that, The SCADA software computes some aggregate data to resume the information in a limited set of scalar features. For each data belonging to a production cycle average, maximum and minimum are calculated. Then, the SCADA software attaches the aggregates data belonging to a production cycle to a specific traceability serial number which can be used as key to join together the different sources of data. 
+More than 5000 parameters are measured in real-time at each production cycle of our industrial process. Among these features, some are considered by the experts as critical to ensure the proper stability of the process (see Section \ref{The key parameters of the Extrusion Blow-moulding}). In addition to the critical process parameters there are timer and counter variables. A timer variable accounts for the time needed to execute a particular mechanical movement in the machine production cycle. The sum of all the mechanical times corresponds to the machine cycle time. A counter variable, instead, increases over time because of a particular event. For example, the number of parts produced in a production day is recorded in a counter variable.  
 
-Unfortunately, there is an important parameter that is not collected through the SCADA software, the parison length. As explained in section \ref{Research framework: The Extrusion Blow Molding}, the parison length provides information about the material distribution. The Extrusion Blow-Molding process taken into account in this research work has no system for measuring the parison length. In this next subsection we will present our approach based on Computer Vision to measure the parison length in real-time.
+Process parameters are collected by the internally developed SCADA system and the data is stored in multiple databases in accordance with the sources of the data. For instance, all the extrusion process data are stored in a database. The same is true for the blow-moulding data and for the weight of the tank that are stored in two separates databases. 
 
-\subsection{Parison length estimation using Computer Vision}
+Each process parameter measured in real-time during the production process needs to be associated to the scalar value corresponding to the quality measurement of the manufactured product, at the end of the production cycle. In order to do that, the SCADA software computes some aggregate data to summarise the information in a limited set of scalar features. For each variable belonging to a production cycle, the average, maximum and minimum values are calculated. Then, the SCADA software attaches the aggregates data belonging to a production cycle to a specific traceability serial number which can be used as key to link the different sources of data. 
 
-One of the key characteristics which can explain the tank weight variability is the length of the plastic parison when it is closed inside the molds at the beginning of the blow-molding process. In fact, accordingly to the length of the parison the distribution of the thickness may change and this can impact the weight of the final part. The parison length is not available within our process data database because the machine is not equipped with the sensors to measure it. Measuring the length of the parison requires to equip the machine with external sensors. In order to be efficient, flexible and robust, our measuring system should present the following properties:
+The extrusion blow-moulding process studied in this work has no system for measuring the parison length. As explained in Section \ref{Industrial domain: extrusion blow-moulding}, the parison length provides information about the material distribution.  Below we present the approach we have used to measure the parison length in real-time.
+
+\subsection{Parison length estimation by computer vision}
+
+The parison length is not available in our process data database because it is not measured. We looked for a measuring system having the following properties:
 %
 \begin{enumerate}
-    \item Have a relatively small software and hardware cost.
-    \item Require little to no expert intervention to adapt the model or process the data.
-    \item Be rapidly adaptable to a novel or evolving industrial situation. For instance, the system should be easily adaptable to any blow-molding machine in every plant of Plastic Omnium.
-    \item Be capable of doing real time analysis.
-    \item Be capable to return the result with a low latency.
-    \item Be able to run in a hostile environment. 
-    \item Be robust to (small) variations in the environment. For instance, the system should be able to function day and night regardless of lighting conditions.
+    \item relatively low software and hardware costs,
+    \item requiring little expertise to adapt the model or process the data,
+    \item adaptable to changes (for example, adaptable to any blow moulding machine in Plastic Omnium's plants),
+    \item making analyses in real time, returning the result with low latency,
+    \item able to operate in hostile environments,
+    \item be robust to environmental variations (e.g. the system must operate day and night, regardless of lighting conditions).
 \end{enumerate}
 %
-In order to take into account the previous industrial constraints, we made the choice to move towards a Computer Vision based approach. Our choice is motivated by the low cost of a camera, compared to others sensors, and by the performances achieved by Deep-Learning based algorithms in detecting object within images. In section \ref{Convolutional Neural Network} we shown how Neural Networks and, in particular, Convolutional Neural Networks reaches stet-of-the-art results in image based classification, object detection and image segmentation tasks. Motivated by the results presented in scientific literature we took the choice of traininig a Convolutional Neural Network able to detect the Parison in real-time and then to provide the length measurement.
-The length measurement involves mainly two stages:
+To meet these industrial constraints, we opted for computer vision. Our choice is motivated by the low cost of a camera, its ease of deployment, and the capabilities of deep learning-based models to detect objects in images. In Section \ref{Convolutional Neural Network} we shown how Convolutional Neural Networks reach state-of-the-art results in image classification, object detection and image segmentation tasks. We therefore chose this solution  to detect the parison to measure its length in real time.
+The length measurement involves two main stages:
 \begin{itemize}
-    \item The parison detection: the parison should be detected inside the field of view of the camera. A Deep-Learning model have to be trained in order to detect the bounding box containing the parison. 
-    \item The length measurement: Once the parison is detected, the length measurement is not trivial as it corresponds to the length of the bounding box or better to the number of pixels between the top and the bottom of the bounding box.
+    \item Parison detection: the parison should be detected inside the field of view of the camera. A CNN is trained to detect a (tight) bounding box containing the parison. 
+    \item Length measurement: once the parison is detected, its length corresponds to the height of the bounding box.
 \end{itemize}
 
-In order to achieve real-time length detection we have chosen the \textit{SSD MobileNet-V2} architecture (compare section \ref{Single Shot MultiBox Detector}). The choice of using these architecture is motivated by the the overall trade-off between the inference speed the model performances. 
-
-In order to train such a model, 200 parison images has been collected using a camera of HD resolution ($1280\times720$). By taking images of the parison all along the extrusion we can build a representative dataset of all the possible input data. The images have been subsequently annotated by means of the Open Source \textit{Labelme} software \citep{wada2016labelme} (Figure \ref{fig:input_and_label}). It is therefore possible to retrieve the bounding box containing the object.   
-
+The CNN architecture we chose is \textit{SSD MobileNet-V2}  (see Section \ref{Single Shot MultiBox Detector}), which presents an interesting trade-off between inference speed and model performances in the wild. Here, we expect 
+In order to train such a model, 200 images of parisons were collected using a camera of HD resolution ($1280\times720$). By taking images of parisons during extrusion, we built a dataset representative of all possible parison lengths. All images were then annotated using the open source software \textit{Labelme} \citep{wada2016labelme} (Figure \ref{fig:input_and_label}). It is therefore possible to retrieve the bounding box containing the parison.   
 \begin{figure}
 \centerline{\includegraphics[scale=0.4]{images/chapter_3/input_and_label.png}}
 \caption{Input image and parison mask}
 \label{fig:input_and_label}
 \end{figure}
 
-As regarding the training, the data has been split into three different subsets: the training set (70\%), the validation set (10\%) and the test set (20\%). The training set samples are used to train the model, the validation set is used during the training to evaluate the performance of the model on unseen samples and to eventually stop the training if the model tends to over-fit. The test set constitutes the subset of samples used to evaluate the performance of the trained model on previously unseen data. The architecture has been trained to minimise the loss function using the  \textit{Adam} optimiser~\citep{kingma2014adam} with the default parameter values ($\beta_{1} = 0.9$, $\beta_{2} = 0.98$ and $\epsilon = 10^{-9}$). The loss function used to train such as model is the combination of a \textit{Localisation loss} and a \textit{Confidence loss} The localisation loss is the mismatch between the ground truth box and the predicted boundary box. The confidence loss is the loss of making a class prediction. For every positive match prediction, we penalise the loss according to the confidence score of the corresponding class.
+The data was split into three different subsets: a training set (70\%), a validation set (10\%) and a test set (20\%). The training set samples are used to train the model, the validation set is used during the training to evaluate the performance of the model on unseen samples and to eventually stop the training if the model tends to over-fit. The test set constitutes the subset of samples used to evaluate the performance of the trained model on previously unseen data. The model was trained to minimise the loss function using the  \textit{Adam} optimiser~\citep{kingma2014adam} with the default parameter values ($\beta_{1} = 0.9$, $\beta_{2} = 0.98$ and $\epsilon = 10^{-9}$). The loss function used to train such as model is a combination of a \textit{Localisation loss} and a \textit{Confidence loss}. The localisation loss is the mismatch between the ground truth box and the predicted boundary box. The confidence loss is the loss of making a class prediction. For every positive match prediction, we penalise the loss according to the confidence score of the corresponding class.
 % SHOULD I ADD MORE INFORMATION ABOUT THE LOSS ?
 
-Due to the limited number of samples composing our dataset, 200 images are considered a really small dataset for a deep-learning based computer vision task, we decided to take advantage of a pre-trained Neural Network. By leveraging transfer learning (compare section \ref{Transfer Learning}) it is possible to converge faster to an optimum solution even if the size of the input data is limited. Instead of training the model from scratch, our architecture is initialised with the pre-trained coefficients on the \textit{COCO} dataset \citep{lin2014microsoft}. The last linear layer of the model has been replaced with a new one in order to be consistent with the number of the expected output classes of our problem. In fact, the original architecture is designed to be able to identify 91 different classes. Since we are interested only in detecting the parison, the output size of our last layer would be equal to one.  
+To limit the burden of data collection and annotation, we selected only  200 images and we used transfer learning (see Section \ref{Transfer Learning}), with the chosen architecture initialised with the pre-trained coefficients of the \textit{COCO} dataset \citep{lin2014microsoft}. The last linear layer of the model was replaced with a new one matching our problem. Since we are only interested in detecting parisons, the size of our last layer is one.  
 
-Results shows that the SSD MobileNet-V2 is able to provide accurate results within a limited amount of computing time. Figure \ref{fig:parison_inference} shows the the ground truth boundary box and the corresponding prediction of two samples of the test set. The computation time is less than $200$ millisecond on a \textit{Nvidia} Jetson Nano, a small computer, equipped with a cheap GPU, for embedded applications and Deep Learning based IoT. 
+SSD MobileNet-V2 provides accurate results in a limited amount of time. Figure \ref{fig:parison_inference} shows two ground truth boundary boxes from the test set and their corresponding prediction. The computation time is below $200$ millisecond on a \textit{Nvidia} Jetson Nano (a small computer equipped with a cheap GPU designed for embedded applications and deep learning based IoT). 
 %
 \begin{figure}
 \centerline{\includegraphics[scale=0.8]{images/chapter_3/parison_length_gt_prediction.png}}
-\caption{Parison length inference example}
+\caption{Two parison length inference examples (from the test set)}
 \label{fig:parison_inference}
 \end{figure}
 %
-This system has been proven to be robust and to satisfy the identified industrial constraints. In particular, the system is reliable in term of prediction and it ensure real-time inference. Moreover, it does not need any expensive hardware. A simple RGB camera and a small computer allows for a cheap and non-intrusive solution which does not require any modification to the machine. 
+This system has proven to be robust and to meet the  industrial constraints identified, making accurate and reliable predictions in real time. A simple RGB camera and a small computer offer a cheap, non-intrusive solution that does not require any modification of the machine. 
 
-With regard to our modelling approach we only care about the final parison. The parison length just before the molds closes for the blow-molding the final part. We made the assumption that the final length could provide enough information to explain the weight variability. INTRODUCE THAT THE CAMERA CAN BE USED TO A BETTER PROCESS CONTROL   
+With regard to our modelling approach we only care about the final parison. The parison length just before the moulds closes for the blow-moulding the final part. We made the assumption that the final length could provide enough information to explain the weight variability.
 
-Since the final parts are produced in batches of one or two days, we built our own dataset using data from 5 different batches, corresponding to as many production days, for a total of 5597 samples and more than 5000 features. 
+% INTRODUCE THAT THE CAMERA CAN BE USED TO A BETTER PROCESS CONTROL   
 
-\section{Data processing TO BE FINISHED}
+Once the parison length acquisition was running online, we built a dataset with the SCADA software variables and the parison length measurement. We collected data from 5 different batches, corresponding to as many production days, for a total of 5597 samples and more than 5000 features. 
 
-Some data processing operations on features are needed to reduce the overall feature space size. In fact, given the few individuals available in the dataset, a strategy of reducing the variables seems to be necessary in order to prevent the model overfitting and to improve its interpretability. In order to reduce the size of the input feature space we have applied to different approaches: an expertise-based and a statistical-based data processing.
+\section{Data processing}
 
-\paragraph{Expertise-based data processing}
+Using all available variables, the number of input features is too large compared to the number of examples in the dataset. We applied two different procedures for variable selection: an expert-based procedure and a statistical-based procedure.
 
-We relied on previous experts knowledge on the process to discard all features that cannot provide useful information for explaining the weight variability. For instance, all counter variables collected by the SCADA software do not bring any interesting information and can be removed. Moreover, the original feature space is composed of many timer variables, representing the time needed to execute a particular mechanical operation, which are redundant and provide no added value. Therefore, most of the timer variables have been removed from the dataset.
+\paragraph{Expertise-based data procedure}
 
+We relied on expert knowledge of the process to discard all features that are not relevant to explain the weight variability. For instance, all counter variables collected by the SCADA software do not bring any interesting information and can be removed. Also, many timer variables, representing the time needed to execute a particular mechanical operatio, are redundant and provide no added value. Therefore, most of the timer variables have been removed from the dataset.
 
-\paragraph{Statistical-based data processing}
+\paragraph{Statistical-based procedure}
 
-Once the 
-
-In order to reduce the number of features, three different statistical approaches have been used to select a subset of interesting features:
+In order to further reduce the number of features, three different statistical feature selection approaches have been used, based on:
 \begin{itemize}
-    \item Feature selection using the  
-    \item Feature selection using 
-    \item Feature selection through \textit{Stability Selection} ADD REFERENCE TO CHAPTER 2.
+    \item correlation between features , 
+    \item feature variance,
+    \item \textit{stability selection} (see Section \ref{Stability Selection}).
 \end{itemize}
 %
-A first approach to reduce the feature space was to remove the variables with too high correlations between them. Moreover, this operation allows us to avoid collinearity phenomena. Collinearity is the phenomenon in which correlation between predictor variables (or independent variables), such that they express a linear relationship in a regression model. When predictor variables in the same regression model are correlated, they cannot independently predict the value of the dependent variable. In other words, they explain some of the same variance in the dependent variable, which in turn reduces their statistical significance.
+Removing highly correlated variables eliminates redundant features and reduces collinearity between features that can cause stability problems when fitting the regression model.
+%When two or more predictor variables in the same regression model are correlated, they cannot independently predict the value of the dependent variable. In other words, they explain some of the same variance in the dependent variable, which in turn reduces their statistical significance. 
+For each pair of features with a correlation value greater than 0.90, one of the two features was removed. Features with very low variance (constant or with no more than 3 different values) were removed. To further reduce the number of features, we applied stability selection. By generating bootstrap samples of the data, and by leveraging the ability of the LASSO penalty to estimate which features are important in each sampled version of the data, we are able to select only those features that have been selected for many perturbed versions of the original problem. Data were finally normalised to have zero-mean and unit-variance (see Section \ref{Data Scaling}). Normalising features is not only important if we are comparing measurements that have different units, but it is also a general requirement for many machine learning algorithms. Figure \ref{fig:data_processing} resumes the data processing flow.
+%
+\begin{figure}
+\centerline{\includegraphics[scale=0.7]{images/chapter_3/Data_processing.eps}}
+\caption{Data processing flow}
+\label{fig:data_processing}
+\end{figure}
+%
 
-Moreover, in order to reduce multi-collinearity, we have deleted from the dataset some of the most highly correlated features. Finally, our dataset has a feature space of size 290. 
+\section{Exploratory data analysis}
 
+\subsection{Weight versus parison length}
 
+This was the first time that data on parison length was available. The relationship between the parison length just before the blowing phase and the weight of the blown part is illustrated by a scatter plot in Figure \ref{fig:length_weight_scatter}.
+%
+\begin{figure}
+\centerline{\includegraphics[scale=1.2]{images/chapter_3/length_weight_scatter.png}}
+\caption{Parison length - Weight scatter plot}
+\label{fig:length_weight_scatter}
+\end{figure}
+%
+The plot shows a weak  negative correlation between the parison length and the weight. The Pearson correlation is equal to $-0.32$. The physical explanation is simple: the longer the parison, the less material remains inside the the moulds during the blow-moulding. Moreover, the lower part of the parison is often thicker to prevent the parison from breaking under its own weight.  
 
-Data have been finally standardised to have zero-mean and unit-variance (See section ADD REF) . Standardising the features is not only important if we are comparing measurements that have different units, but it is also a general requirement for many machine learning algorithms.
+\subsection{Low dimensional representation} \label{Principal Component Analysis for data exploration}
 
-Figure ADD REFERENCE resumes the  
-
-
-% STABILITY SELECTION --> This section should be moved in chapter 2
-
-% The rough idea behind stability selection is to inject more noise into the original problem by generating bootstrap samples of the data, and to use a base structure learning algorithm to find out which features are important in every sampled version of the data. For a feature to be considered stable (or important), it has to be selected in a high number of perturbed versions of the original problem. This tends to filter out features that are only weakly related to the target variables, because the additional noise introduced by the bootstrapping breaks that weak relationship.
-% To make the above more precise, we have to dive into the mathematical details. The algorithm takes as input a grid of regularisation parameters $\Lambda$, and the number of sub-samples $N$ that need to be generated. Stability selection returns a selection probability $\Pi^{\lambda}_{k}$ for every value $\lambda \in \lambda$ and for every feature $k$, and the set of stable features $\hat{S}^{stable}\subseteq\{1,…,p\}$.
-
-% The algorithm consists of two steps. In the sampling step the selection probabilities, or stability scores, are computed as follows. For each value $\lambda \in \Lambda$ do:
-
-% \begin{itemize}
-%     \item For each $i$ in $1,\dots, N$, do:
-%     \begin{itemize}
-%         \item Generate a boostrap sample of the original data $X^{n\times p}$ of size $n/2$.
-%         \item Run the selection algorithm on the boostrap sample with regularisation parameter $\lambda$ to get the selection set $\hat{S}^{\lambda}_{i}$.
-%     \end{itemize}
-%     \item Given the selections sets from each sub-sample, calculate the empirical selection probability for each model component:
-%     \begin{equation}
-%         \hat{\Pi}^{\lambda}_{k} = \frac{1}{N}\sum_{i=1}^{N}
-%     \end{equation}
-% \end{itemize}
-
-% In the scoring step we then compute the set of stable features according to the following definition
-
-% \begin{equation}
-%     \hat{S}^{stable} = \{k:\}
-% \end{equation}
-
-% where $\pi_{thr}$ is a predefined threshold. When the stability score for a variable exceeds the threshold $\pi_{thr}$ for one value in $\Lambda$, it is deemed stable.
-
-
-
-\section{Exploratory data analysis TO BE FINISHED}
-
-
-\subsection{Weight and Parison length}
-
-A first work of data exploration has been done in order to study the correlation between the length of the parison just before the blow-molding phase and the weight of the blow-molded part. This was the first time that we had data available on the parison length. 
-
-\subsection{Principal Component Analysis} \label{}
-
-Since our feature space has a larger high size, it is quite complicated to to asses if there exist any hidden pattern within our data through a visual representation. However, it is possible to transform the input feature space in order to improve the interpretability of the input data. Principal Component Analysis (see section \ref{}) allows for a transformation of the original input feature space in a FINIRE. By applying the PCA it is possible to observe interesting information by only plotting the first principal components which account for the most of the variance of the input data. 
+The large number of features makes it difficult to detect possible hidden patterns in our data by a direct visual representation. We use Principal Component Analysis (see Section \ref{Principal Component Analysis}) to produce the low-dimensional representation that best preserves the distance between examples. 
 %
 \begin{figure}
 \centerline{\includegraphics[scale=0.5]{images/chapter_3/PCA.png}}
-\caption{Principal Components Analysis (sample projection on PC1 and PC2)}
+\caption{Sample projection on the two first axes of Principal Components Analysis}
 \label{fig:pca}
 \end{figure}
 %
-Figure \ref{fig:pca} shows the projection of the sample of only 3 batches on the first 2 principal components. This graphical representation allows us to identify two major information:
+Figure \ref{fig:pca} represents the projection of the samples from 3 batches on the first 2 principal components of PCA. This representation shows two major patterns:
 \begin{itemize}
-    \item There exist some clusters
+    \item Data are organised in clusters,
     \item For each cluster of data there exist a subset of points moving apart from the cluster.
 \end{itemize}
-
-A further analysis has allowed identify that each sample belonging to a specific cluster corresponds to a tank produced in a specific production day or batch. This imply that for the same tank reference, or model, the process data tend to be different depending on the production day. We will define this phenomenon as the ''Batch effect''. Moreover, the samples which moves apart from the centre of each clusters correspond to tanks produced in the first two hours after the machine has been started. This allows to identify two operating regimes: the \textit{transient} and the \textit{stable} regimes. 
-
+%
+Each cluster corresponds to a specific production day or batch. This means that, for the same tank reference, the process parameters differ more between each batch than within a batch. We will call this phenomenon the ``batch effect''. Moreover, the samples are at the periphery of the centre of each cluster correspond to tanks produced in the first two hours after the machine was started. This allows to identify two operating regimes: the \textit{transient} and the \textit{stable} regimes. During the transient regime, the process parameters are slightly different, particularly in terms of temperature. During the transient regime the rate of non-conformity rate in terms of weight is considerably higher (about 300\%) compared to the stable regime.    
 
 \section{Supervised learning modelling}
 
@@ -447,152 +175,145 @@ Given our input processed data $P$ composed of $p$ process parameters and $n$ sa
     \hat{g} = \argmin_{g \in \mathcal{G}} \sum_{i=1}^n (W_{i} - g(P_{i}))^{2} \enspace.
 \end{equation}
 %
-We compared multiple regressive models: Linear Regression, Lasso Regression, Ridge Regression (see section \ref{Parametric models}), Random Forest and Gradient Boosting Tree (see section\ref{Tree-based methods}). The choice of relying on these algorithms is motivated by the following two reasons:
+We compared several models: ordinary linear regression, Lasso regression, ridge regression (see Section \ref{Parametric models}), random forest and gradient boosting tree (see Section \ref{Tree-based methods}). The choice of these algorithms is motivated by:
 %
 \begin{itemize}
-    \item \textit{Interpretability}: Since we would like to understand what parameters affect the most the weight of the blow-molded tank, we are interesting in applying interpretable models. Linear models and Tree-based methods are easily interepretables.
-    \item \textit{Performance}: These methods works quite well with structured data. When dealing with structured data, Deep Learning hardly overtakes traditional Machine Learning algorithms \citep{shwartz2021tabular}. 
+    \item \textit{Interpretability}: Since we aim to understand which parameters most affect the weight of the blow-moulded tank, we are interesting in applying interpretable models. Linear models and tree-based methods are considered to be among the most easily interepretable models.
+    \item \textit{Performance}: These methods work quite well with tabular data. When dealing with tabular data, deep learning hardly surpass traditional machine learning algorithms \citep{shwartz2021tabular}. 
 \end{itemize}
 %
 In order to evaluate the predictive power of our models, we used two different approaches: cross-validation and batch cross-validation. 
 
 \paragraph{Cross-validation}
 
-In the basic Cross-validation approach, called \textit{K-fold} Cross-validation, the training set is split into $k$ smaller sets. The following procedure is followed for each of the $k$ “folds”:
+In standard cross-validation, called \textit{K-fold} Cross-validation, the training set is split into $k$ smaller sets. The following procedure is followed for each of the $k$ “folds”:
 %
 \begin{itemize}
-    \item A model is trained using $k - 1$ of the folds as training data
-    \item the resulting model is validated on the remaining part of the data (i.e., it is used as a test set to compute a performance measure such as accuracy).
+    \item the model is trained using the remaining $k - 1$ folds as the training set,
+    \item the error of the resulting model is estimated on the fold set apart from the training set.
 \end{itemize}
 %
-The performance measure reported by cross-validation is then the average of the values computed in the loop.
+The cross-validation criterion is then the average of the error values computed in the loop.
 %
 \begin{equation}
     CV_{K} = \frac{1}{K}\sum_{i=1}^{K}score_{i}
     \enspace.
 \end{equation}
 %
-This approach can be computationally expensive, but does not waste too much data (as is the case when fixing an arbitrary validation set), which is a major advantage in problems where the number of samples is very small. In the context of our experimentation we have used a number of fold equal to 5.
+This approach is computationally expensive, but does not waste too much data (as is the case when fixing an arbitrary validation set), which is a major advantage in problems where the number of samples is small. In our experiments we used five folds.
 
-\paragraph{Batch cross validation}
+\paragraph{Batch cross-validation}
 
-Instead of performing the cross-validation on $k$ randomly split folds of the training set, we decided to split the whole dataset in the different batches (production days) and to cross-validate the model on each batch. Since in our dataset we have 5 different batches, at each time, one batch is used as a test set and the remaining 4 batches are used to fit the model.
+Instead of performing the cross-validation on $k$ random splits of the training set, we split the whole dataset according to the different batches (production days) to cross-validate the model on each batch. Since our dataset comprises 5 different batches, at each time, one batch is used as a validation set and the remaining 4 batches are used to fit the model.
 
 \begin{equation}
     CV_{batch} = \frac{1}{n\degree\;batches}\sum_{i=1}^{n\degree\;batches}score_{i}
     \enspace.
 \end{equation}
 
-The mean of the 5 different scores is calculated to have an accurate estimate of the model prediction performance. With this strategy we want to know if the model built on multiple batches is capable to fit data belonging to an unseen batch.  
+The mean of the 5 different scores is calculated to have an accurate estimate of the model prediction performance. With this strategy we evaluate whether the models are able to predict on an unseen batch.  
 
 
-\section{Results and Discussions} \label{Results and Discussions}
+\section{Results and discussion} \label{Results and Discussions}
 
-We used two different metrics: $R^2$ and the root mean squared error (RMSE). $R^2$, or coefficient of determination, is the proportion of the variance in the dependent variable that is predictable from the independent variable(s). Mathematically speaking, it can be expressed as follow:
-
-\begin{equation}
-    R^2 = 1 - \frac{RSS}{TSS}
-    \enspace,
-\end{equation}
-where $RSS$ is the residual sum of squares and $TSS$ is the total sum of squares.
-Values of the coefficient of determination range, normally, from zero (poor model) to one (perfect model) but can be negative if our model predicts our dependent variable worse than the mean of the independent variables. $RMSE$ is the square root of the $MSE$ and it has the advantage of explaining the average model prediction error in units of measure of the variable of interest. In our case, it provides the average error in prediction in kilograms. 
-
-Both cross-validation and batch cross-validation return negative $R^2$ values for all the statistical models applied on our dataset. This highlight how the weight variability cannot be explained by our input process features. As it can be expected from looking at $R^2$, the RMSE score is far from being satisfactory regarding our needs. Results for Cross-Validation are resumed in table \ref{tab:cross_validation_results}.  
+We use the $R^2$ metric to evaluate the models. Both cross-validation and batch cross-validation return negative $R^2$ values for all the models. 
+This means that the models are worse at predicting the weight than the sample mean, and thus that the variability of the weight cannot be explained by the parameters of the process. Results for cross-validation are resumed in Table \ref{tab:cross_validation_results}.  
 
 \begin{table}[]
+\centering
 \caption{Cross-Validation results}
 \label{tab:cross_validation_results}
 \begin{tabular}{lllll}
 \toprule
-\textbf{Algorithm} & \textbf{R² train} & \textbf{R² test} & \textbf{RMSE train} & \textbf{RMSE test} \\
+\textbf{Algorithm} & \textbf{R² train} & \textbf{R² test} \\
 \midrule
-Linear Regression   & 0.72   &         &    &   \\ 
-Lasso Regression    &        &         &    &   \\ 
-Ridge Regression    &        & -0.26   &    &   \\ 
-Random Forest       & 0.94   & -0.27   &    &   \\ 
-Gradient Boosting   & 0.95   & -0.73   &    &   \\ 
+Linear regression   & 0.72   & -0.34    \\ 
+Lasso regression    & 0.80   & -0.25    \\ 
+Ridge regression    & 0.78   & -0.26    \\ 
+Random forest       & 0.94   & 0.05     \\ 
+Gradient boosting   & 0.95   & -0.11    \\ 
 \bottomrule
 \end{tabular}
 \end{table}
 
 
 \begin{table}[]
-\caption{Batch Cross-Validation results}
+\centering
+\caption{Batch cross-validation results}
 \label{tab:batch_cross_validation_results}
 \begin{tabular}{lllll}
 \toprule
-\textbf{Algorithm} & \textbf{R² train} & \textbf{R² test} & \textbf{RMSE train} & \textbf{RMSE test} \\
+\textbf{Algorithm} & \textbf{R² train} & \textbf{R² test} \\
 \midrule
-Linear Regression    &         &          &     &     \\ 
-Lasso Regression     &         &          &     &     \\ 
-Ridge Regression     &         & -0.26    &     &     \\ 
-Random Forest        & 0.94    & -0.27    &     &     \\ 
-Gradient Boosting    & 0.95    & -0.73    &     &     \\ 
+Linear regression    & 0.50   & -1.34  \\ 
+Lasso regression     & 0.62   & -0.45  \\ 
+Ridge regression     & 0.67   & -0.39  \\ 
+Random forest        & 0.81   & -0.27  \\ 
+Gradient boosting    & 0.76   & -0.73  \\ 
 \bottomrule
 \end{tabular}
 \end{table}
 
-Both tables highlight how all the approaches tend to over-fit but struggle in generalise what has been learned on the train set to unseen new samples. This is especially true for Tree-Based methods that in general are more prone to over-fit. 
+Both tables highlight how all the approaches tend to over-fit but struggle in generalise what has been learned on the train set to unseen new samples. This is especially true for tree-based methods that in general are more prone to over-fit. 
 
-Results are quite astonishing but are showing evidence that it could be hard to apply statistical models in a field, manufacturing industry, where there is a lot of uncertainty. A further analysis has been conducted to try to explain and motivate these results. We have identified six possibles reason for these negative results:
+Results are quite astonishing but are showing evidence that it could be hard to apply statistical models in a field, manufacturing industry, where there is a lot of uncertainty. A further analysis was conducted to try to explain and motivate these results. We have identified six possibles reasons for these negative results:
 %
 \begin{enumerate}
     \item \textit{Non-stationarity of data}
-    \item \textit{Lack of data characterising raw material properties}
+    \item \textit{Lack of data characterising the properties of the raw material}
     \item \textit{Low variability in product quality}
     \item \textit{Reliability of the input data}
     \item \textit{Weight too resultant}
 \end{enumerate}
 %
-In the following paragraphs we will provide more details about each one of the identified sources of errors. 
+The following paragraphs provide more detail about each  source of error identified. 
 
 \paragraph{Non-stationarity of data}
 
-Results obtained with batch cross-validation have shown how our models do not generalise among different batches. Actually if we look at distributions of our input features we can see how they change considerably among different batches (Figure \ref{fig:Example of a process parameter variability in probability distribution}). 
+Results obtained with batch cross-validation show that our models do not generalise among different batches. Actually if we look at distributions of our input features we can see how they change considerably among different batches (Figure \ref{fig:Example of a process parameter variability in probability distribution}). 
 %
 \begin{figure}
 \centerline{\includegraphics[scale=0.4]{images/chapter_3/process_parameter.eps}}
-\caption{Example of a process parameter variability in probability distribution}
+\caption{Probability distributions across batches for a particular process parameter}
 \label{fig:Example of a process parameter variability in probability distribution}
 \end{figure}
 %
-A “Two-sample Kolmogorov-Smirnov” test has been applied on all two-pair batch combinations. Looking at results, only 35\% of the input features share the same probability distribution over all batches, with a $0.95$ confidence level.
-In order to correct apply Machine Learning models the stationarity hypothesis must be verified. In fact, a trained model expects that any new input sample follows the same distribution of the data used to train the model. 
+A “Two-sample Kolmogorov-Smirnov” test was applied to all pairs of batches. According to these tests, only 35\% of the input features share the same probability distribution over all batches (at a $0.95$ confidence level).
+Standard machine learning models the rely on the stationarity hypothesis to generalise: a trained model expects that the test distribution follows the distribution of the data used to train the model.
 
 \paragraph{Lack of data characterising raw material properties}
 
-The change in data distribution could may be the consequence of some external events or factors that we do not control and do not take into account within our own input process data. We claims that ''batch effect'' we observe in the data could be a consequence of certain changes in rheological properties of raw materials. In fact, the final part is the result of the transformation of raw material through our complex process. Unfortunately, to this date, these data are not available and they cannot be integrated in our dataset. Further studied have been carried out in order to understand if it is possible to measure in real-time some rheological properties of the material. There exist some industrial online rheological systems which provide continuous measurements of the melt flow rate or apparent viscosity directly on the manufacturing process. Unfortunately, the cost of this solution is not economically viable, especially considering that such a system would have to be installed for each of the 6 screws.
+The change in data distribution may also be due to some external events or factors that we do not control and do not take into account within our own input process data. We claim that the ``batch effect'' we observe in the data could be a consequence of certain changes in the rheological properties of raw materials. In fact, the final part is the result of the transformation of raw material through our complex process. Unfortunately, to this date, these data are not available and they cannot be integrated in our dataset. Further studies have been carried out in order to see if it is possible to measure some rheological properties of the material in real-time. There are industrial on-line rheological systems that provide continuous measurements of the melt flow rate or apparent viscosity directly on the manufacturing process. Unfortunately, this solution is not economically viable, especially as such a system would have to be installed for each of the 6 screws.
 
 \paragraph{Low variability in product quality}
 
-The manufacturing process taken into account already has a good performance in term of capability. The variability of the in term of quality does not change too much. The scrap rate is under 3\% and the tolerances limits set to evaluate the compliance of blow-molded tank are quite strict. In general, we look for a weigh variability of about 300 grams which corresponds, for a tank with an average weight of $8.5$ kilograms, to about $3.5\%$ of the total weight. The problem would have been simpler with higher weight variation.     
+The manufacturing process is already relatively reliable and stable, with low variability in product quality. The scrap rate is under 3\% and the tolerance limits set to evaluate the compliance of blow-moulded tank are quite strict. In general, a weight variability of about 300 grams is sought, which for an average tank weight of $8.5$ kilograms corresponds to about $3.5\%$ of the total weight. The phenomenon modelled would have been more pronounced, and the problem would have been simpler with a larger weight variation.     
 
 \paragraph{Reliability of the input data}
 
-As we look for small variations in term of weight, it is important that the input data are accurate enough to provide all the information needed to explain the small quality variability. In an industrial environment, such as a production plant, the collected data are most of the time noisy. The maintenance of the sensors cannot be done regularly. As a consequence, some sensors may provide values which do not corresponds to the reality of what is going on. Moreover, the SCADA software computes some aggregate operation on the input time series-data, which can lead to a lost of information. Finally, it is quite complex to attach the extrusion data to the traceability serial number of a tank since Extrusion is a continuous process and there are not precise triggers to define what data belongs to a part or to another one. The way the extrusion data are attached to a manufactured part could lead to a certain uncertainty.  
-
+As we look for small variations of weight, it is important that the input data is accurate enough. In an industrial environment, such as a production plant, the collected data are most of the time noisy. The maintenance of the sensors cannot be done regularly. As a consequence, some sensors may provide erroneous values. Moreover, the SCADA software computes some aggregate operation on the input time series-data, which can lead to a loss of information. Finally, it is quite complex to attach the extrusion data to the traceability serial number of a tank since extrusion is a continuous process and there are no precise triggers to define what data belongs to a given part. The extrusion data may be misaligned with the manufactured part.  
 
 \paragraph{Weight too resultant}
 
-Another possible explanation is directly related to the nature of the output variable considered in our problem, the weight. In fact, the weight is a resulting variable which depends on the distribution of the material on the tank surface. However, different material distributions can produce the same final weight. In others words, different manufacturing conditions, represented by different process parameters values can lead to the same weight. As a consequence, the model struggles to learn the function which approximate the relationship between process parameters and quality data.
+Another possible explanation is directly related to the nature of the output variable considered in our problem, the weight. In fact, the weight is a resulting variable which depends on the distribution of the material on the tank surface. However, different material distributions can produce the same final weight. In others words, different manufacturing conditions, represented by different process parameters values can lead to the same weight. As a consequence, the model struggles to learn the function which approximates the relationship between process parameters and quality data.
 
-These results highlights the difficulties we can encounter when dealing with manufacturing process data. However, in the following section we will show how the work presented in this chapter has made it possible to start a new project in the company to improve the manufacturing process. 
+These results highlights the difficulties we can encounter when dealing with manufacturing process data. However, in the following section we will show how the work presented in this chapter has made it possible to start a new project to improve the manufacturing process. 
 
 
 \section{SmartBMM: towards smarter machines}
 
-The data analysis results presented all along this chapter have shown the inability to explain the tank weight variability given the blow-molding process data that are considered as critical by the process experts. The possible reasons have been discussed in detail in the previous section. What the analysis has also highlighted is that the most of the scraps occurs just after the machine start-ups (see section \ref{}). As shown previously, right after the machine start-up, the extrusion blow-molding process is not completely stable which increase the overall scrap rate of the blow-molded parts. Moreover, an interview of different extrusion blow-molding experts has highlighted that there are not common and shared best practices to start the machine. As a consequence there, is a lot of variability between startups.
-%
+The data analysis results presented all along this chapter have shown the inability to explain the tank weight variability given the blow-moulding process data that are considered as critical by the process experts. The possible reasons have been discussed in detail in the previous section. What the analysis has also highlighted is that the most of the scraps occurs just after the machine start-ups (see Section \ref{Principal Component Analysis for data exploration}). As shown previously, right after the machine start-up, the extrusion blow-moulding process is not completely stable which increases the overall scrap rate of the blow-moulded parts. Moreover, an interview of different extrusion blow-moulding experts has highlighted that there are no common and shared best practices to start the machine. As a consequence,  there is a lot of variability between startups.
+
 \begin{figure}
 \centerline{\includegraphics[scale=0.7]{images/chapter_3/smartbmm_barchart.png}}
 \caption{Time and scrap rate variability for 27 machine start-ups in a Plastic Omnium plant}
 \label{fig:smartbmm_barchart}
 \end{figure}
 %
-In Figure \ref{fig:smartbmm_barchart}, an example of the previously described variability for 27 machine start-ups performed in a Plastic Omnium plant. On the left bar-chart, we can see how the time needed to start the machine may change from a start-up to another. Sometimes the start is done in 10 minutes, other times a full start may take around 15-20 minutes. There are also three occurrences for which the start-up took more than 20 minutes. In the same way, the right bar-chart highlights how the scrap rate in the first 60 minutes may change from a start up to another. Most of the time, hopefully, the scrap rate does not exceed the 5\%, but there are many starting for which the scrape rate value is above 10\% which is huge. Starting from these observations, it seemed necessary to us to put some efforts in trying to improve the way the Extrusion Blow-Molded machines are started. In particular, we claims that by automating and by optimising the machine start-up we could be able to reduce the uncertainty introduced by the human way of starting the machine. This would allow for a faster convergence towards the stable regime of the machine and, as a consequence, to a smaller number of part non-conformities.   
+Figure \ref{fig:smartbmm_barchart} illustrates this variability among 27 machine start-ups performed in a Plastic Omnium plant. On the left bar-chart, we can see how the time needed to start the machine changes from a start-up to another. Sometimes the start is done in 10 minutes, other times a full start may take around 15-20 minutes. There are also three occurrences for which the start-up took more than 20 minutes. The right bar-chart reports the scrap rate in the first 60 minutes. Most of the time, the scrap rate does not exceed 5\%, but there are some starting for which the scrape rate is above 10\%. These observations call for some efforts to improve the way the extrusion of blow-moulded machines is started. By automating and by optimising the machine start-up we should reduce the uncertainty introduced by the manual starts. This would allow for a faster convergence towards the stable regime of the machine and, as a consequence, to a smaller number of part non-conformities.   
 
-We are aware the scraps may have a multitude of reasons which do not depends on the way the machine is started, but we claims that providing repeatable and optimised starting should benefit at the overall performance of the manufacturing process. 
-The project was initially conceived to handle just the machine starting but it has been, later on, extended to also cover the Purge cycles of the machine. The reason is quite obvious, by ensuring good Purge cycles we can reduce the risk of incurring in contamination/inclusion problems. In this context, we have developed the \textit{SmartBMM} solution. \textit{SmartBMM} is a software which leverages the real-time data collected directly from the PLC of the machine and the past data to elaborate the best instructions to get the machine started without any manual intervention of the operators.
+%We are aware the scraps may have a multitude of reasons which do not depend on the way the machine is started, but we claim that providing repeatable and optimised starting should benefit at the overall performance of the manufacturing process. 
+The project was initially conceived to handle just the machine starting phase but later on, it was extended to also cover the purge cycles of the machine. Indeed, ensuring good purge cycles reduces the risk of contamination/inclusion problems. In this context, we have developed the \textit{SmartBMM} solution. \textit{SmartBMM} is a software which leverages the real-time data collected directly from the PLC of the machine and the past data to elaborate the best instructions to get the machine started without any manual intervention of the operators.
 
 \begin{figure}
 \centerline{\includegraphics[scale=1]{images/chapter_3/SmartBMM.eps}}
@@ -600,20 +321,19 @@ The project was initially conceived to handle just the machine starting but it h
 \label{fig:SmartBMM}
 \end{figure}
 
-Figure \ref{fig:SmartBMM} shows broadly how the SmartBMM works. The SmartBMM software collects real time data directly from the PLC and store it in a database in order to be able to retrieve it later. When the SmartBMM software is started the data collection continue, but, this time, the machine starts to write information to the PLC to execute a set of operations. The software takes the real time incoming data and the past data to elaborate the machine instructions to get the machine to the production conditions. The stored data are used to compute the production extruder speeds which, accordingly to past data, minimise the non-conformities rate. Looking at previous production runs we are able to retrieve the process conditions which leads to a better performance and a lower scrap rate. The software is developed using the \textit{Node-RED} \citep{nodered} programming tool. Node-red is a low-code programming for event-driven applications which has been specifically designed to work with IoT and that allows easy interfacing with machines through different communication protocols.
+Figure \ref{fig:SmartBMM} shows broadly how the SmartBMM works. The SmartBMM software collects real time data directly from the PLC and stores it in a database for later retrieval. When the SmartBMM software is started the data collection continue, but, this time, the machine starts to write information to the PLC to execute a set of operations. The software takes the real time incoming data and the past data to elaborate the machine instructions to get the machine to the production conditions. The stored data are used to compute the production extruder speeds which, accordingly to past data, minimise the non-conformities rate. Looking at previous production runs we are able to retrieve the process conditions which lead to a better performance and a lower scrap rate. The software is developed using the \textit{Node-RED} \citep{nodered} programming tool. Node-red is a low-code programming for event-driven applications which was specifically designed to work with IoT and that allows easy interfacing with machines through different communication protocols.
 
-Instead of manually start the machine by pressing simultaneously multiple buttons on the HMI (Human Machine Interface), machine setters and operators have to press only one button to start a cycle, whether it is a \textit{Starting} cycle or a \textit{Purge} cycle.  
+Instead of manually start the machine by pressing simultaneously multiple buttons on the HMI (Human Machine Interface), machine setters and operators have to press only one button to start a cycle, whether it is a \textit{starting} cycle or a \textit{purge} cycle.  
 
 \begin{itemize}
-    \item The starting functionalities leverages the real-time data collected directly from the PLC of the machine and the past data to elaborate the best instructions to get the machine started without any manual intervention of the machine operators. The set of consecutive instructions provided to the machine are fairly standard. The extruders are started, then the material is fed into the screw, than the extruder speed is raised ans so on. However, our system does not rely on timers to trigger the machine instructions. In real time the process status is controlled and the next machine instruction is triggered only if the process meets all requirements.
-    Two starting functionalities are available: \textit{Full} and \textit{Downtime}. The Full executes a starting when the machine is completely stopped. The Downtime functionality, on the other hand, go back to production condition when the machine has been temporarily stopped.
+    \item The starting functionalities leverages the real-time data collected directly from the PLC of the machine and the past data to elaborate the best instructions to get the machine started without any manual intervention of the machine operators. The set of consecutive instructions provided to the machine are fairly standard. The extruders are started, then the material is fed into the screw, then the extruder speed is raised and so on. However, our system does not rely on timers to trigger the machine instructions. In real time the process status is controlled and the next machine instruction is triggered only if the process meets all requirements.
+    Two starting functionalities are available: \textit{full} and \textit{downtime}. The first one executes a starting phase when the machine is completely stopped; the second one returns to the production condition in which the machine was temporarily stopped.
     %  There exist two Purge cycles: the \textit{Purge Out} and the \textit{Purge In}. The Purge Out cycle is done when the machine is stopped for more than 2 hours to remove any FINIRE. The Purge In is done every time that the Purge Out has been done to prepare the extruder for the production run. 
-    \item The Purge functionalities allow to improve the Purge cycles of the machine.
-    During the Purge cycles we want to ensure that enough material transit into the extruders at high pressure to clean them of material residues. Instead of relying on fixed speed values or timer, we have developed a \textit{PID controller} which regulates the extruder speeds to ensure to be constantly above the pressures targets. Moreover, the amount of material transiting inside screw is controlled in real-time. This allows to finish the Purge cycle only when the exact amount of material is transited inside the screw.     
+    \item The purge functionalities allow to improve the purge cycles of the machine.
+    During purge cycles we want to ensure that enough material transits into the extruders at high pressure to clean them of residual material. Instead of relying on fixed speed values or timers, we have developed a \textit{PID controller} that regulates the extruder speeds to ensure that they are constantly above the pressure targets. Moreover, the amount of material transiting through the screws is controlled in real-time. This allows to finish the purge cycle only when the correct amount of material has transited through the screws.     
 \end{itemize}
 %
-By taking advantage of Starting and Purge functionalities, we aim to reduce either the "weight not OK" and the "contamination" scraps, which account for $2/3$ of the total amount of non-conformities.
-
+The starting and purge functionalities reduce the ``weight not OK'' and the ``contamination'' scraps, which account for $2/3$ of the total amount of non-conformities.
 The functionality is chosen by the operator through a graphical user interface (GUI) specifically developed to allow an easy interaction with the software (Figure \ref{fig:SmartBMM_gui}).
 %
 \begin{figure}
@@ -622,33 +342,31 @@ The functionality is chosen by the operator through a graphical user interface (
 \label{fig:SmartBMM_gui}
 \end{figure}
 %
-An interesting element of this project, is the way we have decided to pilot the machine. In fact, the logic that allows to perform the machine cycles is developed outside of the machine PLC. Historically, all manufacturing processes, including Extrusion Blow-Molding, rely in PLC programs to execute the set of instructions to allow the manufacturing machine to work correctly and to allow for the transformation of the raw materials to the finished product. The choice of developing our solution outside the PLC is motivated by the following reasons:
+Historically, all manufacturing processes, including extrusion  blow-moulding, rely on PLC programs to execute the set of instructions to allow the manufacturing machine to work correctly and to allow for the transformation of the raw materials to the finished product. In this project, we decided to pilot the machine outside of the machine PLC for the following reasons:
 %
 \begin{itemize}
-    \item PLCs are very robust and safe, but they lack in flexibility. PLCs are conceived to execute a row a set of logical instructions but they do not lend themselves well to be used concurrently with other systems such as databases. Developing a more complex logic which involves the data storage and the communication with databases is by far more easy to do using traditional software development tools, compared to the PLC.
-    \item Implementing the logic on an external system such as a physical or a virtual server reduce the number of PLC modifications of the machine. Our software is something non-intrusive which can be installed remotely on a server without any direct modification of the PLC program. It is something that can be plugged to the machine to introduce new functionalities. This makes it possible to reduce costs considerably, since it is not required to directly modify the PLC program which may require the intervention of an external consultant.
+    \item PLCs are very robust and safe, but they lack flexibility. PLCs are conceived to execute a set of logical instructions but they do not lend themselves well to be used concurrently with other systems such as databases. Developing a more complex logic which involves the data storage and the communication with databases is by far more easy with traditional software development tools.
+    \item Implementing the logic on an external system such as a physical or a virtual server reduces the number of PLC modifications of the machine. Our software is  non-intrusive and can be installed remotely on a server without any direct modification of the PLC program. It is something that can be plugged to the machine to introduce new functionalities. This reduces costs considerably, since it does not require the intervention of an external consultant.
 \end{itemize}
 %
 This strategy has, however, a main drawback. Our tools completely rely on the plant network to communicate the instructions to the PLC. Which means that a bad network could be a bottleneck for the correct functioning of our software. Security features have been added on the software side to interrupt the communication with the machine if any network failures prevents to communicate with the machine.
-
 In our opinion this is an example of a cyber-physical system. SmartBMM leverages the sensor networks with data processing to monitor and control the physical environment, with feedback loops able to elaborate the best set of machine given the different process conditions.
 
 
 \section{Conclusion}
 
-In this chapter, we have presented an empirical evaluation of our approach involving the industrial context in which this research work has been carried out. The results highlighted the impossibility to predict the tank weight using the data currently collected through the home made \textit{SCADA system} and enriched by the parison length measurement. Results are unexpected but are showing evidence that it could be hard to apply statistical models in a field, manufacturing industry, where there is a lot of uncertainty and where it is not possible to take into account all those elements that contribute to the variability of the part quality. Possible explanations of these results have been discussed. However, this research work has nevertheless made it possible to identify some room for improvement of the Blow-Molding process. In particular, the exploratory data analysis has shown how most of the part non-conformities occurs just after the machine start-ups where the process is not yet stable. This made it possible to start the \textit{SmartBMM} project.  
-
+In this chapter, we have presented an empirical evaluation of our approach in the industrial context. The features currently collected by the home made \textit{SCADA system}, even when enriched by the parison length measurement, cannot predict the tank weights. These results show the difficulty of applying statistical models in batch manufacturing industries, where t is not always possible to have knowledge of all the elements that contribute to the variability of the part quality. Possible explanations for these results were discussed. Nevertheless, this research work has allowed the identification of avenues for improvement of the blow-moulding process. In particular, the exploratory data analysis has shown how most of the part non-conformities occur just after machine start-up, when the process is not yet stable. This led to the launch the \textit{SmartBMM} project.
 
 \subsection{Scientific Contribution}
 
-On the scientific point of view, the results presented in this chapter allows to questioning the effectiveness of data-driven methods in the context of the manufacturing industry. Data-driven methods have been proven to be effectiveness in many applications but in order to work well it is necessary to have data that respects some quality constraints. The results obtained in this chapter have shown that applying such an approach on all the data available and pretending to obtain good results is trivial. The approach of taking many input data and feed them into a generic AI data-driven model could not work in an environment where there is a lot of uncertainty. Instead of working directly with all the data available, a complex problem should be broken down in many sub problems where data quality is properly controlled. As we will present in the following chapter, by breaking down the problem in sub-parts and by mastering the data it is possible to obtain interesting results. 
+The results presented in this chapter question the effectiveness of data-driven methods in certain manufacturing contexts. The end-to-end data-driven methods have proven to be effective in many applications, but for them to work well, informative data on a stationary phenomenon is required. In other situations, it may be better to decompose the original problem into several sub-problems with properly controlled data quality. The following chapter will present such an approach.
 
 \subsection{Industrial Contribution}
 
-This chapter has three main industrial contributions.
+This chapter presents three main industrial contributions.
 \begin{itemize}
-    \item Firstly, the work presented in this chapter has made it possible to call into question certain beliefs about the functioning of the blow-molding process. The critical process parameters considered as critical to ensure the correct functioning of the process do not allow to explain the tank weight variability. The control limits previously set for the critical parameters of the process, for ensuring the correct functioning of the production process, have proved to be insufficient to explain the tank weight variability.
-    \item The Parison length measurement has opened new research perspectives. By measuring in real-time the length of the Parison, we will eventually be able to ensure the correct material distribution over the overall parison length. By ensuring the correct material distribution and by controlling the parison length we should be able to improve the process stability and, as a consequence, the quality of the manufactured parts. Further information and perspectives will be presented in chapter \ref{Contributions and perspectives}.
-    \item Finally, the \textit{SmartBMM} software that has been developed starting from the results obtained trough the data analysis process, has made it possible to improve the machine start-ups phases which are responsible for those transitional phases that lead to an higher scrape rate. By ensuring a faster and better start-up, we have proven to be able to shorten the duration of this transitional phase. By reducing the duration of the transitional phase it is possible to indirectly reduce the percentage of parts that do not comply with quality standards. Future works will make use of the parison length measured through the use of the camera to add to SmartBMM new functionalities.  
+    \item Firstly, the work challenges certain beliefs about the operation of the blow-moulding process. The process parameters considered critical to ensure proper functioning of the process do not explain the variability in tank weights. The control limits previously set for the critical parameters of the process to ensure the correct functioning of the production process were found to be insufficient for providing such an explanation.
+    \item The parison length measurement has opened new research perspectives. By measuring in real-time the length of the parison, we will eventually be able to control the distribution of material over the entire length of the parison to improve the quality of the manufactured parts. Further information and perspectives will be presented in Chapter \ref{Contributions and perspectives}.
+    \item Finally, the \textit{SmartBMM} software that was developed starting from the results obtained trough the data analysis process has been used to improve the machine start-up phases which lead to a high scrape rate. By ensuring a better start-up, we reduce the transient phase and thus the percentage of parts that do not meet quality standards. Future works will make use of the parison length measured by the camera to add to SmartBMM new functionalities.  
 \end{itemize}
 

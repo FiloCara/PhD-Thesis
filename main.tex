@@ -35,35 +35,21 @@
 
 \setcounter{secnumdepth}{3}
 
-
 \pagestyle{fancy}
 \fancyhead[RE]{}  % right even
 \fancyhead[LO]{}  % left odd
 \fancyfoot[C]{\small\thepage}  % page at foot
 
-% \newtcolorbox[auto counter,
-% list inside=defs,
-% number within=section]{definition}[2][]{
-%   list entry={{\bfseries\thetcbcounter~#2}},
-%   title={Definition~\thetcbcounter:~\textbf{#2}},
-%   colback={white},
-%   colbacktitle={gray},
-%   coltitle=black,
-%   #1
-% }
-% \newcommand{\listofdefinitions}{%
-%   \tcblistof[\section*]{defs}{List of Definitions}
-% }
-
-\renewcommand{\baselinestretch}{1.2}
+\renewcommand{\baselinestretch}{1.1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%            DOCUMENT        %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Thesis Title}
-\author{Filippo Cara}
-\date{May 2021}
+\title{Machine learning for the improvement of a blow-moulding process}
+\author{Filippo CARA}
+\date{November 2021}
+
 
 \begin{document}
 
@@ -71,15 +57,17 @@
 
 \dominitoc
 
-\chapter*{Acknowledgements}
+% \chapter*{Acknowledgements}
 
-I like to acknowledge ...
+% I like to acknowledge ...
 
 \input{chapters/abstract}
   
-\chapter*{Résumé}
+% \chapter*{Résumé}
 
-Voici le résumé en français
+% % Voici le résumé en français
+
+\tableofcontents
 
 \listoffigures
 \addcontentsline{toc}{chapter}{List of Figures}
@@ -89,8 +77,7 @@ Voici le résumé en français
 
 \input{chapters/list_of_symbols}
 \printnomenclature
-
-\tableofcontents
+\addcontentsline{toc}{chapter}{List of Symbols }
 
 
 \input{chapters/introduction}
@@ -112,13 +99,14 @@ Voici le résumé en français
 \input{chapters/chapter_4}
 
 % Chapter 5
-\setcounter{mtc}{7}
-\input{chapters/chapter_5}
+% \setcounter{mtc}{7}
+% \input{chapters/chapter_5}
 
 \input{chapters/conclusion}
 
 \bibliographystyle{apalike}
 \bibliography{references}
+\addcontentsline{toc}{chapter}{Bibliography}
 
 % Appendix
 \appendix
@@ -126,7 +114,5 @@ Voici le résumé en français
 \input{appendix/appendix_A}
 % B
 \input{appendix/appendix_B}
-% C
-% \input{appendix/appendix_C}
 
 \end{document}

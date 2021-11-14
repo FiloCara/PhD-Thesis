@@ -2,22 +2,18 @@
 \minitoc
 
 
-
 \section{Contributions: Towards new quality control framework}
 
 Our dissertation develops along two major axes: the process improvement and the quality control improvement. We claims that the improving of the overall quality of a production line can be obtained by working either on the process and either on the quality control. This for us definitely makes sense as the production of a part compliant with the specifications is the result of a careful work in optimising the production process, as well as the ability to quickly identify a deviation in the quality of the finished part. By quickly identifying a quality problem it is possible to react faster and adjust the process, limiting the production of non-conforming parts.
 
-This thesis has, in our opinion three main contributions:
 
-\begin{enumerate}
-    \item It provides a general framework to improve the Process Control of a complex manufacturing process. We propose a data-driven approach which take advantage of the historical data to try to model the relationship between process parameters and the quality of a product. The approach presented in chapters 3 aims to leverage the information available in the large amount of data collected in the manufacturing process 
-    
-    Our approach, presented in Chapter 3 is composed of 4 main stages: the data acquisition, the data processing, the Machine Learning modeling and the FINIRE. The four stages 
-    \item It provides a general framework to improve the Quality Control. Using a data-driven approach we can use sensors, cameras or any kind of equipment to collect meaningful data. This approach open ups new possibilities in term of Quality Control.  
-    \item In Chapter 4, we propose an approach to infer the thickness of Blow-Molded parts using thermal imaging and a Deep Learning without any direct measurement of the part. We claims that this    
-\end{enumerate}
 
-\section{Research Perspectives}
+
+\paragraph{Scientific Contributions}
+
+\paragraph{Industrial Contributions}
+
+\section{Research Perspectives and further research directions}
 
 \subsection{Process improvement perspectives}
 
@@ -36,53 +32,73 @@ As explained in section
 \subsection{Add the tank effect}
 
 In chapter 4 we have presented our solution to infer the thickness of a blow-molded part by exploiting the surface decay temperature of the same part right after the part has been blown. The use of a thermal camera allows us to take into account, through the acquisition of a sequence of frames FINIRE.
-Through the use of Machine Learning and Deep Learning we have proven to be able to model the relationship between the temperature evolution over time of some critical point and the corresponding thickness. First results proves the interest of our solution, but they highlight a drawback: the model is not able to generalize on FINIRE. One possible solution for imporving the ability of the model to predcit unseen points would be to combine the Temporal and the Spatial-Temporal approach. 
+Through the use of Machine Learning and Deep Learning we have proven to be able to model the relationship between the temperature evolution over time of some critical point and the corresponding thickness. First results proves the interest of our solution, but they highlight a drawback: the model is not able to generalise on FINIRE. One possible solution for improving the ability of the model to predict unseen points would be to combine the Temporal and the Spatial-Temporal approach. Future works FINIRE 
 
 
 
-\subsection{Challenges of AI in Industry}
+% \subsection{Challenges of AI in Industry}
 
-Although AI technology has made breakthroughs in many applications, there is still a big gap between large-scale usage in industrial scenarios \citep{lee2020industrial}. In our opinion there are three majors challenges to overcome for the Manufacturing industry in the coming years: Data Quality and FINIRE results reproducibility, reliability, and data quality.
+% Although AI technology has made breakthroughs in many applications, there is still a big gap between large-scale usage in industrial scenarios \citep{lee2020industrial}. In our opinion there are three majors challenges to overcome for the Manufacturing industry in the coming years: Data Quality and FINIRE results reproducibility, reliability, and data quality.
 
-\paragraph{Reproductibility}
+% \paragraph{Reproductibility}
 
-% TO REVIEW
+% % TO REVIEW
 
-The practice of providing reproductible results in the manufacturing ressearch community is not widely adopted. Too few datasets are actually available to conduct research. It can be assumed that
-the lack of opened datasets is probably induced by the secretive policies frequently enforced in the manufacturing industry. This implies
+% The practice of providing reproductible results in the manufacturing ressearch community is not widely adopted. Too few datasets are actually available to conduct research. It can be assumed that
+% the lack of opened datasets is probably induced by the secretive policies frequently enforced in the manufacturing industry. This implies
 
-Unfortunately, this practice is not widely adopted by researchers in the manufacturing research
-communities.  Unfortunately, this tends to hinder research possibilities and produce the following unwanted side-effects:
+% Unfortunately, this practice is not widely adopted by researchers in the manufacturing research
+% communities.  Unfortunately, this tends to hinder research possibilities and produce the following unwanted side-effects:
 
-\begin{itemize}
-    \item Very difficult, if not impossible, to reproduce any claimed result in the state-of-the-art. This highly limits the effectiveness of peer-reviewing.
-    \item Very difficult, if not impossible, to compare the proposed approaches to address a specific problem. Aside of qualitative studies, there is no common metric based on a shared dataset to evaluate and rank the different methods.
-    \item Developing a dataset may literally cost millions of dollars. If every researcher or research group needs to build a new one from scratch, the developing costs will be are multiplied.
-\end{itemize}
-
-
-\paragraph{Data Quality}
-
-When dealing with data, Data-driven based methods faces five major challenges and limitations:
-
-\begin{enumerate}
-    \item Training data is heavily dependent on manual work, otherwise it is difficult to obtain a large and comprehensive training data set, and the quality of labeling is heavily dependent on human experience and ability.
-    \item FINIRE
-    \item The transparency of the model needs to be improved since AI algorithms cannot explain how conclusions are reached step-by-step.
-    \item Models are not very general, and it is hard to replicate from one application to the next. This means lots of money and energy is needed to train new models for new problems.
-    \item The risk of deviation in data and algorithms, much
-    like the differences between societies and culture, requires extensive steps to solve.
-    \item It is difficult to reach agreement on data privacy and attribution.
-\end{enumerate}
-
-\paragraph{Reliability}
-
-% TO REVIEW
-
-According to the different requirements of reliability in different domains and applications, AI can be roughly divided into mission-critical and non-mission-critical applications. Currently, most AI products on the market do not require strict system reliability. As long as a certain threshold of usability is reached, the occasional errors and problems can be tolerated without serious consequences in non-mission-critical applications. For critical applications, if a system has even a small chance of failure, it could lead to serious consequences, causing property loss or even harm to human beings or social stability. This is particularly true for all those applications that have to do with the safety of people. An example of this is the intelligent driving industry: it is expected
-that this industry will globally reach \$9.5 billion by 2020. The industry is facing serious challenges in guaranteeing safety. The first fatal drone crash occurred in March of 2018, and an Uber autopilot test car hit and killed a woman in May of 2018. Whether it is true autonomous driving technology or a driving assistance system, its high demand for reliability and intolerance of failures makes it difficult for the technology to truly enter the market before exceeding the human driving level. These challenges are the same in industrial systems. If we want to employ AI technology to control the functioning of an entire system, we must be extremely cautious about mission-critical tasks, which necessitates not just advancements in model and algorithm accuracy, but also security limits and uncertainty management in system design. For instance, for a manufacturing company with low percentage of quality scraps, an AI model with a 80\% accuracy in prediction may lead to incorrect alerts FINIRE 
+% \begin{itemize}
+%     \item Very difficult, if not impossible, to reproduce any claimed result in the state-of-the-art. This highly limits the effectiveness of peer-reviewing.
+%     \item Very difficult, if not impossible, to compare the proposed approaches to address a specific problem. Aside of qualitative studies, there is no common metric based on a shared dataset to evaluate and rank the different methods.
+%     \item Developing a dataset may literally cost millions of dollars. If every researcher or research group needs to build a new one from scratch, the developing costs will be are multiplied.
+% \end{itemize}
 
 
-In section REF we have seen how one of
+% \paragraph{Data Quality}
 
-\subsection{How to handle the model reliability}
+% When dealing with data, Data-driven based methods faces five major challenges and limitations:
+
+% \begin{enumerate}
+%     \item Training data is heavily dependent on manual work, otherwise it is difficult to obtain a large and comprehensive training data set, and the quality of labeling is heavily dependent on human experience and ability.
+%     \item FINIRE
+%     \item The transparency of the model needs to be improved since AI algorithms cannot explain how conclusions are reached step-by-step.
+%     \item Models are not very general, and it is hard to replicate from one application to the next. This means lots of money and energy is needed to train new models for new problems.
+%     \item The risk of deviation in data and algorithms, much
+%     like the differences between societies and culture, requires extensive steps to solve.
+%     \item It is difficult to reach agreement on data privacy and attribution.
+% \end{enumerate}
+
+% \paragraph{Reliability}
+
+% % TO REVIEW
+
+% According to the different requirements of reliability in different domains and applications, AI can be roughly divided into mission-critical and non-mission-critical applications. Currently, most AI products on the market do not require strict system reliability. As long as a certain threshold of usability is reached, the occasional errors and problems can be tolerated without serious consequences in non-mission-critical applications. For critical applications, if a system has even a small chance of failure, it could lead to serious consequences, causing property loss or even harm to human beings or social stability. This is particularly true for all those applications that have to do with the safety of people. An example of this is the intelligent driving industry: it is expected
+% that this industry will globally reach \$9.5 billion by 2020. The industry is facing serious challenges in guaranteeing safety. The first fatal drone crash occurred in March of 2018, and an Uber autopilot test car hit and killed a woman in May of 2018. Whether it is true autonomous driving technology or a driving assistance system, its high demand for reliability and intolerance of failures makes it difficult for the technology to truly enter the market before exceeding the human driving level. These challenges are the same in industrial systems. If we want to employ AI technology to control the functioning of an entire system, we must be extremely cautious about mission-critical tasks, which necessitates not just advancements in model and algorithm accuracy, but also security limits and uncertainty management in system design. For instance, for a manufacturing company with low percentage of quality scraps, an AI model with a 80\% accuracy in prediction may lead to incorrect alerts FINIRE 
+
+
+% In section REF we have seen how one of
+
+% \subsection{How to handle the model reliability}
+
+% For instance, we have shown that there exists FINIRE. 
+    % We claim that most of the sceintific work FINIRE  
+    % In fact, most of the research work presented in literature makes use of open and public datasets to empirically asses the effectiveness of a proposed method. Using open and public datasets allow for the unbiased comparison of the effectiveness of different approaches, however, the importance of the data collection is not taken into account. Collecting the right data is the key element FINIRE 
+    
+% Data Quality
+% Manufacturing data comes in different data types (time series, images, video, etc.). Data type heterogeneity leads to numerous difficulties to process these data. It is a very generic and an industry-wide issue when it comes to applying data analysis techniques. Indeed, most of the time, each type of data must be treated in a specific manner which will require computer science engineers to spend a consequent effort to design and
+% develop specific routines and processing pipelines for each of the specific data type. 
+
+% % process data
+% Moreover, training data is heavily dependent on manual work, otherwise it is difficult to obtain a large and comprehensive training data set, and the quality of labelling is heavily dependent on human experience and ability. 
+% This issue drastically hinders the possibilities to implement data-driven method in production. 
+
+
+% More efforts will be needed on the part of companies in order to be able to add new sensors. 
+
+
+% declare non-conforming parts, when these are conforming
+
+% We think that the scientific literature does not put enough attention towards the topic of retrieving the good data.
