@@ -3,12 +3,12 @@
 
 \section{Introduction}
 
-This chapter describes an application of the previously proposed method to our industrial context. Since out-of-tolerance tank weight is the primary cause of part non-conformity, we investigate the process parameters that contribute most to the variability of tank weight. The first step is to gather a data set representative of the phenomenon to be modelled.  This historical data set is then used to model the relationship between process measurements and part quality. The results, as well as the difficulties encountered when applying such an approach in the industrial context studied will be discussed in detail. Finally, we will show how the results obtained in the framework of this research work have allowed us to identify some areas for improvement in the manufacturing process. 
+This chapter describes an application of the previously proposed method to our industrial context. Since out-of-tolerance tank weight is the primary cause of part non-conformity, we investigate process parameters that contribute the most to the variability of tank weight. The first step is to gather a data set representative of the phenomenon to be modelled.  This historical data set is then used to model the relationship between process measurements and part quality. The results, as well as the difficulties encountered when applying such an approach in the industrial context studied will be discussed in detail. Finally, we will show how the results obtained in the framework of this research work have allowed us to identify some areas for improvement in our manufacturing process. 
 
 
 \section{Motivation}
 
-Poor quality or ``scrap'' parts are very expensive for a company like Plastic Omnium Clean Energy Systems. The “Cost of Non-Quality” (CNQ) is one of the key indicators most used by the company. However, when a part is bad, it is first necessary to understand the origin of the problem, which can require a lot of time and energy. Historically, Plastic Omnium industrial process monitoring has been driven using a knowledge-based corrective approach (Figure \ref{fig:Corrective process control}). The quality measurements of each product is used to adjust the process and to maintain the process capability. Moreover, some of the process parameters, which are considered as critic for process safety, are kept under control through the use of uni-variate control charts.  When a parameter falls outside the control limits, some warning messages are generated to alert the operators who have the task of regulating the machine so that the parameter can return in the safe zone. 
+Poor quality or ``scrap'' parts are very expensive for a company like Plastic Omnium Clean Energy Systems. The “Cost of Non-Quality” (CNQ) is one of the key indicators most used by the company. However, when a part is declared bad, it is first necessary to understand the origin of the problem, which can require a lot of time and energy. Historically, Plastic Omnium industrial process monitoring has been driven using a knowledge-based corrective approach (Figure \ref{fig:Corrective process control}). The quality measurements of each product is used to adjust the process and to maintain the process capability. Moreover, some of the process parameters, which are considered as critic for process safety, are kept under control through the use of uni-variate control charts.  When a parameter falls outside the control limits, some warning messages are generated to alert the operators who have the task of regulating the machine so that the parameter can return in a safe zone. 
 
 \begin{figure}
 \centerline{\includegraphics[scale=0.7]{images/chapter_3/corrective_approach.eps}}
@@ -24,17 +24,17 @@ Evidence has shown that the overall stability of the process ensures, in most ca
 \label{fig:Predictive process control}
 \end{figure}
 
-In order to understand the relationship between process parameters and the quality of final parts, we use a supervised learning approach. We view our complex industrial process as a black box with multiple inputs and one output. Given $p$ process parameters $(X_1,X_2,\ldots,X_p)$ and one product quality variable $Q$, we look for the function that better approximates the relationship between the inputs and the output. Mathematically speaking, we look for the function $f$ that approximates the relationship between the process variables and the quality result:
+In order to understand the correlation between process parameters and the quality of the final part, we use a supervised learning approach. We view our complex industrial process as a black box with multiple inputs and one output. Given $p$ process parameters $(X_1,X_2,\ldots,X_p)$ and one product quality variable $Q$, we look for the function that better approximates the relationship between inputs and the output. Mathematically speaking, we look for the function $f$ that approximates the relationship between the process variables and the quality result:
 
 \begin{equation}
-    Q = \hat{f}(X_1,X_2,\ldots,X_p) + \epsilon
+    Y = \hat{f}(X_1,X_2,\ldots,X_p) + \epsilon
     \enspace,
 \end{equation}
 where $\epsilon$ is defined as the part of $Q$ that cannot be predicted from the input process parameters $(X_1,X_2,\ldots,X_p)$.
 
-By an automatic analysis of a set of examples (training set) of measured input-output behaviour of the process learning algorithms can find out important correlations between process variables and construct classifiers for detecting dangerous or unwanted process states.
+By an automatic analysis of a set of examples (training set) of measured input-output behaviour of the process, learning algorithms can find out important correlations between process variables and construct classifiers for detecting dangerous or unwanted process states.
 
-In the context of our research framework, a work has been carried out to determinate what are the main causes of scraps involving the extrusion blow-moulding process. An analysis conducted on three years of data collected by the Manufacturing Execution System (MES) software of the company in a French plant has highlighted that the first cause of scraps in blow-moulding machines is due to tanks whose weight does not meet the customer's specifications. This kind of non-compliance accounts for about one half of the total amount of scraps (Figure \ref{fig:Most common scrap causes (2017-2018-2019)}) followed by inclusion and other contamination problems. 
+In the context of our research framework, we have carried out a work in order to determinate what are the main causes of scraps involving the extrusion blow-moulding process. An analysis conducted on three years of data collected by the Manufacturing Execution System (MES) software of the company in a French plant has highlighted that the first cause of scraps in blow-moulding machines is due to tanks whose weight does not meet the customer's specifications. This kind of non-compliance accounts for about one half of the total amount of scraps (Figure \ref{fig:Most common scrap causes (2017-2018-2019)}) followed by inclusion and other contamination problems. 
 
 \begin{figure}
 \centerline{\includegraphics[scale=0.9]{images/chapter_3/Scraps_codes.eps}}
@@ -42,8 +42,8 @@ In the context of our research framework, a work has been carried out to determi
 \label{fig:Most common scrap causes (2017-2018-2019)}
 \end{figure}
 
-As presented in Section \ref{The key quality characteristics of a blow-moulded fuel tank}, the tank weight is historically considered as an important product characteristic as it provides an overall indication about the amount of material that composes the fuel tank. By ensuring a lower tolerance limit of the weight it is possible, according to experts, to ensure that there is enough material to ensure compliance of thicknesses. In the same way, there exist an upper tolerance limit which exists to ensure that the part it is not to heavy. By measuring in real-time, for each part produced, the weigh of the tank, people in plants feel reassured about the correct material distribution along its surface.  
-As a consequence of this analysis, we decided to focus our efforts on trying to understand where these scrap come from and what we can do to try to reduce them. Moreover, since the weight is measured in real-time, it is possible to easily assemble a dataset composed of multiple samples. By following the approach described in Section \ref{Proposed Method} of this chapters, we aim to search for any hidden pattern or correlation within process data and quality data that could explain why some parts are not compliant in term of weight.
+% As presented in Section \ref{The key quality characteristics of a blow-moulded fuel tank}, the tank weight is historically considered as an important product characteristic as it provides an overall indication about the amount of material that composes the fuel tank. By ensuring a lower tolerance limit of the weight it is possible, according to experts, to ensure that there is enough material to ensure compliance of thicknesses. In the same way, there exist an upper tolerance limit which exists to ensure that the part it is not to heavy. By measuring in real-time, for each part produced, the weigh of the tank, people in plants feel reassured about the correct material distribution along its surface.  
+As a consequence of this analysis, we decided to focus our efforts on trying to understand where these scraps come from and what we can do to try to reduce them. Moreover, since the weight is measured in real-time, it is possible to easily assemble a dataset composed of multiple samples. By following the approach described in Section \ref{Proposed Method} of this chapters, we aim to search for any hidden pattern or correlation within process data and quality data that could explain why some parts are not compliant in term of weight.
 
 
 \section{Data collection}
@@ -52,7 +52,7 @@ As a consequence of this analysis, we decided to focus our efforts on trying to 
 
 More than 5000 parameters are measured in real-time at each production cycle of our industrial process. Among these features, some are considered by the experts as critical to ensure the proper stability of the process (see Section \ref{The key parameters of the Extrusion Blow-moulding}). In addition to the critical process parameters there are timer and counter variables. A timer variable accounts for the time needed to execute a particular mechanical movement in the machine production cycle. The sum of all the mechanical times corresponds to the machine cycle time. A counter variable, instead, increases over time because of a particular event. For example, the number of parts produced in a production day is recorded in a counter variable.  
 
-Process parameters are collected by the internally developed SCADA system and the data is stored in multiple databases in accordance with the sources of the data. For instance, all the extrusion process data are stored in a database. The same is true for the blow-moulding data and for the weight of the tank that are stored in two separates databases. 
+Process parameters are collected by the internally developed SCADA system and data are stored in multiple databases in accordance with the sources of each one. For instance, all the extrusion process data are stored in a database. The same is true for the blow-moulding data and for the weight of the tank that are stored in two separate databases. 
 
 Each process parameter measured in real-time during the production process needs to be associated to the scalar value corresponding to the quality measurement of the manufactured product, at the end of the production cycle. In order to do that, the SCADA software computes some aggregate data to summarise the information in a limited set of scalar features. For each variable belonging to a production cycle, the average, maximum and minimum values are calculated. Then, the SCADA software attaches the aggregates data belonging to a production cycle to a specific traceability serial number which can be used as key to link the different sources of data. 
 
@@ -101,7 +101,7 @@ SSD MobileNet-V2 provides accurate results in a limited amount of time. Figure \
 %
 This system has proven to be robust and to meet the  industrial constraints identified, making accurate and reliable predictions in real time. A simple RGB camera and a small computer offer a cheap, non-intrusive solution that does not require any modification of the machine. 
 
-With regard to our modelling approach we only care about the final parison. The parison length just before the moulds closes for the blow-moulding the final part. We made the assumption that the final length could provide enough information to explain the weight variability.
+With regard to our modelling approach we only care about the final parison. The parison length just before the mould closes to blow-mould the final part. We made the assumption that the final length could provide enough information to explain the weight variability.
 
 % INTRODUCE THAT THE CAMERA CAN BE USED TO A BETTER PROCESS CONTROL   
 
@@ -113,7 +113,7 @@ Using all available variables, the number of input features is too large compare
 
 \paragraph{Expertise-based data procedure}
 
-We relied on expert knowledge of the process to discard all features that are not relevant to explain the weight variability. For instance, all counter variables collected by the SCADA software do not bring any interesting information and can be removed. Also, many timer variables, representing the time needed to execute a particular mechanical operatio, are redundant and provide no added value. Therefore, most of the timer variables have been removed from the dataset.
+We relied on expert knowledge of the process to discard all features that are not relevant to explain the weight variability. For instance, all counter variables collected by the SCADA software do not bring any interesting information and can be removed. Also, many timer variables, representing the time needed to execute a particular mechanical operation, are redundant and provide no added value. Therefore, most of timer variables have been removed from the dataset.
 
 \paragraph{Statistical-based procedure}
 
@@ -147,7 +147,7 @@ This was the first time that data on parison length was available. The relations
 \label{fig:length_weight_scatter}
 \end{figure}
 %
-The plot shows a weak  negative correlation between the parison length and the weight. The Pearson correlation is equal to $-0.32$. The physical explanation is simple: the longer the parison, the less material remains inside the the moulds during the blow-moulding. Moreover, the lower part of the parison is often thicker to prevent the parison from breaking under its own weight.  
+The plot shows a weak  negative correlation between the parison length and the weight. The Pearson correlation is equal to $-0.32$. The physical explanation is simple: the longer the parison, the less material remains inside the the mould during the blow-moulding. Moreover, the upper part of the parison is often thicker to prevent the parison from breaking under its own weight.  
 
 \subsection{Low dimensional representation} \label{Principal Component Analysis for data exploration}
 
@@ -178,7 +178,7 @@ Given our input processed data $P$ composed of $p$ process parameters and $n$ sa
 We compared several models: ordinary linear regression, Lasso regression, ridge regression (see Section \ref{Parametric models}), random forest and gradient boosting tree (see Section \ref{Tree-based methods}). The choice of these algorithms is motivated by:
 %
 \begin{itemize}
-    \item \textit{Interpretability}: Since we aim to understand which parameters most affect the weight of the blow-moulded tank, we are interesting in applying interpretable models. Linear models and tree-based methods are considered to be among the most easily interepretable models.
+    \item \textit{Interpretability}: Since we aim to understand which parameters most affect the weight of the blow-moulded tank, we are interested in applying interpretable models. Linear models and tree-based methods are considered to be among the most easily interepretable models.
     \item \textit{Performance}: These methods work quite well with tabular data. When dealing with tabular data, deep learning hardly surpass traditional machine learning algorithms \citep{shwartz2021tabular}. 
 \end{itemize}
 %
@@ -193,7 +193,7 @@ In standard cross-validation, called \textit{K-fold} Cross-validation, the train
     \item the error of the resulting model is estimated on the fold set apart from the training set.
 \end{itemize}
 %
-The cross-validation criterion is then the average of the error values computed in the loop.
+The cross-validation criterion is then the average of error values computed in the loop.
 %
 \begin{equation}
     CV_{K} = \frac{1}{K}\sum_{i=1}^{K}score_{i}
@@ -217,7 +217,7 @@ The mean of the 5 different scores is calculated to have an accurate estimate of
 \section{Results and discussion} \label{Results and Discussions}
 
 We use the $R^2$ metric to evaluate the models. Both cross-validation and batch cross-validation return negative $R^2$ values for all the models. 
-This means that the models are worse at predicting the weight than the sample mean, and thus that the variability of the weight cannot be explained by the parameters of the process. Results for cross-validation are resumed in Table \ref{tab:cross_validation_results}.  
+This means that the models are worse at predicting the weight than the sample mean, and thus that the variability of the weight cannot be explained by the available parameters of the process. Results for cross-validation are resumed in Table \ref{tab:cross_validation_results}.  
 
 \begin{table}[]
 \centering
@@ -279,7 +279,7 @@ Results obtained with batch cross-validation show that our models do not general
 \end{figure}
 %
 A “Two-sample Kolmogorov-Smirnov” test was applied to all pairs of batches. According to these tests, only 35\% of the input features share the same probability distribution over all batches (at a $0.95$ confidence level).
-Standard machine learning models the rely on the stationarity hypothesis to generalise: a trained model expects that the test distribution follows the distribution of the data used to train the model.
+Standard machine learning models rely on stationarity hypothesis to generalise: a trained model expects that the test distribution follows the distribution of data used to train the model.
 
 \paragraph{Lack of data characterising raw material properties}
 
@@ -287,11 +287,11 @@ The change in data distribution may also be due to some external events or facto
 
 \paragraph{Low variability in product quality}
 
-The manufacturing process is already relatively reliable and stable, with low variability in product quality. The scrap rate is under 3\% and the tolerance limits set to evaluate the compliance of blow-moulded tank are quite strict. In general, a weight variability of about 300 grams is sought, which for an average tank weight of $8.5$ kilograms corresponds to about $3.5\%$ of the total weight. The phenomenon modelled would have been more pronounced, and the problem would have been simpler with a larger weight variation.     
+The manufacturing process is already relatively reliable and stable, with low variability in product quality. The scrap rate is under 3\% and the tolerance limits set to evaluate the compliance of blow-moulded tanks are quite strict. In general, a weight variability of about 300 grams is sought, which for an average tank weight of $8.5$ kilograms corresponds to about $3.5\%$ of the total weight. The phenomenon modelled would have been more pronounced, and the problem would have been simpler with a larger weight variation.     
 
 \paragraph{Reliability of the input data}
 
-As we look for small variations of weight, it is important that the input data is accurate enough. In an industrial environment, such as a production plant, the collected data are most of the time noisy. The maintenance of the sensors cannot be done regularly. As a consequence, some sensors may provide erroneous values. Moreover, the SCADA software computes some aggregate operation on the input time series-data, which can lead to a loss of information. Finally, it is quite complex to attach the extrusion data to the traceability serial number of a tank since extrusion is a continuous process and there are no precise triggers to define what data belongs to a given part. The extrusion data may be misaligned with the manufactured part.  
+As we look for small variations of weight, it is important that the input data is accurate enough. In an industrial environment, such as a production plant, the collected data are most of the time noisy. The maintenance of the sensors cannot be done regularly. As a consequence, some sensors may provide erroneous values. Moreover, the SCADA software computes some aggregate operation on the input time series-data, which can lead to a loss of information. Finally, it is quite complex to attach extrusion data to the traceability serial number of a tank since extrusion is a continuous process and there are no precise triggers to define what data belongs to a given part. The extrusion data may be misaligned with the manufactured part.  
 
 \paragraph{Weight too resultant}
 
@@ -302,7 +302,7 @@ These results highlights the difficulties we can encounter when dealing with man
 
 \section{SmartBMM: towards smarter machines}
 
-The data analysis results presented all along this chapter have shown the inability to explain the tank weight variability given the blow-moulding process data that are considered as critical by the process experts. The possible reasons have been discussed in detail in the previous section. What the analysis has also highlighted is that the most of the scraps occurs just after the machine start-ups (see Section \ref{Principal Component Analysis for data exploration}). As shown previously, right after the machine start-up, the extrusion blow-moulding process is not completely stable which increases the overall scrap rate of the blow-moulded parts. Moreover, an interview of different extrusion blow-moulding experts has highlighted that there are no common and shared best practices to start the machine. As a consequence,  there is a lot of variability between startups.
+The data analysis results presented all along this chapter have shown the inability to explain the tank weight variability given the blow-moulding process data that are considered as critical by process experts. The possible reasons have been discussed in detail in the previous section. What the analysis has also highlighted is that the most scrap occurs just after the machine start-ups (see Section \ref{Principal Component Analysis for data exploration}). As shown previously, right after the machine start-up, the extrusion blow-moulding process is not completely stable which increases the overall scrap rate of the blow-moulded parts. Moreover, an interview of different extrusion blow-moulding experts has highlighted that there are no common and shared best practices to start the machine. As a consequence,  there is a lot of variability between startups.
 
 \begin{figure}
 \centerline{\includegraphics[scale=0.7]{images/chapter_3/smartbmm_barchart.png}}
@@ -310,10 +310,10 @@ The data analysis results presented all along this chapter have shown the inabil
 \label{fig:smartbmm_barchart}
 \end{figure}
 %
-Figure \ref{fig:smartbmm_barchart} illustrates this variability among 27 machine start-ups performed in a Plastic Omnium plant. On the left bar-chart, we can see how the time needed to start the machine changes from a start-up to another. Sometimes the start is done in 10 minutes, other times a full start may take around 15-20 minutes. There are also three occurrences for which the start-up took more than 20 minutes. The right bar-chart reports the scrap rate in the first 60 minutes. Most of the time, the scrap rate does not exceed 5\%, but there are some starting for which the scrape rate is above 10\%. These observations call for some efforts to improve the way the extrusion of blow-moulded machines is started. By automating and by optimising the machine start-up we should reduce the uncertainty introduced by the manual starts. This would allow for a faster convergence towards the stable regime of the machine and, as a consequence, to a smaller number of part non-conformities.   
+Figure \ref{fig:smartbmm_barchart} illustrates this variability among 27 machine start-ups performed in a Plastic Omnium plant. On the left bar-chart, we can see how the time needed to start the machine changes from a start-up to another. Sometimes the start-up is done in 10 minutes, other times a full one may take around 15-20 minutes. There are also three occurrences for which the start-up took more than 20 minutes. The right bar-chart reports the scrap rate in the first 60 minutes. Most of the time, the scrap rate does not exceed 5\%, but there are some starting for which the scrap rate is above 10\%. These observations call for some efforts to improve the way the extrusion of blow-moulded machines is started. By automating and by optimising the machine start-up we should reduce the uncertainty introduced by manual starts. This would allow for a faster convergence towards the stable regime of the machine and, as a consequence, to a smaller number of part non-conformities.   
 
-%We are aware the scraps may have a multitude of reasons which do not depend on the way the machine is started, but we claim that providing repeatable and optimised starting should benefit at the overall performance of the manufacturing process. 
-The project was initially conceived to handle just the machine starting phase but later on, it was extended to also cover the purge cycles of the machine. Indeed, ensuring good purge cycles reduces the risk of contamination/inclusion problems. In this context, we have developed the \textit{SmartBMM} solution. \textit{SmartBMM} is a software which leverages the real-time data collected directly from the PLC of the machine and the past data to elaborate the best instructions to get the machine started without any manual intervention of the operators.
+%We are aware that the scraps may have a multitude of reasons which do not depend on the way the machine is started, but we claim that providing repeatable and optimised starting should benefit at the overall performance of the manufacturing process. 
+The project was initially conceived to handle just the machine starting phase but later on, it was extended to also cover the purge cycles of the machine. Indeed, ensuring good purge cycles reduces the risk of contamination/inclusion problems. In this context, we have developed the \textit{SmartBMM} solution. \textit{SmartBMM} is a software which leverages the real-time data collected directly from the PLC of the machine and the past data to follow the best instructions to get the machine started without any manual intervention of the operators.
 
 \begin{figure}
 \centerline{\includegraphics[scale=1]{images/chapter_3/SmartBMM.eps}}
@@ -321,16 +321,16 @@ The project was initially conceived to handle just the machine starting phase bu
 \label{fig:SmartBMM}
 \end{figure}
 
-Figure \ref{fig:SmartBMM} shows broadly how the SmartBMM works. The SmartBMM software collects real time data directly from the PLC and stores it in a database for later retrieval. When the SmartBMM software is started the data collection continue, but, this time, the machine starts to write information to the PLC to execute a set of operations. The software takes the real time incoming data and the past data to elaborate the machine instructions to get the machine to the production conditions. The stored data are used to compute the production extruder speeds which, accordingly to past data, minimise the non-conformities rate. Looking at previous production runs we are able to retrieve the process conditions which lead to a better performance and a lower scrap rate. The software is developed using the \textit{Node-RED} \citep{nodered} programming tool. Node-red is a low-code programming for event-driven applications which was specifically designed to work with IoT and that allows easy interfacing with machines through different communication protocols.
+Figure \ref{fig:SmartBMM} shows broadly how the SmartBMM works. The SmartBMM software collects real time data directly from the PLC and stores it in a database for later retrieval. When the SmartBMM software is started the data collection continues, but, this time, the machine starts to write information to the PLC to execute a set of operations. The software takes the real time incoming data and the past data to elaborate the machine instructions to bring the machine to production conditions. The stored data are used to compute production extruder speeds which, accordingly to past data, minimise the non-conformity rate. Looking at previous production runs we are able to retrieve the process conditions which lead to a better performance and a lower scrap rate. The software is developed using the \textit{Node-RED} \citep{nodered} programming tool. Node-red is a low-code programming for event-driven applications which was specifically designed to work with IoT and that allows easy interfacing with machines through different communication protocols.
 
 Instead of manually start the machine by pressing simultaneously multiple buttons on the HMI (Human Machine Interface), machine setters and operators have to press only one button to start a cycle, whether it is a \textit{starting} cycle or a \textit{purge} cycle.  
 
 \begin{itemize}
-    \item The starting functionalities leverages the real-time data collected directly from the PLC of the machine and the past data to elaborate the best instructions to get the machine started without any manual intervention of the machine operators. The set of consecutive instructions provided to the machine are fairly standard. The extruders are started, then the material is fed into the screw, then the extruder speed is raised and so on. However, our system does not rely on timers to trigger the machine instructions. In real time the process status is controlled and the next machine instruction is triggered only if the process meets all requirements.
-    Two starting functionalities are available: \textit{full} and \textit{downtime}. The first one executes a starting phase when the machine is completely stopped; the second one returns to the production condition in which the machine was temporarily stopped.
+    \item The starting functionalities leverages the real-time data collected directly from the PLC of the machine and the past data to elaborate the best instructions to get the machine started without any manual intervention of machine operators. The set of consecutive instructions provided to the machine are fairly standard. The extruders are started, then the material is fed into the screw, then the extruder speed is raised and so on. However, our system does not rely on timers to trigger the machine instructions. In real time the process status is controlled and the next machine instruction is triggered only if the process meets all requirements.
+    Two starting functionalities are available: \textit{full} and \textit{downtime}. The first one executes a starting phase when the machine is completely stopped; the second one returns to the production condition in which the machine was temporarily idled.
     %  There exist two Purge cycles: the \textit{Purge Out} and the \textit{Purge In}. The Purge Out cycle is done when the machine is stopped for more than 2 hours to remove any FINIRE. The Purge In is done every time that the Purge Out has been done to prepare the extruder for the production run. 
-    \item The purge functionalities allow to improve the purge cycles of the machine.
-    During purge cycles we want to ensure that enough material transits into the extruders at high pressure to clean them of residual material. Instead of relying on fixed speed values or timers, we have developed a \textit{PID controller} that regulates the extruder speeds to ensure that they are constantly above the pressure targets. Moreover, the amount of material transiting through the screws is controlled in real-time. This allows to finish the purge cycle only when the correct amount of material has transited through the screws.     
+    \item The purge functionalities allow to improve purge cycles of the machine.
+    During purge cycles we want to ensure that enough material transits into the extruders at high pressure to clean them of residual production material. Instead of relying on fixed speed values or timers, we have developed a \textit{PID controller} that regulates the extruder speeds to ensure that they are constantly above the pressure targets. Moreover, the amount of material transiting through the screws is controlled in real-time. This allows to finish the purge cycle only when the correct amount of material has transited through the screws.     
 \end{itemize}
 %
 The starting and purge functionalities reduce the ``weight not OK'' and the ``contamination'' scraps, which account for $2/3$ of the total amount of non-conformities.
@@ -342,20 +342,20 @@ The functionality is chosen by the operator through a graphical user interface (
 \label{fig:SmartBMM_gui}
 \end{figure}
 %
-Historically, all manufacturing processes, including extrusion  blow-moulding, rely on PLC programs to execute the set of instructions to allow the manufacturing machine to work correctly and to allow for the transformation of the raw materials to the finished product. In this project, we decided to pilot the machine outside of the machine PLC for the following reasons:
+Historically, all manufacturing processes, including extrusion  blow-moulding, rely on PLC programs to execute the set of instructions to allow the manufacturing machine to work correctly and to allow for the transformation of raw materials into finished products. In this project, we decided to pilot the machine outside of the machine PLC for the following reasons:
 %
 \begin{itemize}
-    \item PLCs are very robust and safe, but they lack flexibility. PLCs are conceived to execute a set of logical instructions but they do not lend themselves well to be used concurrently with other systems such as databases. Developing a more complex logic which involves the data storage and the communication with databases is by far more easy with traditional software development tools.
+    \item PLCs are very robust and safe, but they lack flexibility. PLCs are conceived to execute a set of logical instructions but they do not lend themselves well to be used concurrently with other systems such as databases. Developing a more complex logic which involves data storage and communication with databases is by far more easy with traditional software development tools.
     \item Implementing the logic on an external system such as a physical or a virtual server reduces the number of PLC modifications of the machine. Our software is  non-intrusive and can be installed remotely on a server without any direct modification of the PLC program. It is something that can be plugged to the machine to introduce new functionalities. This reduces costs considerably, since it does not require the intervention of an external consultant.
 \end{itemize}
 %
-This strategy has, however, a main drawback. Our tools completely rely on the plant network to communicate the instructions to the PLC. Which means that a bad network could be a bottleneck for the correct functioning of our software. Security features have been added on the software side to interrupt the communication with the machine if any network failures prevents to communicate with the machine.
-In our opinion this is an example of a cyber-physical system. SmartBMM leverages the sensor networks with data processing to monitor and control the physical environment, with feedback loops able to elaborate the best set of machine given the different process conditions.
+This strategy has, however, a main drawback. Our tools completely rely on plant network to communicate instructions to the PLC. Which means that a bad network could be a bottleneck for the correct functioning of our software. Security features have been added on the software side to interrupt the communication with the machine if any network failures prevents to communicate with the machine.
+In our opinion this is an example of a cyber-physical system. SmartBMM leverages the sensor networks with data processing to monitor and control physical environment, with feedback loops able to elaborate the best set of machine instructions given the different process conditions.
 
 
 \section{Conclusion}
 
-In this chapter, we have presented an empirical evaluation of our approach in the industrial context. The features currently collected by the home made \textit{SCADA system}, even when enriched by the parison length measurement, cannot predict the tank weights. These results show the difficulty of applying statistical models in batch manufacturing industries, where t is not always possible to have knowledge of all the elements that contribute to the variability of the part quality. Possible explanations for these results were discussed. Nevertheless, this research work has allowed the identification of avenues for improvement of the blow-moulding process. In particular, the exploratory data analysis has shown how most of the part non-conformities occur just after machine start-up, when the process is not yet stable. This led to the launch the \textit{SmartBMM} project.
+In this chapter, we have presented an empirical evaluation of our approach in the industrial context. The features currently collected by home made \textit{SCADA system}, even when enriched by parison length measurements, cannot predict the tank weights. These results show the difficulty of applying statistical models in batch manufacturing industries, where it is not always possible to have knowledge of all the elements that contribute to the variability of the part quality. Possible explanations for these results were discussed. Nevertheless, this research work has allowed the identification of avenues for improvement of the blow-moulding process. In particular, the exploratory data analysis has shown how most of the part non-conformities occur just after machine start-up, when the process is not yet stable. This led to the launch the \textit{SmartBMM} project.
 
 \subsection{Scientific Contribution}
 
@@ -367,6 +367,6 @@ This chapter presents three main industrial contributions.
 \begin{itemize}
     \item Firstly, the work challenges certain beliefs about the operation of the blow-moulding process. The process parameters considered critical to ensure proper functioning of the process do not explain the variability in tank weights. The control limits previously set for the critical parameters of the process to ensure the correct functioning of the production process were found to be insufficient for providing such an explanation.
     \item The parison length measurement has opened new research perspectives. By measuring in real-time the length of the parison, we will eventually be able to control the distribution of material over the entire length of the parison to improve the quality of the manufactured parts. Further information and perspectives will be presented in Chapter \ref{Contributions and perspectives}.
-    \item Finally, the \textit{SmartBMM} software that was developed starting from the results obtained trough the data analysis process has been used to improve the machine start-up phases which lead to a high scrape rate. By ensuring a better start-up, we reduce the transient phase and thus the percentage of parts that do not meet quality standards. Future works will make use of the parison length measured by the camera to add to SmartBMM new functionalities.  
+    \item Finally, the \textit{SmartBMM} software that was developed starting from the results obtained trough the data analysis process has been used to improve the machine start-up phases which lead to a high scrap rate. By ensuring a better start-up, we reduce the transient phase and thus the percentage of parts that do not meet quality standards. Future works will make use of the parison length measured by the camera to add to SmartBMM new functionalities.  
 \end{itemize}
 

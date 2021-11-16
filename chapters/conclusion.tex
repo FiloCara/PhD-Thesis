@@ -1,4 +1,4 @@
-\chapter*{Conclusion TO BE FINISHED}
+\chapter*{Conclusion}
 \addcontentsline{toc}{chapter}{Conclusion}
 \thispagestyle{empty}
 
@@ -47,43 +47,14 @@ This research work has in our opinion five main industrial contributions:
 
 \section*{Perspectives}
 
-Finally, we would like to draw attention on a few perspective research directions. These questions appear essential given our current understanding of the manufacturing industry and the state of the machine learning research. In our opinion, there are three majors challenges to overcome for the manufacturing industry, in order to properly apply machine learning models in production: machine learning model uncertainty management and the machine learning life-cycle management. These topics have to be addressed in order to answer the third research objectives presented in the first chapter (see section \ref{Research objectives and methodology}).   
+Finally, we would like to draw attention on a few perspective research directions. These questions appear essential given our current understanding of the manufacturing industry and the state of the machine learning research. In our opinion, there are three majors challenges to overcome for the manufacturing industry, in order to properly apply machine learning models in production: machine learning model accuracy management, the machine learning life-cycle management and the model generalisati among different machines. These topics have to be addressed in order to answer the third project objective presented in the first chapter (see section \ref{Research objectives and methodology}).   
 % MODEL UNCERTAINTY
-If we want to employ machine learning technology to control the functioning of a production process, or to asses the quality of a manufactured part, we must be extremely cautious about mission-critical tasks, which necessitates not just advancements in model and algorithm accuracy, but also security limits and uncertainty management in system design. For instance, for a manufacturing company with low percentage of quality scraps, a machine learning model with a 80\% accuracy in prediction may lead to incorrect alerts. Non detecting non-conforming parts, or even worst, declaring a part as non compliant when in fact it is fully compliant, is surely a problem for the company. 
-The experimentation conducted during this research work have highlighted how it is extremely hard to build a robust machine learning algorithm in the context of our manufacturing process. We claim that a 100\% model accuracy is utopistic in our industrial context but in general in the manufacturing industry. Therefore, future works may focus on how a model with a limited accuracy could provide values to a company. Maybe the accuracy is not enough to automatically declare the part as non-conforming inside a traceability system, but it could be used to quickly identify some product quality deviation.
+If we want to employ machine learning technology to control the functioning of a production process, or to asses the quality of a manufactured part, we must be extremely cautious about mission-critical tasks, which necessitates not just advancements in model and algorithm accuracy, but also security limits and uncertainty management in system design. For instance, for a manufacturing company with low percentage of quality scraps, a machine learning model with a 80\% accuracy in prediction may lead to incorrect alerts. Non detecting non-conforming parts, or even worst, declaring a part as non compliant when in fact it is fully compliant, is surely a problem for the company. The experimentation conducted during this research work have highlighted how it is extremely hard to build a robust machine learning algorithm in the context of our manufacturing process. We claim that a 100\% model accuracy is quite utopian in our industrial context but, in general, in the manufacturing industry. Therefore, future works may focus on how a model with a limited accuracy could provide values to a company. Maybe the accuracy is not enough to automatically declare the part as non-conforming inside a traceability system, but it could be used to quickly identify some product quality deviation.
 
 % MODEL LIFE-CYCLE MANAGEMENT
-Another topic related to decision-making is the machine learning model life-cycle management. Results presented all along this PhD dissertation have highlighted that the extrusion blow-moulding process is non-stationary. In the manufacturing industry, multiples non controllable factors may lead to a change in the input data distribution. If the input data distribution changes over time, a model would not be able to provide the same accuracy over time. It becomes mandatory to correctly handle the model re-train over time. In order to re-train the model, it becomes extremely important to correctly handle the data acquisition of new quality control data to provides a model FINIRE. morever, future research works could leverage the machin learning field of Domain Adaptation. Domain adaptation is the task of adapting models across domains. This is motivated by the challenge where the test and training datasets fall from different data distributions due to some factor. Domain adaptation aims to build machine learning models that can be generalised into a target domain and dealing with the discrepancy across domain distributions.
-% 
-% \textbf{A future research question could be}: How to, effectively and automatically, handle the uncertainty of a trained machine learning model in the manufacturing industry? 
-
-
+Another topic related to decision-making is the machine learning model life-cycle management. Results presented in Chapter \ref{From Corrective to Predictive Process Control} of this PhD dissertation have highlighted that the extrusion blow-moulding process is non-stationary. In the manufacturing industry, multiples non controllable factors may lead to a change in the input data distribution. If the input data distribution changes over time, a model would not be able to provide the same accuracy over time. Therefore, it becomes mandatory to correctly handle this data distribution change through a model re-train process. In order to re-train the model, it becomes extremely important to correctly handle the data acquisition of new quality control data to feed the model with new train input samples. Moreover, future research works could leverage the machine learning field of \textit{Domain adaptation}. Domain adaptation is a particular case of transfer learning that utilises labelled data in one or more relevant source domains to execute new tasks in a target domain. The common algorithms for shallow domain adaptation can mainly be categorised into two classes: instance-based \citep{bruzzone2009domain,chu2013selective} and feature-based \citep{gheisari2015unsupervised, gong2013connecting, pan2010domain}. The first class reduces the discrepancy by re-weighting the source samples, and it trains on the weighted source samples. For the second class, a common shared space is generally learned in which the distributions of the two datasets are matched. These types of approaches could be used to limit the amount of new samples needed to retrain the model.
 
 % GENERALISATION
-Strictly related to the previous topic ...
-
-
-The last topic that should be addressed is the one of the model generalisation across different machines. A machine learning model trained on a specific machine will not necessarily work for another machine. Some external factors that we do not control may change. The input raw material, 
-
-For instance, the FINIRE 
-
-We claims that transfer learning could be a solution FINIRE
-
-
-In fact, we claims that a model trained on a specific machine, for a specific product, could not properly generalise FINIRE. This means lots of money and energy is needed to continuously build new trainig data and to train new models for new problems. We think that transfer learning could partially solve such an issue. In fact, FINIRE
-
-What works for a machine will not necessarily work for another machine. Some external factors that we do not control may change. For instance, the FINIRE 
-
-
-Moreover, what works for a machine will not necessarily work for another machine. 
-
-
-% 
-
-% non facile nel futuro prossimo ma forse fattibile in un futuro remoto 
-we claims that it will be quite difficult to build a genralised modle able to 
-% 
-
-
+The last topic that should be addressed is the one of the model generalisation across different machines or productions. For a company like Plastic Omnium, it should be interesting to deploy a machine learning model in different production plants. Unfortunately, a machine learning model trained on a specific machine will not necessarily work for another machine. Some external factors that we do not control may change. For instance, the input raw material, may have slightly different properties, the room temperature may change across different plants. This means lots of time and energy is needed to get training data in each plant of the company. We think that transfer learning could partially solve such an issue. In fact, instead of train a model from scratch, we can use a pre-trained model on data belonging to another machine or production. In such a way it should be possible for the model to converge faster even with a limited number of training samples.     
 
 \clearpage
