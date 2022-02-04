@@ -1,17 +1,6 @@
 \chapter{Thickness inference using thermal imaging} \label{Thickness inference using thermal imaging}
 \minitoc
 
-% A few considerations:
-% 1) The mathematical notation should be changed accordingly to Yves's suggestion in the paper
-% 2) Some Figure could be replaced or improved. For instance, the Figure 4.7 should be replaced as well as the 4.15.
-
-% Notation
-% n --> samples (i=1...n)
-% K=20 --> number of critical points (k=1...K)
-% X_i --> thermal video
-% Y_i --> Thickness vector 
-% x_{ik} --> 
-
 
 \section{Introduction}
 
@@ -64,14 +53,14 @@ Areas with smaller thicknesses cool down faster than those with higher thickness
 \end{figure}
 %
 This phenomenon is due to the release of energy from the innermost plastic layer that has not be in direct contact with the mould surfaces.
-As suggested by the literature presented in Section \ref{Background}, this surface temperature decay, easily measured by thermal imaging, could be leveraged to infer the thickness of the part.  
+As presented in Section \ref{The key quality characteristics of a blow-moulded fuel tank}, this surface temperature decay, easily measured by thermal imaging, could be leveraged to infer the thickness of the part.  
 In particular, we make two assumptions:
 \begin{itemize}
    \item The cooling conditions of the environment where the part is monitored are the same for all parts produced. Therefore, we consider that the variations of the temperature of the production area are negligible.
    \item The physical and chemical properties of the material are assumed to be constant over the entire surface of the part. In particular, the thermal and infrared transmittances of the material should be approximately constant.
 \end{itemize}
 
-Based on these assumptions, we designed two data-driven methods to model the relationship between the surface temperature variations of critical areas of the part and the corresponding thickness values. The first approach, by one-dimensional time series, exploits the cooling dynamics, one point of the part at a time, whereas the second method processes the part globally, taking into account unity of part (points belonging to the same part are processed simultaneously) and spatial information (points are positioned on the part surface).
+Based on these assumptions, we designed three data-driven methods to model the relationship between the surface temperature variations of critical areas of the part and the corresponding thickness values. The first approach, by one-dimensional time series, exploits the cooling dynamics, one point of the part at a time, whereas the second method processes the part globally, taking into account unity of part (points belonging to the same part are processed simultaneously) and spatial information (points are positioned on the part surface).
 
 \section{Proposed methods}
 
@@ -83,7 +72,7 @@ Three different approaches to model the temperature-thickness relationship are p
 \begin{itemize}
     \item \textit{Parametric temporal approach}: The Parametric temporal approach involves the use of a parametric function to approximate the pointwise temperature surface decay. The function parameters, retrieved through curve fitting, may then be used as input features for a machine learning regressor.
     \item \textit{Flexible temporal approach}: The flexible temporal approach, as the parametric temporal one, takes advantage of the pixel-wise temperature decay. Instead of compressing the information through the use of a parametric function, the flexible temporal approach leverages the ability of deep learning to extract meaningful features from raw signals.
-    \item \textit{Spatio-Temporal approach}: The spatio-temporal approach leverages not only the temporal temperature information, but also the spatial one. Instead of extracting the temperature time series for each critical point of the blow-moulded parts we can design an \textit{end-to-end} deep learning architecture able to directly handle the input thermal video. In such a way, we should be able to take into account the tank unit intrinsic information which is completely lost in the previous approaches.
+    \item \textit{Spatio-temporal approach}: The spatio-temporal approach leverages not only the temporal temperature information, but also the spatial one. Instead of extracting the temperature time series for each critical point of the blow-moulded parts we can design an \textit{end-to-end} deep learning architecture able to directly handle the input thermal video. In such a way, we should be able to take into account the tank unit intrinsic information which is completely lost in the previous approaches.
 \end{itemize}
 %
 These three approaches are presented in more detail below.
@@ -94,7 +83,7 @@ The first approach consists of three phases: time series extraction, time series
 
 \paragraph{Time series extraction:} 
 
-The time series extraction phase aims to process the input thermal video in order to retrieve the temperature time series of a limited number of critical points, for which the thickness value is known. These time series constitute the input data of our data-driven model. Given $K$ critical points of each part for which the thickness values are known, and given the thermal video $X_{i}$, we are interested in extracting the time series ${x}_{ik} = \left (X_{i}(\xi_{k}, \zeta_{k},1),\ldots,X_{i}(\xi_{k}, \zeta_{k},T) \right) \in \mathds{R}^{T}$ with $T$ time steps, where $(\xi_{k}, \zeta_{k}) \in \{1,\ldots,h\}\times\{1,\ldots,w\}$ indexes the pixel corresponding to key point $k \in \{1,\ldots,K\}$. For a set of $n$ input thermal videos, this first phase produces a dataset
+The time series extraction phase aims to process the input thermal video in order to retrieve the temperature time series of a limited number of critical points, for which the thickness value is known. These time series constitute the input data of our data-driven model. Given $K$ critical points of each part for which the thickness values are known, and given the thermal video $X_{i}$, we are interested in extracting the time series ${x}_{ik} = \left (X_{i}(\xi_{k}, \zeta_{k},1),\ldots,X_{i}(\xi_{k}, \zeta_{k},T) \right) \in \mathds{R}^{T}$, with $T$ time steps, where $(\xi_{k}, \zeta_{k}) \in \{1,\ldots,h\}\times\{1,\ldots,w\}$ indexes the pixel matched to key point $k \in \{1,\ldots,K\}$. For a set of $n$ input thermal videos, this first phase produces a dataset
 \begin{equation}
     D = \left\{\{x_{ik},y_{ik}\}_{k=1}^K\right\}_{i=1}^n
 \end{equation}
@@ -113,10 +102,10 @@ In order to reduce the number of input features we approximate the surface-tempe
 In such a way, the different cooling behaviour, observable in different areas of the part could be expressed through a limited number of new parameters. Moreover, the functional approximation smooths the time signal, thereby filtering the measurement noise. The new features may be then used as the input data for a regression model.
 Mathematically speaking, the time series approximation produces a new dataset,
 %
-\begin{equation*}
+\begin{equation}
     D = \left\{\{z_{ik},y_{ik}\}_{k=1}^K\right\}_{i=1}^n
     \enspace,
-\end{equation*}
+\end{equation}
 %
 composed of $K\times n$ pairs $(z_{ik},y_{ik})$ collection pairs where ${z}_{ik} \in \mathds{R}^{P}$ are the $P$ parameters obtained by fitting the parametric function to the time series $x_{ik}$.
 
@@ -163,7 +152,7 @@ As our hypothesis is that temporal information plays a key role in thickness dis
 %
 Inspired by the results achieved by RNNs in the domain of sequential data, we designed a simple RNN to address our problem (Figure \ref{fig:rnn_model}). The main idea behind our pipeline is to sequentially process the temperature at each time step $t$ by taking into account information from prior inputs to predict the current input and output. The last output computed by the RNN model is then passed through a fully connected layer to produce a scalar output aiming at approximating the thickness of the part area for which the time series has been extracted.
 
-\subsection{Spatio-Temporal approach} \label{Spatio-temporal approach}
+\subsection{Spatio-temporal approach} \label{Spatio-temporal approach}
 
 Compared to the previous approaches, the method proposed in this section aims to leverage not only the temporal temperature information, but also the intrinsic information of the tank unit. Instead of extracting the temperature time series for each critical point of the blow-moulded parts we design an \textit{end-to-end} deep learning architecture capable of directly processing thermal video as input data. In this setup, the dataset
 \begin{equation}
@@ -177,7 +166,7 @@ or more precisely such that
 \begin{equation}
     \hat{g} = \argmin_{g\in\mathcal{G}} \sum_{i=1}^n \sum_{k=1}^K \left( Y_{i}(\xi_{k}, \zeta_{k}) - g(X_{i}(\xi_{k}, \zeta_{k})\right)^2 \enspace,
 \end{equation}
-where $(\xi_{k}, \zeta_{k}) \in \{1,\ldots,h\}\times\{1,\ldots,w\}$ indexes the pixel corresponding to the key point $k$.
+where $(\xi_{k}, \zeta_{k}) \in \{1,\ldots,h\}\times\{1,\ldots,w\}$ indexes the pixel matched to the key point $k$.
 
 The work presented in this paragraph is inspired by the computer vision domain of \textit{semantic segmentation}, whose objective is to classify  the pixels of an image that belong to the same object class. Basically for an input image, semantic segmentation produces a segmentation mask which has the same spatial dimension of the input image where each pixel value correspond to the predicted class. As for other computer vision tasks, state-of-the-art results are obtained by convolutional neural networks (see Section \ref{Convolutional Neural Network}).
 Here, instead of predicting a segmentation mask per image and per class, we propose to use a encoder-decoder architecture to learn thicknesses from a thermal video sequence. As before, thicknesses are only measured on the key points of the part. The end-to-end pipeline that infers the thicknesses of the key points from the thermal video sequence is depicted in Figure \ref{fig:spatio_temporal_architecture}.
@@ -185,7 +174,7 @@ Here, instead of predicting a segmentation mask per image and per class, we prop
 \begin{sidewaysfigure}
 \centering
 \includegraphics[scale=0.35]{images/chapter_4/Spatio-Temporal.png}
-\caption{Spatio-Temporal architecture}
+\caption{Spatio-temporal architecture}
 \label{fig:spatio_temporal_architecture}
 \end{sidewaysfigure}
 %
@@ -208,9 +197,9 @@ Training such an architecture is more challenging compared to that of the flexib
     \item The thickness ground-truth map is not known for all the points of the tanks. In the training phase, semantic segmentation requires the output mask of the input data. For our problem, we do not have access to the full thickness map of the tanks, but only to the thickness of key points.
 \end{itemize}
 
-The first shortcoming may be alleviated by applying two different machine learning techniques: \textit{transfer learning} (see Section \ref{Transfer Learning}) and \textit{data augmentation}. Instead of training a model from scratch, a network with pre-trained parameters may be used as a starting point. Most of the state-of-the-art semantic segmentation approaches make use of pre-trained encoders to start with, while the remaining part of the network is trained from scratch.  
+The first shortcoming may be alleviated by applying two different machine learning techniques: \textit{transfer learning} (see Section \ref{Transfer Learning}) and \textit{data augmentation}. Instead of training a model from scratch, a network with pre-trained parameters may be used as a starting point. Most of the state-of-the-art semantic segmentation approaches make use of pre-trained encoders to start with, while the remaining part of the network is trained from scratch. However, we deal with thermal images. Unlike traditional colour images, which are commonly represented using a 3-channel matrix (\textit{RGB}) with 256 different integer values, thermal images are 1-channel matrices where each pixel takes a continuous value corresponding to a temperature in degrees Celsius. Because pre-trained networks have been trained on RGB images composed of unsigned integers ranging from 0 to 255, to leverage transfer learning is necessary to map the continuous temperatures values to the 0-255 range. 
 
-Data augmentation is a second option to deal with a small datasets. Data augmentation in data analysis is a set of techniques used to increase the amount of data by adding slightly modified copies of already existing data or newly created synthetic data from existing data. Popular image augmentation techniques involves geometric transformations such as image flipping, rotation or translation, or colour space transformations. More advanced techniques make use of generative models to create artificial training sample. Regarding our problem, the only augmentation techniques that can be readily applied are the ones that involve geometric transformations. 
+Data augmentation is a second option to deal with small datasets. Data augmentation in data analysis is a set of techniques used to increase the amount of data by adding slightly modified copies of already existing data or newly created synthetic data from existing data. Popular image augmentation techniques involves geometric transformations such as image flipping, rotation or translation, or colour space transformations. More advanced techniques make use of generative models to create artificial training sample. Regarding our problem, the only augmentation techniques that can be readily applied are the ones that involve geometric transformations. 
 \begin{figure}
 \centering
 \includegraphics[scale=0.8]{images/chapter_4/data_augmentation.png}
@@ -221,7 +210,7 @@ Data augmentation is a second option to deal with a small datasets. Data augment
 As image colour is temperature related, any augmentation techniques that alter the colour space risk corrupting the input data.
 While the lack of a large volume of input data can be handled by transfer learning and data augmentation, the lack of labelled data in the training dataset can be a little more challenging. In fact, since the full thickness map of the part is not available, we cannot train the model in the traditional pixel-wise loss between the ground truth map and its reconstruction computed by the network. The computed loss is then back-propagated in the network to adjust the learnable parameters of the architecture. In our particular case, the full thickness ground truth of the part is not known, which means that we cannot compute the pixel-wise loss everywhere. However, it is possible to train the network by computing the pixel-wise loss between the map and the reconstruction for the pixels whose thickness is known.
 
-\section{Experimental Validation} \label{Experimental Validation}
+\section{Experimental validation} \label{Experimental Validation}
 
 This section presents the results from a real-world implementation in an industrial setting. First, the empirical context is described as well as the data processing and the training pipeline. Finally, we provide the results of this first experimentation.
 
@@ -229,16 +218,16 @@ This section presents the results from a real-world implementation in an industr
 
 To evaluate the performance of the proposed data-driven model-based quality control, a data acquisition campaign in an industrial environment has been organised. In order to train our models to learn to infer the thickness, given the cooling profile, we need two different types of data: the temperature of the part surface and the thickness measurement of the corresponding part. The temperature data  has been acquired with an industrial thermal camera OPTRIS PI 640 with a good resolution (640$\times$480), previously calibrated to correctly measure the temperature of the plastic material. Unlike traditional colour images, which are commonly represented using a 3-channel matrix (\textit{RGB}) with 256 different integer values, thermal images collected through the OPTRIS 640 PI are 1-channel matrices where each pixel takes a continuous value corresponding to a temperature in degrees Celsius. Unlike other temperature measuring instruments, the thermal camera has the advantage to evaluate, in a single shot, the temperature of the whole visible surface. Several consecutive shots of the same part make it possible to follow the evolution of the temperature over time (Figure \ref{fig:thermal_video}). 
 
-Before moving forward to the description of the empirical context, a clarification is needed. Previously, we said that thermal images are 1-channel matrices where each pixel takes a continuous value corresponding to a temperature in degree Celsius. Because computers interprets as images only matrix (or 3D tensors) composed of unsigned integers ranging from 0 to 255, to display a thermal image is necessary to map the continuous temperatures values to the 0-255 range. In others words, a \textit{colormap} needs to be applied to the raw images in order to display it. In Figure \ref{fig:thermal_video}, as well as for others images of the current chapter, raw thermal frames are transformed in RGB images using a colormap which map low temperature value to blue colours and high temperature value to red colours. In order to have comparable colours among the different frames the colormap is computed on values ranging from 40°C (dark blue) and 135°C (bright red).  
-
 \begin{figure}
 \centering
 \includegraphics[scale=0.55]{images/chapter_4/Thermal_video.png}
 \caption{Thermal video $X_i$}
 \label{fig:thermal_video}
 \end{figure}
+%
+In order to gather comparable data, the image acquisition of each part produced needs to be synchronised with the blowing process in order to synchronise the acquisition of images on the same relative time. Repeatable mechanical movements of the machine have been used to “trigger” data acquisition. The trigger starts a one minute countdown after which the acquisition of thermal images begins. This time is mandatory to give the machine the time to unload the part and the machine operator time to place the part in the measuring area. For our experimental measurement campaign, we collected thermal videos on 50 different parts. For each part we recorded 120 consecutive thermal images equally spaced with a one second interval between images, for a total of two minutes of data acquisition.
 
-Of course, measuring the temperature of the entire surface of the part would require several cameras. In the presented experiment, we limit the temperature acquisition to half of the whole surface. The thickness measurement has been carried out on key points through the use of an ultrasonic measurement instrument routinely used for sampling control. The thickness of the part selected for our experimentation have typical values ranging between 3 and 10 millimetres. In order to gather comparable data, the image acquisition of each part produced needs to be synchronised with the blowing process in order to synchronise the  acquisition of images on the same relative time. Repeatable mechanical movements of the machine have been used to “trigger” data acquisition. The trigger starts a one minute countdown after which the acquisition of thermal images begins. This time is mandatory to give the machine the time to unload the part and the machine operator time to place the part in the measuring area. For our experimental measurement campaign, we collected thermal videos on 50 different parts. For each part we recorded 120 consecutive thermal images equally spaced with a one second interval between images, for a total of two minutes of data acquisition. For each thermal video, and therefore for each part, we measured 20 critical thickness points evenly distributed on the tank surface (Figure \ref{fig:critical_points}).
+The thickness measurement has been carried out on key points through the use of an ultrasonic measurement instrument routinely used for sampling control. The thicknesses of the part selected for our experimentation have typical values ranging between 3 and 10 millimetres. For each thermal video, and therefore for each part, we measured 20 critical thickness points evenly distributed on the tank surface (Figure \ref{fig:critical_points}).
 
 \begin{figure}
 \centering
@@ -249,15 +238,15 @@ Of course, measuring the temperature of the entire surface of the part would req
 
 \subsection{Data processing}
 
-Once the data has been collected, some processing operations are needed to prepare the data for training. In particular, we need to associate the 20 key points whose thickness is measured to their corresponding pixel coordinates on the thermal video. This was done manually, each measured point of the part is identified on a thermal image by its $(\xi_{k}, \zeta_{k})$ pixel coordinate. Hopefully, since the position of the part does not change during the image acquisition, it is sufficient to find the pixel coordinates for one frame per sequence. 
+Once data have been collected, some processing operations are needed to prepare the data for training. Raw thermal frames are transformed in RGB images using a colormap which maps low temperature value to blue colours and high temperature value to red colours. In order to have comparable colours among the different frames, the colormap is computed on values ranging from 40\degree C (dark blue) and 135\degree C (bright red). Moreover, we need to associate the 20 key points whose thickness is measured to their corresponding pixel coordinates on the thermal video. This was done manually, each measured point of the part is identified on a thermal image by its $(\xi_{k}, \zeta_{k})$ pixel coordinate. Hopefully, since the position of the part does not change during the image acquisition, it is sufficient to find the pixel coordinates for one frame per sequence. 
 
 Although the part does not move during the acquisition, each part is not precisely positioned with respect to the field of view of the thermal camera. The  $(\xi_{k}, \zeta_{k})$ coordinates on different thermal videos may therefore refer to different surface areas of the part. In order to align pixel coordinates along parts, a transformation is applied, to each frame, to project the part onto a reference position. Before describing the transformation in more detail, we present the \textit{pinhole camera model}. 
 
 \paragraph{The pinhole camera model}
 The pinhole camera model describes the mathematical relationship between the coordinates of a point in a three-dimensional space and its projection onto a two-dimensional pixel coordinate system. This mathematical relationship depends on the extrinsic and intrinsic parameters of the camera. The extrinsic parameters refer to the rotation matrix and translation vector of the camera coordinate system with regard to the world coordinate system.
-Given a point $(x, y, z, 1)^{T}$ in the world coordinate system, we can form its pixel coordinates $(u, v, 1)^{T}$ as follows:
+Given a point $(x, y, z, 1)^{T}$ in the world coordinate system, we can form its pixel coordinates $(\xi, \zeta, 1)^{T}$ as follows:
 \begin{equation} \label{pinhole}
-    \begin{bmatrix} u\\ v\\ 1 \end{bmatrix} = \begin{bmatrix}
+    \begin{bmatrix} \xi\\ \zeta\\ 1 \end{bmatrix} = \begin{bmatrix}
         f_x & 0   & c_x\\ 
         0   & f_y & c_y \\ 
         0   & 0   & 1 
@@ -272,7 +261,7 @@ Given a point $(x, y, z, 1)^{T}$ in the world coordinate system, we can form its
 \end{equation}
 That is:
 \begin{equation}
-    \begin{bmatrix} u\\ v\\ 1 \end{bmatrix} = K[R|T]
+    \begin{bmatrix} \xi\\ \zeta\\ 1 \end{bmatrix} = K[R|T]
     \begin{bmatrix} x\\ y\\ z \\ 1 \end{bmatrix}
         \enspace,
 \end{equation}
@@ -290,7 +279,7 @@ where:
 Given this  mathematical description, a homography $H$ can be defined as a transformation matrix that maps points from one plane to another. It can be derived by the equation \ref{pinhole}:
 
 \begin{equation}
-    \begin{bmatrix} u\\ v\\ 1 \end{bmatrix} = \begin{bmatrix}
+    \begin{bmatrix} \xi\\ \zeta\\ 1 \end{bmatrix} = \begin{bmatrix}
         f_x & 0   & c_x\\ 
         0   & f_y & c_y \\ 
         0   & 0   & 1 
@@ -300,11 +289,11 @@ Given this  mathematical description, a homography $H$ can be defined as a trans
         r_{21}& r_{22} & r_{23} & t_{y} \\
         r_{31}& r_{32} & r_{33} & t_{z}
         \end{bmatrix}
-        \begin{bmatrix} u'\\ v'\\ 0 \\ 1 \end{bmatrix}
+        \begin{bmatrix} \xi'\\ \zeta'\\ 0 \\ 1 \end{bmatrix}
 \end{equation}
 
 \begin{equation}
-    \begin{bmatrix} u\\ v\\ 1 \end{bmatrix} = \begin{bmatrix}
+    \begin{bmatrix} \xi\\ \zeta\\ 1 \end{bmatrix} = \begin{bmatrix}
         f_x & 0   & c_x\\ 
         0   & f_y & c_y \\ 
         0   & 0   & 1 
@@ -314,17 +303,17 @@ Given this  mathematical description, a homography $H$ can be defined as a trans
         r_{21}& r_{22} & t_{y} \\
         r_{31}& r_{32} & t_{z}
         \end{bmatrix}
-        \begin{bmatrix} u'\\ v'\\ 1 \end{bmatrix}
+        \begin{bmatrix} \xi'\\ \zeta'\\ 1 \end{bmatrix}
 \end{equation}
 
 \begin{equation}
-    \begin{bmatrix} u\\ v\\ 1 \end{bmatrix} = 
+    \begin{bmatrix} \xi\\ \zeta\\ 1 \end{bmatrix} = 
         \begin{bmatrix}
         h_{11}& h_{12} & h_{13} \\ 
         h_{21}& h_{22} & h_{23} \\
         h_{31}& h_{32} & h_{33}
         \end{bmatrix}
-        \begin{bmatrix} u'\\ v'\\ 1 \end{bmatrix}
+        \begin{bmatrix} \xi'\\ \zeta'\\ 1 \end{bmatrix}
 \end{equation}
 
 \begin{equation} \label{projection}
@@ -348,7 +337,7 @@ Then, depending on the used method, extra processing is needed to prepare data f
 \subsubsection{Parametric temporal approach}
 The parametric temporal approach makes use of the temperature time series extracted from the thermal video sequences to infer the corresponding thickness. Given the coordinates $(\xi_{k}, \zeta_{k})$ of the 20 critical thickness values, it is simple to retrieve the temperature time series by simply collecting the temperature of the coordinate for each sequential frame of the thermal video. By extracting all temperature time series for each critical point of the 50 parts considered, we can build a new time series dataset composed of 1000 (50 x 20) time series and the corresponding thickness values. The time series are then approximated by their parametric expansion. As explained in Section \ref{Parametric Temporal approach}, three different parametric functions have been identified as good candidates for approximating the pixel-wise temperature surface decay. In order to identify the parametric expansion that best fits the input time series, each expansion was applied to the time-series of the training set. The root mean square error (RMSE) of the overall reconstruction is used to select the best expansion. 
 
-Table \ref{tab:curve_fitting_error} shows the average RMSE reconstruction for the three parametric expansions considered. The polynomial expansion minimises the reconstruction error and is thus used to summarise the raw time series.  
+Table \ref{tab:curve_fitting_error} shows the average RMSE reconstruction for the three parametric expansions considered. The polynomial expansion, minimises the reconstruction error and is thus used to summarise the raw time series.  
 For each time series, the three parameters defining the second-order polynomial approximation constitute the predictor of the machine learning model.
 
 \begin{table}
@@ -356,7 +345,7 @@ For each time series, the three parameters defining the second-order polynomial 
 \caption{Curve fitting reconstruction error}
 \begin{tabular}{ll}
 \toprule
-Parametric function    & RMSE (train) \\ 
+\textbf{Parametric function}    & \textbf{RMSE (train)}\\ 
 \midrule
 
 Power Law              & 0.29         \\ 
@@ -372,7 +361,7 @@ Polynomial (2nd degree) & 0.03         \\
 
 As for the parametric temporal approach, the flexible temporal approach makes use of the temperature time series extracted from the thermal video sequences to infer the corresponding thickness. Given the coordinates $(\xi_{k}, \zeta_{k})$ of the 20 critical thickness values, it is simple to retrieve the temperature time series by simply collecting the temperature of the coordinate for each sequential frame of the thermal video. Unlike the previous approach, no extra data processing is required because the raw time series constitute the input data of the RNN model. 
 
-\subsubsection{Spatio-Temporal approach}
+\subsubsection{Spatio-temporal approach}
 Compared to the previous approaches, the spatio-temporal approach does not require to rearrange the input thermal video in another format, but some processing operations are still needed to allow the usage of a pre-trained spatial encoder. In order to be consistent with the data of the \textit{ImageNet} dataset \citep{deng2009imagenet} that was used  to pre-train the network, each thermal frame is converted to a 3-channel RGB image. The maximum and minimum temperatures among all frames are retrieved and the same colormap is applied on all thermal frames of each video sequence. The colormap is the one applied to visualise the thermal frames in the current Chapter. All values are then rescaled in $[0, 1]$ and then normalised using the default mean and standard deviation value of the \textit{ImageNet} dataset.
 
 \subsection{Training}
@@ -388,13 +377,13 @@ The exhaustive list of model hyper-parameters and their search space is summaris
 \centering
 \caption{Hyper-parameter search space for the parametric temporal models}
 \label{tab:Parametric Temporal_search_space}
-\begin{tabular}{lll} 
+\begin{tabular}{@{}l@{~\,}ll@{}} 
 \toprule
 \textbf{Model}                            & \textbf{Hyper-parameter} & \textbf{Search space}                          \\ 
 \midrule
 Lasso                                     & $\lambda$                & LogSpace($10^{-5}$, 1)                          \\ 
 \midrule
-SVM  & Kernel                   & \{Linear, Polynomial, RBF\}  \\ 
+\multirow{4}{*}{SVM}  & Kernel                   & \{Linear, Polynomial, RBF\}  \\ 
 \cline{2-3}
                                           & $C$                        & LogSpace($10^{-6}$, 1)                          \\ 
 \cline{2-3}
@@ -423,15 +412,15 @@ We compared the performances of three RNN-based models: a vanilla RNN, an LSTM a
     \textbf{Hyper-parameter} & \textbf{Search space} \\ 
     \midrule
     RNN Cell type & \{RNN, LSTM, GRU\} \\
-    N° hidden unit & \{8, 16, 32\} \\
-    N° stacked layers & \{1, 2\} \\
+    N\degree  hidden unit & \{8, 16, 32\} \\
+    N\degree  stacked layers & \{1, 2\} \\
     \bottomrule
     \end{tabular}
     \label{tab:rnn_search_space}
 \end{table}
 Each model has been trained to minimise the mean squared error metric using the  \textit{Adam} optimiser~\citep{kingma2014adam} with $\beta_{1} = 0.9$, $\beta_{2} = 0.98$ and $\epsilon = 10^{-9}$ (default values) and a learning rate sampled by the TPE algorithm on a logarithmic scale,  from $10^{-7}$ to $10^{-2}$. 
 
-\subsubsection{Spatio-Temporal approach}
+\subsubsection{Spatio-temporal approach}
 As for the previous approach, we compared different model configurations on two pre-trained networks: a ResNet18 (18 layers) and a ResNet34 (34 layers). Deeper architectures exist, but we made the choice to limit the search space to the two smaller ResNet architectures because of the limited number of samples in our training set. Deeper architectures would allow to extract richer data representations, but at the expense of more parameters and increased computation time. We believe that ResNet18 and ResNet34 are powerful enough to produce a relevant representation of thermal images. Another hyper-parameter of the presented architecture is the number of encoder/decoder blocks. As stated in Section \ref{Residual Networks}, all ResNet architectures, independently on their depths, have 5 main building blocks. Actually, it is possible to slightly change the architecture in order to stop the encoding computation before the last block. This allows to reduce the complexity of the architecture and thus prevent possible over-fitting problems. For instance, we could take into account only the first 3 convolutional building blocks of the ResNet in such a way that the output of the third convolutional building block would be the spatial feature map and the output of the first and second blocks would be the intermediate encoded features. Since the encoder and decoder are symmetrical, reducing the number of encoder blocks also implies a reduction in the number of decoder blocks.
 
 \begin{table}[h!]
@@ -442,7 +431,7 @@ As for the previous approach, we compared different model configurations on two 
     \textbf{Hyper-parameter} & \textbf{Search space} \\ 
     \midrule
     Encoder & \{ResNet18, ResNet34\} \\
-    N° of blocks  & \{3, 4, 5\} \\
+    N\degree  of blocks  & \{3, 4, 5\} \\
     \bottomrule
     \end{tabular}
     \label{tab:spatial_temporal_search_space}
@@ -511,7 +500,7 @@ These results are similar to those obtained with random forest, but random fores
 The third approach (Table \ref{tab:spatial_temporal_model_results}) completely outperforms the previous ones. The best results are obtained using a pre-trained ResNet34 encoder with 5 encoder-decoder blocks, which achieves an RMSE of 0.16 mm on the test set, which is about one-third of the error of the previous approaches. A precision of 0.2mm is considered extremely interesting in our industrial context. 
 \begin{table}
     \centering
-    \caption{RMSE for the spatio-Temporal model}
+    \caption{RMSE for the spatio-temporal model}
     \begin{tabular}{llll}
     \toprule
     \textbf{Model} & \textbf{Train}  & \textbf{Validation}  & \textbf{Test}  \\
@@ -555,15 +544,13 @@ The results are presented in Figure \ref{fig:gt_prediction_unseen}, which shows 
 \label{fig:gt_prediction_unseen}
 \end{figure}
 %
-However, the prediction of the thickness of unseen points is nowhere near as good as the prediction on these critical points, and our approach does improve on the manual inspection in this respect: our model is reliable on the critical points usually measured but fails to predict the thickness of the entire part. In Chapter \ref{Contributions and perspectives} we will present some of the research perspectives we are working on to improve the ability of the model to correctly predict the thickness of the full visible surface. 
-
-% Perspectives 
+However, the prediction of the thickness of unseen points is nowhere near as good as the prediction on these critical points, and our approach does improve on the manual inspection in this respect: our model is reliable on the critical points usually measured but fails to predict the thickness of the entire part.
 
 \section{Conclusion}
 
-Traditional quality control methods for measuring blow-moulded part thickness involves time-consuming operations that cannot be applied online for a 100\% quality inspection on all parts. This chapter proposes a new data-driven approach for measuring in real-time the part thickness by leveraging the surface-temperature decay over time. Three different pipelines have been designed to model the relationship between the cooling behaviour of a part area, captured through the use of a thermal camera, and the corresponding thickness. The procedure was validated in a real-world manufacturing setting. These results have shown the ability of our method to provide accurate results in predicting thickness values of a set of critical points. Among the three pipelines presented above, the spatio-temporal approach is the one that achieve the best performance in reconstructing the thickness values of the test set data. Future research works aim to generalise predictions outside of the critical points, in order to reconstruct the full thickness map of the whole visible part surface. In Chapter \ref{Contributions and perspectives} we will provide more details about the research perspectives related to this topic. 
+Traditional quality control methods for measuring blow-moulded part thickness involves time-consuming operations that cannot be applied online for a 100\% quality inspection on all parts. This chapter proposes a new data-driven approach for measuring in real-time the part thickness by leveraging the surface-temperature decay over time. Three different pipelines have been designed to model the relationship between the cooling behaviour of a part area, captured through the use of a thermal camera, and the corresponding thickness. The procedure was validated in a real-world manufacturing setting. These results have shown the ability of our method to provide accurate results in predicting thickness values of a set of critical points. Among the three pipelines presented above, the spatio-temporal approach is the one that achieve the best performance in reconstructing the thickness values of the test set data. Future research works aim to generalise predictions outside of the critical points, in order to reconstruct the full thickness map of the whole visible part surface.
 
-\subsection{Scientific Contribution}
+\subsection{Scientific contribution}
 
 Thermography for measuring thickness is not a new idea, however, to our knowledge, this is the first time that thermography has been proven to be effective at measuring the thickness of a part in an industrial environment. Certainly the first time it has been used to infer the thickness of a blow-moulded part. By leveraging the surface-decay temperature due to the part cooling at the room temperature, we can infer the thickness of a tank in a non-contact manner.
 
@@ -577,7 +564,7 @@ Compared to previous proposed approaches using thermography, which make use of p
 Transfer learning has been proven to be effective in a context where the number of data was very limited. Although the proposed method was validated in a single case study, we claim it should generalise to other industrial contexts. The presented empirical setting was designed to respond to a specific need of a manufacturer, but we think it should apply to others manufacturer dealing with blow-moulding and others manufacturing process involving plastic processing. Whenever it is possible to observe a different cooling behaviour between different areas of the part surface, our approach may be potentially applied.
 
 
-\subsection{Industrial Contribution}
+\subsection{Industrial contribution}
 
 From the industrial point of view, this chapter introduces a new idea of quality control. The traditional Acceptance Sampling approach, used in the industrial context studied, may be enhanced by introducing data-driven model quality control. In this chapter we have shown that by adding extra sensors, or cameras, it could be possible to infer the quality of the part and therefore provide a quality status in real-time without any time-consuming or destructive measurement. This provides to the manufacturing company a dual benefit:
 %
@@ -588,5 +575,5 @@ From the industrial point of view, this chapter introduces a new idea of quality
 %
 As regarding the proposed approach to infer the thickness, results are considered accurate enough to move towards the industrialisation of the proposed system. In order to industrialise the proposed system, we should be able to take into account extra information such us the temperature of the environment where the machine is located, as well as the temperature of the moulds. In fact, the surface temperature of the blow-moulded part depends on the ability of the moulds to absorb the heat. If the heat absorption capacity changes, as a result of the change in temperature of the moulds coolant, the tank surface temperature will be different and the data-driven model accuracy would drop. In the same way, the plant temperature may influence a bit the cooling behaviour of the blow-moulded part. However, the impact of the temperature of the industrial environment on the surface temperature decay should be minimal due to the insulating properties of the plastic material (PEHD).  
 
-
+\cleardoublepage
 

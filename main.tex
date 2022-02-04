@@ -23,11 +23,19 @@
 \usepackage{adjustbox}
 \usepackage[parfill]{parskip}
 \usepackage{nomencl}
+\makenomenclature
 
 \setlength\parindent{15pt} % set indent
 \setlength{\parskip}{10pt} % changes vertical space between paragraphs
 
 \renewcommand{\arraystretch}{1.3} % Stretch a bit the table cell height
+
+\usepackage{etoolbox}
+\renewcommand\nomgroup[1]{%
+  \item[\bfseries
+  \ifstrequal{#1}{A}{Chapter 1-2-3}{%
+  \ifstrequal{#1}{B}{Chapter 4}{}}%
+]}
 
 \DeclareMathOperator*{\argmin}{argmin}
 
@@ -35,7 +43,10 @@
 
 \setcounter{secnumdepth}{3}
 
+% Define page style
+
 \pagestyle{fancy}
+
 \fancyhead[RE]{}  % right even
 \fancyhead[LO]{}  % left odd
 \fancyfoot[C]{\small\thepage}  % page at foot
@@ -46,20 +57,15 @@
 %%%%%%%%%%            DOCUMENT        %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Machine learning for the improvement of a blow-moulding process}
-\author{Filippo CARA}
-\date{November 2021}
 
 
 \begin{document}
-
-\maketitle
+ \frontmatter 
+\input{chapters/title_page}
 
 \dominitoc
 
-% \chapter*{Acknowledgements}
-
-% I like to acknowledge ...
+\input{chapters/acknowledgements}
 
 \input{chapters/abstract}
   
@@ -75,29 +81,31 @@
 \listoftables
 \addcontentsline{toc}{chapter}{List of Tables}
 
-\input{chapters/list_of_symbols}
-\printnomenclature
-\addcontentsline{toc}{chapter}{List of Symbols }
-
+% \input{chapters/list_of_symbols}
+% \printnomenclature
+% \addcontentsline{toc}{chapter}{List of Symbols}
 
 \input{chapters/introduction}
 
+\mainmatter
+
 % Chapter 1
-\setcounter{mtc}{4}
+\setcounter{mtc}{3}
 \input{chapters/chapter_1}
 
 % Chapter 2
-\setcounter{mtc}{5}
+\setcounter{mtc}{4}
 \input{chapters/chapter_2}
 
 % Chapter 3
-\setcounter{mtc}{6}
+\setcounter{mtc}{5}
 \input{chapters/chapter_3}
 
 % Chapter 4
-\setcounter{mtc}{7}
+\setcounter{mtc}{6}
 \input{chapters/chapter_4}
 
+\backmatter
 
 \input{chapters/conclusion}
 

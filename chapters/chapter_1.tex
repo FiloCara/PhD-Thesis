@@ -1,4 +1,4 @@
-\chapter{Industrial Context and Research Framework} \label{Industrial Context and Research Framework}
+\chapter{Industrial context and research framework} \label{Industrial Context and Research Framework}
 \minitoc
 
 In this first chapter, we present the industrial context of this research project. Primarily, we will review the Industry 4.0 paradigm as well as the benefits it can bring to the manufacturing industry through the application of Machine Learning methods. Subsequently, we will describe our extrusion blow-moulding industrial research framework, and we will formalise and position our research work. Finally, the goal of this research work is presented: the quality improvement of fuel tank production using extrusion blow-moulding process.  
@@ -9,7 +9,7 @@ Automotive industry is nowadays driven by global competition and the need for fa
 
 The term Industry 4.0 refers to the connection among production departments, tools, machines, “individual things” in general made possible by internet and cyber physical systems \citep{schlapfer2015industry}.
 With the digital revolution, the boundaries between physical and digital worlds are disappearing to create an interconnected factory with strong interactions between employees, machines and products. These connected entities can interact with one another using standard internet-based protocols and analyse data to predict failure, configure themselves, and adapt themselves to changes.
-According to the estimations made by BCG for German companies, Industry 4.0 will have a positive impact on companies with productivity and revenue growth but also on economy with more investments and with an overall six percent increase in employment during the next ten years. Productivity improvements on conversion costs, which exclude the cost of materials, will range from 10 to 20\% in automotive industry, while productivity gains of 5 to 8\% will be achieved if the materials costs are factored in \citep{lorenz2016time}. The revenue growth, as a direct consequence of  manufacturers' demand for enhanced equipment and new data applications, as well as consumer demand for a wider variety of increasingly customised products, is estimated at 30 billion € a year, which is approximately one percent of the German GDP \citep{russmann2015industry}. 
+According to the estimations made by BCG for German companies, Industry 4.0 will have a positive impact on companies with productivity and revenue growth but also on economy with more investments and with an overall six percent increase in employment during the next ten years. Productivity improvements on conversion costs, which exclude the cost of materials, will range from 10 to 20\% in automotive industry, while productivity gains of 5 to 8\% will be achieved if the materials costs are factored in \citep{lorenz2016time}. The revenue growth, as a direct consequence of  manufacturers' demand for enhanced equipment and new data applications, as well as consumer demand for a wider variety of increasingly customised products, is estimated at 30 billion euros a year, which is approximately one percent of the German GDP \citep{russmann2015industry}. 
 
 Industry 4.0 is also a new way of looking at performance, with a more precise and immediate vision (based on real-time indicators) of the entire production chain, but also the optimisation of production through the use of artificial intelligence. In interconnected plants, the large amount of data collected from different sources --production equipment and systems as well as enterprise-- can be helpful in taking decision and contributes to a continuous improvement process. In particular, we think that the integration of machine learning models inside complex industrial processes can reduce the non-quality costs with the increase of the Overall Equipment Effectiveness (OEE). 
 
@@ -75,7 +75,7 @@ Scheduling  &
 
 \section{Industrial domain: extrusion blow-moulding} \label{Industrial domain: extrusion blow-moulding}
 
-Our industrial process, extrusion blow-moulding, isused to form hollow thermoplastic objects (especially bottles and containers). The process takes a thin-walled tube called a \textit{parison} that has been formed by extrusion, entraps it between two halves of a larger diameter mould, and then expands it by blowing air into the tube, forcing the parison out against the mould. The outside of the thin-walled part takes then the shape of the inside of the mould \citep{poli2001design}.
+Our industrial process, extrusion blow-moulding, is used to form hollow thermoplastic objects (especially bottles and containers). The process takes a thin-walled tube called a \textit{parison} that has been formed by extrusion, entraps it between two halves of a larger diameter mould, and then expands it by blowing air into the tube, forcing the parison out against the mould. The outside of the thin-walled part takes then the shape of the inside of the mould \citep{poli2001design}.
 
 \begin{figure}
 \centerline{\includegraphics[scale=0.75]{images/chapter_1/extrusion_blow_molding.eps}}
@@ -91,10 +91,10 @@ As the name suggests, extrusion blow-moulding is composed of two sub-processes: 
     \item \textit{Blow-moulding:} Unlike extrusion, blow-moulding is a discontinuous-flow process. In extrusion blow moulding, the parison is vertically suspended in the air during which time two mould halves enclose it by the action of a pneumatic or hydraulic mechanism. Internally applied air pressure causes the parison to inflate and take the shape of the inner parts of the moulds. Once the blow operation is completed and the part has been cooled down suitably for ejection, the mould opens and the part is ejected, allowing the parison to be extruded through the mould for the next cycle. 
 \end{itemize}
 
-Each phase has parameters that inﬂuence the subsequent phases and, ultimately, the characteristics of the ﬁnished product. The multiple phases mean that the number of parameters that can be adjusted on the process is fairly high. It is possible to fine-tune temperatures, screw speeds and throughputs for the extrusion, as well as the  pressure curves, moulds opening and closing times for the blow-moulding phase. In addition, the extrusion blow-moulding process has a certain dynamic: it takes a certain amount of time for the adjustment of one of the process parameters to have an effect on the products. This dynamic is mainly due to the thermal inertia of the solid tooling.
+Each phase has parameters that influence the subsequent phases and, ultimately, the characteristics of the finished product. The multiple phases mean that the number of parameters that can be adjusted on the process is fairly high. It is possible to fine-tune temperatures, screw speeds and throughputs for the extrusion, as well as the  pressure curves, moulds opening and closing times for the blow-moulding phase. In addition, the extrusion blow-moulding process has a certain dynamic: it takes a certain amount of time for the adjustment of one of the process parameters to have an effect on the products. This dynamic is mainly due to the thermal inertia of the solid tooling.
 One of the most critical part of the process is the parison formation. In fact, the dimensions of the blow moulded article are directly related to the dimension and thickness of the parison. Furthermore, the thermo-mechanical history of the material during the parison formation stage and the resulting weight and diameter distribution of the parison have a great influence on the characteristics of the subsequent inflation and cooling stages. The shape and the dimensions of the parison are the result of complex interactions between the molten polymer and the thermo-mechanical conditions that influence the melt after it leaves the extruder die. Parison formation is affected by two phenomena knows as \textit{swell} and \textit{sag}. Parison swell, occurring both in diameter and thickness, is due to the nonlinear viscoelastic deformation of the polymer melt in the extrusion die. Sag is caused by gravitational forces that act on the suspended parison \citep{huang2002prediction}.
 
-There are many variations of this process including equipment made to extrude multiple parisons simultaneously, equipment that can extrude multiple layers within the same parison, equipment with rotary capability that will hold several moulds and can provide a continuous nonstop process. Moreover, the extrusion blow-moulding process can be split into two subcategories: intermittent extrusion blow moulding and continuous extrusion blow moulding. With intermittent extrusion blow moulding, the extruder fills a reservoir with plastic. Once the the reservoir has been filled, a plunger is activated and pushes the material from the reservoir through the extrusion head. On the other hand, in continuous blow-moulding, the plastic is extruded permanently in a continuous manner while the machine runs.
+There are many variations of this process including equipment made to extrude multiple parisons simultaneously, equipment that can extrude multiple layers within the same parison, equipment with rotary capability that will hold several moulds and can provide a continuous nonstop process. Moreover, the extrusion blow-moulding process can be split into two subcategories: intermittent extrusion blow moulding and continuous extrusion blow moulding. With intermittent extrusion blow moulding, the extruder fills a reservoir with plastic. Once the reservoir has been filled, a plunger is activated and pushes the material from the reservoir through the extrusion head. On the other hand, in continuous blow-moulding, the plastic is extruded permanently in a continuous manner while the machine runs.
 
 In this thesis project we have been studying a continuous extrusion blow-moulding process, whose finished products are obtained from the overlay of multiple plastic layers. This particular type of blow-moulding process is known as \textit{co-extrusion}. Co-extrusion was born out of the need of reduce the permeability of fuel tanks. The steps for producing a multi-layer plastic product are the same as those used by the traditional single layer process, except for the number of extruders involved in the manufacturing process. Up to six extruders can be used simultaneously to melt different plastic materials. The goal is to create a multi-layer tank with the use of different materials, as shown in Figure \ref{fig:Co-extrusion Process}.
 
@@ -106,9 +106,9 @@ In this thesis project we have been studying a continuous extrusion blow-mouldin
 
 The extrusion blow-molding process taken into account all along this research study is used to produce different tank models. In fact, by simply changing the moulds, it is possible to manufacture tanks with various shapes and sizes. The ratio between the separate plastic layers, as well as the material throughput, need to be adjusted accordingly to take into account the different size or shape of each tank model. This makes the extrusion blow-molding a flexible process which allows for rapid responses to costumers requests. The fuel tanks are usually manufactured in production campaigns of a few days, also known as batches.
 
-The extrusion blow-moulding constitutes one of the various stages necessary to produce finished part. The stages needed to manufacture a finished part may vary depending on the type of product. For instance, a fuel tank container, a plastic bottle or a plastic bumper may require different post-production processes. Further information on how a fuel tank is produced are available in Appendix \ref{Full production process}. As far as our thesis work is concerned, we will only focus on the extrusion blow-moulding stage.
+The extrusion blow-moulding constitutes one of the various stages necessary to produce finished part. The stages needed to manufacture a finished part may vary depending on the type of product. For instance, a fuel tank container, a plastic bottle or a plastic bumper may require different post-production processes. Further information on how a fuel tank is produced are available in Appendix \ref{Fuel system production process}. As far as our thesis work is concerned, we will only focus on the extrusion blow-moulding stage.
 
-\subsection{The key parameters of the extrusion blow-moulding} \label{The key parameters of the Extrusion Blow-moulding}
+\subsection{The key parameters of extrusion blow-moulding} \label{The key parameters of the Extrusion Blow-moulding}
 
 Extrusion blow-moulding requires the fine-tuning of multiples adjustable parameters to reach the conditions for producing the final part. One of the most critical process parameter involving the extrusion sub-process is the material throughput. Controlling the amount of material passing through each extruder is crucial for the following reasons:  
 %
@@ -117,10 +117,10 @@ Extrusion blow-moulding requires the fine-tuning of multiples adjustable paramet
     \item The throughput ratios among the different 6 extruders should be controlled to ensure the correct amount of material on each of the 6 layers composing the tank thickness.
 \end{itemize}
 %
-The throughput depends mainly on the rotation speed of the extruder and slightly on the extruder temperature. The temperature of the extruder affects the melting of the plastic material and the material viscosity may change. Depending on the material viscosity the throughput may change given the same extruder speed. For what has been said so far, controlling the temperature of the extruder along the screw length is mandatory to ensure constant and repeatable melting condition and therefore ensure a constant throughput. Another key parameter is the opening of the die gap of the \textit{head} of the machine. By controlling the opening of the gap during the cycle time we are able to distribute more or less material along the parison length. This operation is important to ensure to put enough material in parison zones that are most stretched during the blowing phase. Of course, the parison length plays a key role in ensuring that the material distribution is well positioned relatively to the mould position. Unfortunately, in the production process in question, there is no control system for measuring the parison length. In continuous extrusion blow-moulding, the cycle time triggers the blowing cycle. With regard to the blow-moulding sub-process, the most critical parameters are the blowing pressure, or better the blowing pressures, since there exist 4 different air blowing circuits, the cooling water temperature and throughput. The blowing pressure ensures the parison to inflate and take the shape of the inner parts of the moulds. Without enough air pressure the plastic material does not adhere to the mould surfaces, preventing a correct material cooling. In the same way, the amount of water passing through the cooling circuit, as well as its temperature, affect the cooling capacities of the moulds. The following table (Table \ref{tab:key_parameters}) summarises the key parameters of an extrusion blow-moulding process that were identified together with process experts.
+The throughput depends mainly on the rotation speed of the extruder and slightly on the extruder temperature. The temperature of the extruder affects the melting of the plastic material and the material viscosity may change. Depending on the material viscosity the throughput may change given the same extruder speed. For what has been said so far, controlling the temperature of the extruder along the screw length is mandatory to ensure constant and repeatable melting condition and therefore ensure a constant throughput. Another key parameter is the opening of the die gap of the \textit{head} of the machine. By controlling the opening of the gap during the cycle time we are able to distribute more or less material along the parison length. This operation is important to ensure to put enough material in parison zones that are most stretched during the blowing phase. Of course, the parison length plays a key role in ensuring that the material distribution is well positioned relatively to the mould position. Unfortunately, in the production process in question, there is no control system for measuring the parison length. In continuous extrusion blow-moulding, the cycle time triggers the blowing cycle. 
 
 \begin{landscape}
-\begin{table}[]
+\begin{table}
 \caption{Blow-moulding key
 parameters}
 \label{tab:key_parameters}
@@ -131,22 +131,21 @@ parameters}
 \midrule
 \textbf{Parameter}                     & \textbf{Range}   & \textbf{Description}                                    & \textbf{Dependencies} \\ 
 \midrule
-Speed$^*$  (in RPM)                               & [0, 90]       & Rotation speed of the screw                               &              \\ 
-Throughput$^*$ (in Kg/h)                              & [0, 400]      & Material throughput in screw                 &  Speed, temperatures            \\ 
+Speed$^*$  (in RPM)                                  & [0, 90]       & Rotation speed of the screw                               &              \\ 
+Throughput$^*$ (in Kg/h)                             & [0, 400]      & Material throughput in screw                 &  Speed, temperatures            \\ 
 Melt pressure$^*$ (in \% of motor nominal torque)    & [0, 100]      & Pressure at the end of the screw                 & Speed             \\
-Feeding temperature$^*$ (in °C)                               & [0, 100]      & Temperature at the entrance      &              \\
-Melt temperature$^*$  (in °C)                                & [0, 250]      & Temperature at the end          &    Feed. temperature, pressure          \\
-Cycle time   (in s)                                 & [60, 120]     & Tank production cycle time                                &              \\
-Parison profile  (in \% of die gap opening)         &               &                                                &  Cycle time            \\
-Parison length (in mm)                                & [0, 3000]     & Length during extrusion     &   Parison profile, cycle time    \\ 
+Feeding temperature$^*$ (in \degree C)                      & [0, 100]      & Temperature at the entrance      &              \\
+Melt temperature$^*$  (in \degree C)                        & [0, 250]      & Temperature at the end          &    Feed. temperature, pressure          \\
+Cycle time   (in s)                                  & [60, 120]     & Tank production cycle time                                &              \\
+Parison profile  (in \%)          &  [0, 100]     &  Die gap opening                                              &  Cycle time            \\
+Parison length (in mm)                               & [0, 3000]     & Length during extrusion     &   Parison profile, cycle time    \\ 
 \midrule
 \multicolumn{4}{c}{\textbf{Blow-moulding}} \\
 \midrule
 \textbf{Parameter}                     & \textbf{Range}   & \textbf{Description}    & \textbf{Dependencies} \\ 
 \midrule
-Blowing pressure$^{**}$ (in bar)      &  [0, X]              & Blowing pressure inside moulds                                               &              \\
-Cooling water temperature (in °C)     &  [5, 30]               & Temperature of cooling water (moulds)                                               &               \\
-Cooling water throughput (in Kg/h)    &    []               & Throughput of the cooling water (moulds)                                               &              \\ 
+Blowing pressure$^{**}$ (in bar)      &  [0, 12]              & Blowing pressure inside moulds                                               &              \\
+Cooling water temperature (in \degree C)     &  [5, 30]               & Temperature of cooling water (moulds)                                               &               \\
 \bottomrule
 \end{tabular}
 \end{small}
@@ -158,6 +157,8 @@ $^*$ For each extruder \\
 $^{**}$ There exist 4 different blowing circuits}\\
 \end{table}
 \end{landscape}
+
+With regard to the blow-moulding sub-process, the most critical parameters are the blowing pressure pressures (there exist 4 different air blowing circuits), the cooling water temperature and its throughput. The blowing pressure ensures the parison to inflate and take the shape of the inner parts of the moulds. Without enough air pressure the plastic material does not adhere to the mould surfaces, preventing a correct material cooling. In the same way, the amount of water passing through the cooling circuit, as well as its temperature, affect the cooling capacities of the moulds. Table \ref{tab:key_parameters} summarises the key parameters of an extrusion blow-moulding process that were identified together with process experts.
 
 \subsection{The key quality characteristics of a blow-moulded fuel tank} \label{The key quality characteristics of a blow-moulded fuel tank}
 
@@ -184,9 +185,9 @@ Due to the impossibility of measuring the thickness of all parts produced, in pr
 
 Another quality issue that may occur is the fuel tank contamination. If the extrusion blow-moulding machine screws are not properly emptied following the so called purge procedures, or cycles, some material can remain attached to the screws and can solidify. This may cause the presence of unwanted burned material in the manufactured fuel tank, which generates a visual non-conformity of the part, and which can lead to tank permeability problems. The contamination problem identification completely relies on human visual inspection.
 
-In order to produce a complete fuel system (see Appendix \ref{Plastic Omnium}), other manufacturing process are required after the extrusion blow-moulding (see Appendix \ref{Full production process}). Operations such as components welding or the assembly of pieces require further quality checks. The deepening of any quality control that does not directly concern the extrusion blow-moulding is out of the scope of this research work.  
+In order to produce a complete fuel system (see Appendix \ref{Plastic Omnium}), other manufacturing process are required after the extrusion blow-moulding (see Appendix \ref{Fuel system production process}). Operations such as components welding or the assembly of pieces require further quality checks. The deepening of any quality control that does not directly concern the extrusion blow-moulding is out of the scope of this research work.  
 %
-\begin{table}[]
+\begin{table}
 \caption{Quality indicators of a blow-moulded fuel tank }
 \label{tab:quality_inidcators}
 \begin{tabular}{@{}lllp{6cm}@{}}
@@ -214,7 +215,7 @@ A literature review was carried out to identify previous work aimed at improving
 Two main strategies have been developed to improve the quality of the blow-moulded parts: \textit{expertise-based} and the \textit{data-driven } approaches. In the remaining part of the current section, we will investigate these two approaches proposed in the literature and we will discuss the possibility of using these methods in our industrial context. 
 
 
-\subsection{Expertise-Based approaches} \label{Expertise-based approaches}
+\subsection{Expertise-based approaches} \label{Expertise-based approaches}
 
 Expertise-based approaches make use of physics and simulation to model the manufacturing process and to fine tune process parameters given the simulated final part characteristics. Different strategies have been used to model the whole process that is the parison extrusion, clamping, inflation and cooling. \citet{lee1996prediction} used a finite element model of thin film to simulate blow moulding processes, and applied the feasible direction method to minimise the parison volume at the constraints of part thickness. The proposed parison design simulation is composed of the following stages. The finite element model predicts the thickness of the blow-moulded part from a given parison profile or preform. The resulting thickness distribution of the part is submitted to the optimisation model to generate a new parison profile. The new preform design is compared with the old one. If there is any improvement, the new preform design is again passed to the finite element model, and the loop is repeated until no further design improvement can be achieved. Author showed that the presented approach makes the optimisation algorithm more efficient and reduces the computational requirement drastically. 
 
@@ -230,7 +231,7 @@ The approaches discussed by \citet{poslinski1990nonisothermal,ryan1982dynamics,k
 It is a trial and error process, which is time-consuming and produces a lot of material scrap. On the other hand, the concurrent process optimises parameters virtually, and therefore, eliminates scrap, machine downtime and the need for experimental optimisation. The results demonstrate that there is a significant reduction in span time and in effort, since much of the delay and rework is eliminated using the simulation-based development process.
 
 
-\subsection{Data-Driven approaches} \label{Data-driven approaches}
+\subsection{Data-driven approaches} \label{Data-driven approaches}
 
 As the production process is complicated to be modelled physically, most of the work carried out previously makes use of data-driven methods to understand what process parameters affect the most the quality of the blow-moulded parts. The patterns discovered within data allow a subsequent optimisation of the process parameters.
 
@@ -260,7 +261,7 @@ Because manufacturing processes are becoming more and more complex, and the high
 \begin{itemize}
     \item \textit{Smart factory} refers to the set of initiatives that enable for a real-time traceability of what is happening inside production plants. With a real-time system, raw materials, work in progress and finished products are bar coded and tracked throughout the manufacturing process. The digitisation of the data allows also for a better monitoring of the production performance.
     \item \textit{Digital industrialisation} refers to the set of initiatives that make use of Virtual Reality (VR) and digital twin models to reduce the deployments costs of new machine and to optimise the plant machine layout. Other initiatives aim to optimise the ergonomics. 
-    \item \textit{Predictive quality}refers to the use of data-driven methods to reduce the rate of product rejection at the end of the production line. This topic also covers initiatives to improve quality control and reduce destructive testing for quality control purposes.  
+    \item \textit{Predictive quality} refers to the use of data-driven methods to reduce the rate of product rejection at the end of the production line. This topic also covers initiatives to improve quality control and reduce destructive testing for quality control purposes.  
     \item \textit{Predictive maintenance} refers to the use of data-driven methods that are meant to analyse equipment status and forecast when maintenance should be performed. Predictive maintenance aims to reduce the number and the duration of the unplanned down-times and to optimise the maintenance operations.
 \end{itemize}
 %
@@ -304,9 +305,8 @@ The application of the proposed framework to the industrial use case requires th
 
 The last stage will involve the implementation of a decision-making system able to assess the quality of a produced part and, if necessary, to reject it. The system should be able to communicate with the systems already in place, such as the \textit{PES} system, to declare the part as non-compliant and to alert quality and production teams to trigger corrective actions. 
 
-% Figure \ref{} ADD REF resumes the three stages of our methodology as well as the most important scientific and industrial issues which have to be overcome.
-
 \section{Conclusion}
 
 In this fist chapter, we have described the context of our research project. The French automotive company Plastic Omnium, leader in the production of automotive plastic components, aims to take advantage of fast growing amount of data available in manufacturing plants to improve quality of fuel tanks produced through extrusion blow-moulding manufacturing process. This complex manufacturing process is composed of two sub-processes: \textit{extrusion} and \textit{blow-moulding}. Extrusion is a continuous-flow process where a plastic material feedstock is fed through a hopper onto a feeding transfer screw. The thermal energy provided by the heating clamps as well as the mechanical energy provided by the screw rotation allow the melting of the plastic material. The die will typically create a tubular extruded cross-section, round or oval depending upon the final shape of the finished blow-moulded part. Unlike extrusion, blow-moulding is a discontinuous-flow process. In extrusion blow moulding, the parison is vertically suspended in the air during which time two mould halves enclose it by the action of a pneumatic or hydraulic mechanism. Internally applied air pressure causes the parison to inflate and take the shape of the inner parts of the moulds. The fuel tank produced through this manufacturing process must respect some dimensional and geometrical constraints to comply with customer specifications. The thickness of the tank over the whole surface must be sufficient to ensure robustness of the part and therefore its safety, while avoiding an excessive and unnecessary weight of the finished product. The scientific literature, involving quality control and process monitoring in the extrusion blow-moulding process, identifies two different ways of working on the topic of improving the quality of a blow-moulded parts. The first approach mainly relies on expertise and expert systems to optimise the manufacturing process. The second method makes use of data and data-driven methods to try to explain the variability of final part quality given the input manufacturing process parameters. The limitations of the approaches proposed in the literature, as well as the motivations that have oriented us towards the use of data-driven methods have been discussed. Finally, the main research objectives, as well as the research axes that will drive our research work, are presented. In the next Chapter, we will describe a general method to handle the predictive quality topics.   
 
+\cleardoublepage

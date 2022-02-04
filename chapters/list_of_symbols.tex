@@ -1,13 +1,26 @@
-\makenomenclature
 
 \renewcommand{\nomname}{List of Symbols}
 
-\nomenclature{\(n\)}{Number of samples}
-\nomenclature{\(p\)}{Number of features}
-\nomenclature{\(X \in \mathds{R}^{p \times n}\)}{General input data composed of $p$ features and $n$ samples}
-\nomenclature{\(Y \in \mathds{R}^{n}\)}{Target data}
-\nomenclature{\((\xi_{k}, \zeta_{k}) \in \{1,\ldots,h\}\times\{1,\ldots,w\}\)}{Pixel coordinates}
-\nomenclature{\(X \in \mathds{R}^{p \times n}\)}{TO DO}
-\nomenclature{\(x_{ik}\)}{Time series}
+\mbox{}
+% Chapter 1-2-3
 
+\nomenclature[A]{\(n\)}{Number of samples}
+\nomenclature[A]{\(p\)}{Number of predictors}
+\nomenclature[A]{\(m\)}{Number of target outcomes}
+\nomenclature[A]{\(\lambda\in \Lambda\)}{Penalty term}
+\nomenclature[A]{\(\Lambda\)}{Set of possible penalty values}
+\nomenclature[A]{\(\mathbf{X} \in \mathds{R}^{n \times p}\)}{Input data}
+\nomenclature[A]{\(\mathbf{Y} \in \mathds{R}^{n \times m}\)}{Target data}
 
+% Chapter 4
+
+\nomenclature[B]{\(Y \in \mathds{R}^{w \times h}\)}{Output thickness mask}
+\nomenclature[B]{\(X \in \mathds{R}^{n \times w \times h \times T}\)}{Input video}
+\nomenclature[B]{\(w\)}{Thermal frame width}
+\nomenclature[B]{\(h\)}{Thermal frame height}
+\nomenclature[B]{\(k \in K\)}{Critical thickness point}
+\nomenclature[B]{\(K\)}{Set of critical thickness points}
+\nomenclature[B]{\((\xi_{k}, \zeta_{k}) \in \{1,\ldots,H\}\times\{1,\ldots,W\}\)}{Pixel coordinates on a 2-dimensional image}
+\nomenclature[B]{\(x_{k} \in \mathds{R}^{n \times T}\)}{Surface decay temperature time series (point k)}
+
+\cleardoublepage
